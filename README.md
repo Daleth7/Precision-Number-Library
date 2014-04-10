@@ -22,57 +22,57 @@ Current features:
 
 - Multi-precision number types (Precision::Int, Precision::Float, Precision::Fract and their unsigned counterparts)
 
-- - Basic arithmetic operations
+ - Basic arithmetic operations
 
-- - Type aliases to ease use of number type components
+ - Type aliases to ease use of number type components
 
-- - Ability to convert to a string of images (std::basic_string<CharT>)
+ - Ability to convert to a string of images (std::basic_string<CharT>)
 
-- - Various tests such as even() and positive()
+ - Various tests such as even() and positive()
 
-- - Shift functions to aid in changing the number of digits
+ - Shift functions to aid in changing the number of digits
 
-- - Methods to retrieve individual digits
+ - Methods to retrieve individual digits
 
-- - Int:
+ - Int:
 
-- - - Bitwise logical operations
+   - Bitwise logical operations
 
-- - - Base dependent logical operations
+   - Base dependent logical operations
 
-- - Float:
+ - Float:
 
-- - - All comparators are based upon precision (e.g. FloatObj1 == FloatObj2 is safe to use)
+   - All comparators are based upon precision (e.g. FloatObj1 == FloatObj2 is safe to use)
 
-- - - Count digits on the left and/or right side of the decimal point
+   - Count digits on the left and/or right side of the decimal point
 
-- - - Keeps track of precision (immutable after construction unless the object is replaced via assignment)
+   - Keeps track of precision (immutable after construction unless the object is replaced via assignment)
 
-- - Fract:
+ - Fract:
 
-- - - Retrieve the numerator, denominator, and the decimal form
+   - Retrieve the numerator, denominator, and the decimal form
 
-- - - Memory of precision for the decimal form
+   - Memory of precision for the decimal form
 
-- - - Ability to cast to Float
+   - Ability to cast to Float
 
-- - Float and Fract:
+ - Float and Fract:
 
-- - - Tests if the number is an integer
+   - Tests if the number is an integer
 
-- - - Methods for exponentiating and inverting
+   - Methods for exponentiating and inverting
 
-- - - Ability to cast to Int
+   - Ability to cast to Int
 
 - General number base templates (Precision::General_Base::Int, Precision::General_Base::Float, Precision::General_Base::Fract and their unsigned counterparts)
 
-- - For more details on how to instantiate a new number base, see Precision/General_Base/Precision_Int_General_Base.h
+ - For more details on how to instantiate a new number base, see Precision/General_Base/Precision_Int_General_Base.h
 
 - Exotic number bases (Precision::Hexadecimal, Precision::Octal, Precision::ABC)
 
 - String literal operators (e.g. "1E7"_Precision_Int_E)
 
-- - Support for regular and scientific notations
+ - Support for regular and scientific notations
 
 - Psuedo random number generator (Precision::Random)
 
@@ -93,20 +93,20 @@ Features currently under construction:
 
 - Mathematics System (Precision::Math)
 
-- - Functions under Precision/General_Base/Math_Shared_Functions.h (included by Precision/Precision_Math.h) are fully functional
+ - Functions under Precision/General_Base/Math_Shared_Functions.h (included by Precision/Precision_Math.h) are fully functional
 
 
 Future features:
 
 - A revised system to get rid of the ugly constants in Precision/General_Base/Shared_Constants.h with compile-time constants
 
-- - Possibly have constants system support general base as well (either by conversion from base 10 or by compile calculations)
+ - Possibly have constants system support general base as well (either by conversion from base 10 or by compile calculations)
 
 - New algorithms to aid in converting number bases for floating point, fraction, and complex number systems
 
 - Extending the psuedo random number generator to also generate Float and Fract numbers
 
-- - Perhaps also the Complex
+ - Perhaps also the Complex
 
 
 Features still being researched or experimented with:
@@ -120,4 +120,4 @@ Features still being researched or experimented with:
 - Making the main number types: Int, Float, and Fract; STL-like with iterators
 
 - A new system to aid in passing container types with optional template parameters for the passed container types
-- - That is: template <template <typename...> class Container> will have a way to pass in additional arguments to modify the container type, such as passing custom allocators
+ - That is: template <template <typename...> class Container> will have a way to pass in additional arguments to modify the container type, such as passing custom allocators
