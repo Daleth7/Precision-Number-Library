@@ -41,11 +41,8 @@ Current features:
    - Base dependent logical operations
 
  - Float:
-
    - All comparators are based upon precision (e.g. FloatObj1 == FloatObj2 is safe to use)
-
    - Count digits on the left and/or right side of the decimal point
-
    - Keeps track of precision (immutable after construction unless the object is replaced via assignment)
 
  - Fract:
