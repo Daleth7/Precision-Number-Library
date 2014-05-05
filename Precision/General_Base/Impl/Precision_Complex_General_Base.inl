@@ -6,16 +6,16 @@ namespace Precision{
     //Read-only
             COMP_TEMPL_
             typename Int::str_type Int::str()const
-                {return m_real.str() + m_imag.str() + str_type(1, _imagi);}
+                {return m_real.str() + m_imag.str() + str_type(1, _symbols[6]);}
 
             COMP_TEMPL_
             typename Int::str_type Int::str_w_spaces()const{
                 return
                     m_real.str()
-                    + str_type(1, _space)
+                    + str_type(1, _symbols[4])
                     + m_imag.str()
-                    + str_type(1, _space)
-                    + str_type(1, _imagi)
+                    + str_type(1, _symbols[4])
+                    + str_type(1, _symbols[6])
                 ;
             }
 
@@ -28,7 +28,7 @@ namespace Precision{
                 return
                     m_real.sci_note(inPrec, inShowFull)
                     + m_imag.sci_note(inPrec, inShowFull)
-                    + str_type(1, _imagi)
+                    + str_type(1, _symbols[6])
                 ;
             }
 
@@ -39,10 +39,10 @@ namespace Precision{
             )const{
                 return
                     m_real.sci_note_w_spaces(inPrec, inShowFull)
-                    + str_type(1, _space)
+                    + str_type(1, _symbols[4])
                     + m_imag.sci_note_w_spaces(inPrec, inShowFull)
-                    + str_type(1, _space)
-                    + str_type(1, _imagi)
+                    + str_type(1, _symbols[4])
+                    + str_type(1, _symbols[6])
                 ;
             }
 
@@ -75,7 +75,7 @@ namespace Precision{
                 return
                     m_real.str(inPrec, inShowFull)
                     + m_imag.str(inPrec, inShowFull)
-                    + str_type(1, _imagi)
+                    + str_type(1, _symbols[6])
                 ;
             }
 
@@ -86,10 +86,10 @@ namespace Precision{
             )const{
                 return
                     m_real.str_w_spaces(inPrec, inShowFull)
-                    + str_type(1, _space)
+                    + str_type(1, _symbols[4])
                     + m_imag.str_w_spaces(inPrec, inShowFull)
-                    + str_type(1, _space)
-                    + str_type(1, _imagi)
+                    + str_type(1, _symbols[4])
+                    + str_type(1, _symbols[6])
                 ;
             }
 
@@ -106,7 +106,7 @@ namespace Precision{
                 return
                     m_real.sci_note(inPrec, inShowFull)
                     + m_imag.sci_note(inPrec, inShowFull)
-                    + str_type(1, _imagi)
+                    + str_type(1, _symbols[6])
                 ;
             }
 
@@ -117,10 +117,10 @@ namespace Precision{
             )const{
                 return
                     m_real.sci_note_w_spaces(inPrec, inShowFull)
-                    + str_type(1, _space)
+                    + str_type(1, _symbols[4])
                     + m_imag.sci_note_w_spaces(inPrec, inShowFull)
-                    + str_type(1, _space)
-                    + str_type(1, _imagi)
+                    + str_type(1, _symbols[4])
+                    + str_type(1, _symbols[6])
                 ;
             }
 
@@ -138,12 +138,12 @@ namespace Precision{
             Float::Float(const str_type& s, size_type inPrec)
                 : Number(new_real, new_imag)
             {
-                size_type pos(s.find(_plus, 1));
+                size_type pos(s.find(_symbols[0], 1));
                 if(pos == str_type::npos)
-                    pos = s.find(_neg, 1);
+                    pos = s.find(_symbols[1], 1);
                 if(pos != str_type::npos){
                     m_real = scalar_type(s.substr(0, pos), inPrec);
-                    if(pos < s.size()-1 && s.back() == _imagi)
+                    if(pos < s.size()-1 && s.back() == _symbols[6])
                         m_imag = scalar_type(s.substr(pos+1, s.size()-1));
                 }
             }
@@ -163,7 +163,7 @@ namespace Precision{
                 return
                     m_real.str(inPrec, inShowFull)
                     + m_imag.str(inPrec, inShowFull)
-                    + str_type(1, _imagi)
+                    + str_type(1, _symbols[6])
                 ;
             }
 
@@ -174,10 +174,10 @@ namespace Precision{
             )const{
                 return
                     m_real.str_w_spaces(inPrec, inShowFull)
-                    + str_type(1, _space)
+                    + str_type(1, _symbols[4])
                     + m_imag.str_w_spaces(inPrec, inShowFull)
-                    + str_type(1, _space)
-                    + str_type(1, _imagi)
+                    + str_type(1, _symbols[4])
+                    + str_type(1, _symbols[6])
                 ;
             }
 
@@ -190,7 +190,7 @@ namespace Precision{
                 return
                     m_real.sci_note(inPrec, inShowFull)
                     + m_imag.sci_note(inPrec, inShowFull)
-                    + str_type(1, _imagi)
+                    + str_type(1, _symbols[6])
                 ;
             }
 
@@ -201,10 +201,10 @@ namespace Precision{
             )const{
                 return
                     m_real.sci_note_w_spaces(inPrec, inShowFull)
-                    + str_type(1, _space)
+                    + str_type(1, _symbols[4])
                     + m_imag.sci_note_w_spaces(inPrec, inShowFull)
-                    + str_type(1, _space)
-                    + str_type(1, _imagi)
+                    + str_type(1, _symbols[4])
+                    + str_type(1, _symbols[6])
                 ;
             }
 
@@ -234,12 +234,12 @@ namespace Precision{
                 : m_real(0)
                 , m_imag(0)
             {
-                size_type pos(s.find(_plus, 1));
+                size_type pos(s.find(_symbols[0], 1));
                 if(pos == str_type::npos)
-                    pos = s.find(_neg, 1);
+                    pos = s.find(_symbols[1], 1);
                 if(pos != str_type::npos){
                     m_real = scalar_type(s.substr(0, pos), inPrec);
-                    if(pos < s.size()-1 && s.back() == _imagi)
+                    if(pos < s.size()-1 && s.back() == _symbols[6])
                         m_imag = scalar_type(s.substr(pos+1, s.size()-1));
                 }
             }

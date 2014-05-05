@@ -11,7 +11,7 @@
 
 #define DEFAULT_PARAMS                              \
     Default_Type::digit, Default_Type::image::set,  \
-    precision_byte_type, Default_Type::k_base
+    byte_type, Default_Type::k_base
 
 namespace Precision{
     namespace Hexadecimal{

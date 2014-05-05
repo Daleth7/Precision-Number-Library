@@ -12,7 +12,7 @@
 
 #define DEFAULT_TEMPLATE_PARAMS                     \
     Default_Type::digit, Default_Type::image::set,  \
-    precision_byte_type, Default_Type::k_base
+    byte_type, Default_Type::k_base
 
 namespace Precision{
     using Int       = General_Base::Int <DEFAULT_TEMPLATE_PARAMS>;

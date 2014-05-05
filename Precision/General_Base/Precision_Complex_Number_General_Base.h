@@ -6,33 +6,25 @@
 
 //Please refer to the documentation in Precision_Int_General_Base.h
 //  for a list of conditions for each template parameter.
-//Specifically for this complex class, there is an additional parameter
-//  used to represent the imaginary character as in "A+Bi".
 
-#define COMP_TEMPL_             \
-    template <                  \
-        typename CharT,         \
-        CharT const *const _0,  \
-        typename ByteType,      \
-        ByteType Base,          \
-        CharT _plus,            \
-        CharT _neg,             \
-        CharT _point,           \
-        CharT _exp,             \
-        CharT _space,           \
-        CharT _imagi,           \
-        template <typename...>  \
-            class Container,    \
-        typename SignType       \
+//This class is used a template for Precision_Complex_General_Base.h
+//  since no matter the number type, e.g. integral or fraction, the
+//  implementation shall be the same.
+
+#define COMP_TEMPL_                     \
+    template <                          \
+        typename CharT,                 \
+        CharT const *const _0,          \
+        typename ByteType,              \
+        ByteType Base,                  \
+        CharT const *const _symbols,    \
+        template <typename...>          \
+            class Container,            \
+        typename SignType               \
     >
 
-#define INST_PARAMS_                \
-        CharT, _0, ByteType, Base,  \
-        _plus, _neg, _point,        \
-        _exp, _space, _imagi        \
-        Container, SignType
-
-#define COMP_INST_ Number <INST_PARAMS_>
+#define COMP_INST_  \
+    Number <CharT, _0, ByteType, Base, _symbols Container, SignType>
 
 namespace Precision{
     namespace General_Base{
@@ -40,8 +32,7 @@ namespace Precision{
             template <
                 typename CharT, CharT const *const _0,
                 typename ByteType, ByteType Base,
-                CharT _plus, CharT _neg, CharT _point,
-                CharT _exp, CharT _space, CharT _imagi,
+                CharT const *const _symbols,
                 template <typename...> class Container,
                 typename SignType, typename ScalarType
             >
@@ -109,7 +100,6 @@ namespace Precision{
 
 #include "Impl/Precision_Complex_Number_General_Base.inl"
 
-#undef INST_PARAMS_
 #undef COMP_INST_
 #undef COMP_TEMPL_
 

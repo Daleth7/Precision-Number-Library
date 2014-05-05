@@ -6,52 +6,40 @@
 #include "Precision_Tags.h"
 #include "Shared_Constants.h"
 
-#include <vector>
-
 //Please refer to the documentation in Precision_Int_General_Base.h
 //  for a list of conditions for each template parameter.
 
-#define UFRACT_TEMPL_           \
-    template <                  \
-        typename CharT,         \
-        CharT const *const _0,  \
-        typename ByteType,      \
-        ByteType Base,          \
-        CharT _plus,            \
-        CharT _neg,             \
-        CharT _point,           \
-        CharT _exp,             \
-        CharT _space,           \
-        CharT _slash,           \
-        template <typename...>  \
-            class Container,    \
-        typename SignType       \
+#define UFRACT_TEMPL_                   \
+    template <                          \
+        typename CharT,                 \
+        CharT const *const _0,          \
+        typename ByteType,              \
+        ByteType Base,                  \
+        CharT const *const _symbols,    \
+        template <typename...>          \
+            class Container,            \
+        typename SignType               \
     >
 
-#define INST_PARAMS_ CharT, _0, ByteType, Base,       \
-        _plus, _neg, _point, _exp, _space,  \
-        Container, SignType
+#define INST_PARAMS_    \
+        CharT, _0, ByteType, Base, _symbols, Container, SignType
 
-#define UFRACT_INST_ UFract <CharT, _0, ByteType, Base,       \
-        _plus, _neg, _point, _exp, _space, _slash,  \
-        Container, SignType>
+#define UFRACT_INST_    \
+    UFract <CharT, _0, ByteType, Base, _symbols, Container, SignType>
 
 namespace Precision{
     namespace General_Base{
         template <
             typename CharT, CharT const *const _0,
-            typename ByteType = precision_byte_type, ByteType Base = 10,
-            CharT _plus = CharT('+'), CharT _neg = CharT('-'),
-            CharT _point = CharT('.'), CharT _exp = CharT('E'),
-            CharT _space = CharT(' '), CharT _slash = CharT('/'),
-            template <typename...> class Container = std::vector,
+            typename ByteType = byte_type, ByteType Base = 10,
+            CharT const *const _symbols = Constant::symbols,
+            template <typename...> class Container = default_container_type,
             typename SignType = SignClass
         >
         class UFract : Tag::Fraction, Tag::Unsigned {
             public:
                 using Signed_Fract  = Fract <CharT, _0, ByteType, Base,
-                    _plus, _neg, _point, _exp, _space, _slash,
-                    Container, SignType>;
+                    _symbols, Container, SignType>;
                 using Integer       = typename Signed_Fract::Integer;
                 using Floating      = typename Signed_Fract::Floating;
                 using str_type      = typename Signed_Fract::str_type;

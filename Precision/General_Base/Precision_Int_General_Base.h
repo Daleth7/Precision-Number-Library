@@ -3,7 +3,6 @@
 
 #include <string>
 #include <functional>
-#include <vector>
 #include <cstddef>
 
 #include "Precision_Tags.h"
@@ -11,39 +10,67 @@
 #include "Precision_Sign_Class.h"
 
 /*  Template Parameters Clarification
-    * The class will make use of a compile-time array provided
+    * The class will make use of an array with external linkage provided
         by the instantiator, e.g.
         constexpr char digits[10] {'0', '1', '2', '3', '4',
             '5', '6', '7', '8', '9'};
-    1) CharT        - The type of character used to represent each digit in Base N
-                        Must be compatible as a template parameter to
+    1) CharT        - The type of character or image used to represent each digit
+                        in Base N must be compatible as a template parameter to
                         std::basic_string<T>. The string type (str_type) of the
                         class shall be instantiated as std::basic_string<CharT>.
-    2) _0           - A pointer to the first element in the array
-    3) ByteType     - The type used for the computer representation of the
-                        number. This type also sets the maximum base that may
+    2) _0           - A pointer to the first digit in an array containing the images
+                        of each digit.
+                        Important note: It is the responsibility of the instantiator
+                        to ensure _0 is a valid parameter and that the array
+                        pointed to contains the appropriate images.
+    3) ByteType     - The type used for the computer representation of each
+                        digit. This type also sets the maximum base that may
                         be used and affects the dynamic storage size. Defaulted
-                        to precision_byte_type, which is guaranteed to allow a
+                        to Precision::byte_type, which is guaranteed to allow a
                         base up to at least 127 and is guaranteed to be at least
                         one byte in size. It is recommended to use
-                        precision_byte_type for small bases.
+                        Precision::byte_type for small bases.
     4) Base         - The base N the class shall represent. Defaulted to 10.
-    5) _plus        - A constant of type CharT which will represent the positive
-                        sign, such as '+'. Defaulted to CharT('+').
-    6) _neg         - A constant of type CharT which will represent the negative
-                        sign, such as '-'. Defaulted to CharT('-').
-    7) _point        - A constant of type CharT which will represent the decimal
-                        point separating the integer portion of the number from
-                        the decimal portion of the number, such as '.'.
-                        Defaulted to CharT('.').
-    8) _exp         - A constant of type CharT which will represent the
-                        exponentiation sign, such as 'E' as in 1.23E-02.
-                        Defaulted to CharT('E').
-    9) _space       - A constant of type CharT which will represent the space
-                        character, such as ' '. Defaulted to CharT(' ').
-    10) Container    - The container used to store pointers to the array.
+    5) _symbols     - A pointer to the first symbol in an array with external linkage
+                        and that contains the images of each symbol. Each symbol is
+                        further defined below in the order it should appear in the
+                        array.
+        * plus symbol       - An image depicting the plus sign to indicate a
+                                positive number as in "+123".
+        * minus symbol      - An image depicting the minus sign to indicate a
+                                negative number as in "-123".
+        * point symbol      - An image depicting the decimal point to indicate a
+                                separation between a number's whole part and
+                                decimal part as in "123.456".
+        * exponent symbol   - An image depicting the exponential sign to represent
+                                a power of 10 as in "1.23 E 456" which is equivalent
+                                to writing "1.23 * 10^456".
+        * space symbol      - An image depicting an empty space between two other
+                                images as in "+ 1234".
+                        The above five Constant::symbols are required as the minimum.
+                        Depending on what the number type is tagged with from
+                        Precision::Tag, there may be additional Constant::symbols needed.
+        * slash_symbol      - An image depicting the slash sign to indicate a
+                                fractional number as in "12/345". Required for
+                                Fraction number types, tagged with Tag::Fraction.
+        * imaginary_symbol  - An image depicting the imaginary number to indicate a
+                                complex number as in "a + bi". Required for
+                                Complex number types, tagged with Tag::Complex.
+                        _symbols is defaulted to Constant::symbols which points to an
+                        array containing images of type const char:
+                            * plus symbol:      '+'
+                            * minus symbol:     '-'
+                            * point symbol:     '.'
+                            * exponent symbol:  'E'
+                            * space symbol:     ' '
+                            * slash symbol:     '/'
+                            * imaginary symbol: 'i'
+                        Important note: It is the responsibility of the instantiator
+                        to ensure _symbols is a valid parameter and that the array
+                        pointed to contains the appropriate Constant::symbols.
+    6) Container    - The container used to store indices to the array.
                         Most STL containers will work.
-                        * Must support the following methods:
+                        * Must support the following:
                             * Container::Container(size_type, digit_type)
                             * Bidirectional iterators
                             * Container::begin()
@@ -55,55 +82,49 @@
                             * Container::insert(iterator, size_type, digit_type)
                             * Container::erase(iterator, size_type)
                             * Container::erase(iterator)
-                        Defaulted to std::vector.
-    11) SignType    - The type used to represent the sign of the number. Must
-                        support the following methods:
-                            * primitve_integral_type SignType::value()const
+                        Defaulted to Precision::default_container_type.
+    7) SignType     - The type used to represent the sign of the number, i.e. whether
+                        it is positive or negative. Must support the following:
+                            * signed_integral_type SignType::value()const
                             * bool SignType::positive()const
-                            * bool SignType::negative()
+                            * bool SignType::negative()const
                             * void SignType::negate()
                             * void SignType::make_positive()
                             * void SignType::make_negative()
-                            * SignType::SignType(primitive_integral_type)
+                            * SignType::SignType(sign_integral_type)
+                        By convention, all number types in the Precision namespace
+                        shall abide by the following rules:
+                            * signed short(1) == positive
+                            * signed short(-1) == negative
                         Defaulted to Precision::SignClass.
 
     Example Instantiation:
         constexpr char digit_image[10] {'0', '1', '2', '3', '4',
             '5', '6', '7', '8', '9'};
-        using Int = Precision::General_Base::Int
-                    <char, digit_image, precision_byte_type, 10>;
+        using Int = Precision::General_Base::Int<char, digit_image>;
 */
-#define INT_TEMPL_              \
-    template <                  \
-        typename CharT,         \
-        CharT const *const _0,  \
-        typename ByteType,      \
-        ByteType Base,          \
-        CharT _plus,            \
-        CharT _neg,             \
-        CharT _point,           \
-        CharT _exp,             \
-        CharT _space,           \
-        template <typename...>  \
-            class Container,    \
-        typename SignType       \
+#define INT_TEMPL_                      \
+    template <                          \
+        typename CharT,                 \
+        CharT const *const _0,          \
+        typename ByteType,              \
+        ByteType Base,                  \
+        CharT const *const _symbols,    \
+        template <typename...>          \
+            class Container,            \
+        typename SignType               \
     >
 
-#define INT_INST_ Int <                     \
-        CharT, _0, ByteType, Base,          \
-        _plus, _neg, _point, _exp, _space,  \
-        Container, SignType                 \
-    >
+#define INT_INST_   \
+    Int <CharT, _0, ByteType, Base, _symbols, Container, SignType>
 
 namespace Precision{
     namespace General_Base{
         template <
             typename CharT, CharT const *const _0,
-            typename ByteType = precision_byte_type, ByteType Base = 10,
-            CharT _plus = CharT('+'), CharT _neg = CharT('-'),
-            CharT _point = CharT('.'), CharT _exp = CharT('E'),
-            CharT _space = CharT(' '),
-            template <typename...> class Container = std::vector,
+            typename ByteType = byte_type, ByteType Base = 10,
+            CharT const *const _symbols = Constant::symbols,
+            template <typename...> class Container = default_container_type,
             typename SignType = SignClass
         >
         class Int : Tag::Integral, Tag::Signed {

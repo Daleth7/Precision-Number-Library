@@ -1,5 +1,6 @@
 #ifndef __INCLUDE_ALL_PRECISION_TYPES_H__
 #define __INCLUDE_ALL_PRECISION_TYPES_H__
+
 #include "Precision/Precision_Default.h"
 #include "Precision/Precision_Literal_Operators.h"
 

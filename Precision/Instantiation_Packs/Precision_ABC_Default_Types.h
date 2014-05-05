@@ -6,15 +6,14 @@
 namespace Precision{
     namespace ABC{
         namespace Default_Type{
+            using digit                 = char;
+            constexpr unsigned short k_base    = 26;
             struct image{
-                static constexpr char set[26]
+                static constexpr digit set[k_base]
                     {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                     'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
                     'u', 'v', 'w', 'x', 'y', 'z'};
             };
-            using digit                 = char;
-            using decimal               = std::ptrdiff_t;
-            constexpr decimal k_base    = 26;
         }
     }
 }

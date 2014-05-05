@@ -7,53 +7,24 @@
 #include "Precision_Float_General_Base.h"
 #include "Precision_Fract_General_Base.h"
 
-#include <vector>
-
 //Please refer to the documentation in Precision_Int_General_Base.h
 //  for a list of conditions for each template parameter.
-//Specifically for this complex class, there is an additional parameter
-//  used to represent the imaginary character as in "A+Bi".
 
-#define COMP_TEMPL_             \
-    template <                  \
-        typename CharT,         \
-        CharT const *const _0,  \
-        typename ByteType,      \
-        ByteType Base,          \
-        CharT _plus,            \
-        CharT _neg,             \
-        CharT _point,           \
-        CharT _exp,             \
-        CharT _space,           \
-        CharT _imagi,           \
-        template <typename...>  \
-            class Container,    \
-        typename SignType       \
+#define COMP_TEMPL_                     \
+    template <                          \
+        typename CharT,                 \
+        CharT const *const _0,          \
+        typename ByteType,              \
+        ByteType Base,                  \
+        CharT const *const _symbols,    \
+        template <typename...>          \
+            class Container,            \
+        typename SignType               \
     >
 
-#define PART_PARAMS_                \
-        CharT, _0, ByteType, Base,  \
-        _plus, _neg, _point,        \
-        _exp, _space
-
-#define INST_PARAMS_                \
-        CharT, _0, ByteType, Base,  \
-        _plus, _neg, _point,        \
-        _exp, _space, _imagi        \
-        Container, SignType,        \
-        ScalarType
-
-#define INT_INST_           \
-    PART_PARAMS_, _imagi,   \
-    Container, SignType,    \
-    General_base::Int<PART_PARAMS_, Container, SignType>
-
-#define FLOAT_INST_ INT_INST_
-
-#define FRACT_INST_                 \
-    PART_PARAMS_, _imagi, _slash,   \
-    Container, SignType,            \
-    General_base::Fract<PART_PARAMS_, Container, SignType>
+#define INST_PARAMS_                            \
+        CharT, _0, ByteType, Base, _symbols,    \
+        Container, SignType, ScalarType
 
 namespace Precision{
     namespace General_Base{
@@ -62,14 +33,11 @@ namespace Precision{
         //  Precision_Complex_Number_General_Base.h"
             template <
                 typename CharT, CharT const *const _0,
-                typename ByteType = precision_byte_type, ByteType Base = 10,
-                CharT _plus = CharT('+'), CharT _neg = CharT('-'),
-                CharT _point = CharT('.'), CharT _exp = CharT('E'),
-                CharT _space = CharT(' '), CharT _imagi = CharT('i'),
-                template <typename...> class Container = std::vector,
+                typename ByteType = byte_type, ByteType Base = 10,
+                CharT const *const _symbols = Constant::symbols,
+                template <typename...> class Container = default_container_type,
                 typename SignType = SignClass,
-                typename ScalarType
-                    = General_Base::Int<PART_PARAMS_, Container, SignType>
+                typename ScalarType = General_Base::Int<INST_PARAMS_>
             >
             struct Int : Tag::Integral, Tag::Signed, Number<INT_INST_>{
         //Read-only
@@ -99,14 +67,11 @@ namespace Precision{
 
             template <
                 typename CharT, CharT const *const _0,
-                typename ByteType = precision_byte_type, ByteType Base = 10,
-                CharT _plus = CharT('+'), CharT _neg = CharT('-'),
-                CharT _point = CharT('.'), CharT _exp = CharT('E'),
-                CharT _space = CharT(' '), CharT _imagi = CharT('i'),
-                template <typename...> class Container = std::vector,
+                typename ByteType = byte_type, ByteType Base = 10,
+                CharT const *const _symbols = Constant::symbols,
+                template <typename...> class Container = default_container_type,
                 typename SignType = SignClass,
-                typename ScalarType
-                    = General_Base::Float<PART_PARAMS_, Container, SignType>
+                typename ScalarType = General_Base::Float<INST_PARAMS_>
             >
             struct Float : Tag::Floating, Tag::Signed, Number<FLOAT_INST_>{
         //Read-only
@@ -137,15 +102,11 @@ namespace Precision{
 
             template <
                 typename CharT, CharT const *const _0,
-                typename ByteType = precision_byte_type, ByteType Base = 10,
-                CharT _plus = CharT('+'), CharT _neg = CharT('-'),
-                CharT _point = CharT('.'), CharT _exp = CharT('E'),
-                CharT _space = CharT(' '), CharT _slash = CharT('/'),
-                CharT _imagi = CharT('i'),
-                template <typename...> class Container = std::vector,
+                typename ByteType = byte_type, ByteType Base = 10,
+                CharT const *const _symbols = Constant::symbols,
+                template <typename...> class Container = default_container_type,
                 typename SignType = SignClass,
-                typename ScalarType
-                    = General_Base::Fract<PART_PARAMS_, Container, SignType>
+                typename ScalarType = General_Base::Fract<INST_PARAMS_>
             >
             struct Fract : Tag::Fraction, Tag::Signed, Number<FRACT_INST_>{
         //Read-only
@@ -195,10 +156,6 @@ namespace Precision{
 #include "Impl/Precision_Complex_General_Base.inl"
 
 #undef COMP_TEMPL_
-#undef PART_PARAMS_
 #undef INST_PARAMS_
-#undef INT_INST_
-#undef FLOAT_INST_
-#undef FRACT_INST_
 
 #endif

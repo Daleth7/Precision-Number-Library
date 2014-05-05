@@ -154,23 +154,23 @@ namespace Precision{
             str_type toreturn(m_whole.str());
 
             if(toreturn.size() == 2 && toreturn.back() == _0[0])
-                return toreturn += str_type(1, _point)
+                return toreturn += str_type(1, _symbols[2])
                     + str_type(inPrec ? inPrec : 1, _0[0]);
                 //If the number is something like 0.009
             if(m_precision > m_whole.count_digits())
                 toreturn.insert(1, m_precision - m_whole.count_digits(), _0[0]);
-            toreturn.insert(toreturn.size() - m_precision, 1, _point);
+            toreturn.insert(toreturn.size() - m_precision, 1, _symbols[2]);
 
             if(m_precision >= m_whole.count_digits())
                 toreturn.insert(1, 1, _0[0]);
             if(m_show_full || inShowFull) return toreturn;
             else if(inPrec == 0){
-                while(toreturn.back() == _0[0] && toreturn.back() != _point)
+                while(toreturn.back() == _0[0] && toreturn.back() != _symbols[2])
                     toreturn.pop_back();
 
-                if(toreturn.back() == _point && m_precision > 0)
+                if(toreturn.back() == _symbols[2] && m_precision > 0)
                     toreturn.push_back(_0[0]);
-                else if(toreturn.back() == _point)
+                else if(toreturn.back() == _symbols[2])
                     toreturn.pop_back();
 
                 return toreturn;
@@ -179,7 +179,7 @@ namespace Precision{
             size_type min = m_precision - inPrec - 1;
             while(min-- > 0) toreturn.pop_back();
 
-            if(toreturn.back() == _point && m_precision > 0)
+            if(toreturn.back() == _symbols[2] && m_precision > 0)
                 toreturn.push_back(_0[0]);
             else
                 toreturn.pop_back();
@@ -197,11 +197,11 @@ namespace Precision{
                 inPrec = m_precision;
             str_type toreturn(m_whole.sci_note((m_show_full || inShowFull)
                 ? m_precision : inPrec));
-            toreturn.erase(toreturn.find(_exp)+1);
+            toreturn.erase(toreturn.find(_symbols[3])+1);
 
             toreturn += (
                 (m_whole.count_digits() < m_precision)
-                ? str_type(1, _neg)
+                ? str_type(1, _symbols[1])
                     + Integer(m_precision - m_whole.count_digits() + 1)
                     . str()
                     . substr(1)
@@ -219,9 +219,9 @@ namespace Precision{
             bool inShowFull
         )const{
             str_type toreturn(this->sci_note(inPrec, inShowFull));
-            toreturn.insert(1, 1, _space);
-            toreturn.insert(toreturn.find(_exp), 1, _space);
-            toreturn.insert(toreturn.find(_exp)+1, 1, _space);
+            toreturn.insert(1, 1, _symbols[4]);
+            toreturn.insert(toreturn.find(_symbols[3]), 1, _symbols[4]);
+            toreturn.insert(toreturn.find(_symbols[3])+1, 1, _symbols[4]);
             return toreturn;
         }
 
@@ -422,7 +422,7 @@ namespace Precision{
             , m_show_full(false)
         {
             if(inImage.size() != 0){
-                const size_type pos = inImage.find(_point);
+                const size_type pos = inImage.find(_symbols[2]);
                 if(pos == str_type::npos)
                     m_whole = Integer(inImage + str_type(m_precision, _0[0]));
                 else{

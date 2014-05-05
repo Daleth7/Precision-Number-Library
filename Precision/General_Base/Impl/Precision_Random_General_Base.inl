@@ -36,13 +36,13 @@ namespace Precision{
             {return m_order_of_entropy;}
 
         template <typename Integer_Type>
-        size_t Random<Integer_Type>::push1()const{return m_push1;}
+        std::size_t Random<Integer_Type>::push1()const{return m_push1;}
 
         template <typename Integer_Type>
-        size_t Random<Integer_Type>::push2()const{return m_push2;}
+        std::size_t Random<Integer_Type>::push2()const{return m_push2;}
 
         template <typename Integer_Type>
-        size_t Random<Integer_Type>::push3()const{return m_push3;}
+        std::size_t Random<Integer_Type>::push3()const{return m_push3;}
 
         template <typename Integer_Type>
         constexpr auto
@@ -56,7 +56,7 @@ namespace Precision{
         //Algorithm is a modified form of the SFMT as described in this paper:
         // http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/ARTICLES/sfmt.pdf
             typename type::str_type image(m_seed.str());
-            const size_t quad(image.size()/4);
+            const std::size_t quad(image.size()/4);
             type
                 word_1(image.substr(0, quad)),
                 word_2(image.substr(quad+1, quad)),
@@ -159,7 +159,7 @@ namespace Precision{
             typename type::lli INorder_of_entropy,
             const type& INand1, const type& INand2,
             const type& INand3, const type& INand4,
-            size_t INpush1, size_t INpush2, size_t INpush3,
+            std::size_t INpush1, std::size_t INpush2, std::size_t INpush3,
             bool call_discard
         )
             : m_seed(INseed.positive() ? INseed : 1)
@@ -169,7 +169,7 @@ namespace Precision{
             , m_push1(INpush1), m_push2(INpush2), m_push3(INpush3)
         {
             if(call_discard){
-                size_t i(7);
+                std::size_t i(7);
                 while(i-- > 0)
                     this->discard();
             }

@@ -10,23 +10,18 @@ namespace Precision{
         Base_Return convert(const Base_Param& orig, std::false_type){
             if(Base_Param::base() == Base_Return::base()){
                 typename Base_Return::diglist_type toreturn;
-                for(size_t i(0); i < orig.count_digits(); ++i)
+                for(std::size_t i(0); i < orig.count_digits(); ++i)
                     toreturn.push_back(orig.digit_10(i));
                 std::reverse(toreturn.begin(), toreturn.end());
                 return Base_Return(toreturn, orig.sign());
             }else{
-                Base_Return
-                    toreturn(0),
-                    base_factor(Math::exponentiate(
-                        Base_Return(Base_Param::base()),
-                        orig.count_digits()-1
-                    ))
-                ;
-                for(
-                    size_t i(0);
-                    i < orig.count_digits();
-                    ++i, base_factor /= Base_Param::base()
-                )   toreturn += base_factor * Base_Return(orig.digit_10(i));
+                Base_Return toreturn(0), base_factor(1);
+                std::size_t i(orig.count_digits());
+                while(i-- > 0){
+                    toreturn += base_factor * Base_Return(orig.digit_10(i));
+                    base_factor *= Base_Param::base();
+                }
+                toreturn.sign(orig.sign());
                 return toreturn;
             }
         }

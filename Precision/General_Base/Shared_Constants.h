@@ -3,14 +3,21 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <vector>
 
-using precision_byte_type = std::int_least8_t;
 namespace Precision{
+    using byte_type = std::int_least8_t;
+    template <typename... TArgs>
+        using default_container_type = std::vector<TArgs...>;
 
     constexpr std::size_t
         k_default_prec = 100,
         k_display_prec = 5
     ;
+
+    struct Constant{
+        static constexpr char symbols[] = "+-.E /i";
+    };
 
     namespace Math{
         char const *const k_pi_str

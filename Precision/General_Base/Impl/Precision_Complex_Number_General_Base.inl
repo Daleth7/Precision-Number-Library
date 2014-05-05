@@ -116,12 +116,12 @@ namespace Precision{
                 : m_real(0)
                 , m_imag(0)
             {
-                size_type pos(s.find(_plus, 1));
+                size_type pos(s.find(_symbols[0], 1));
                 if(pos == str_type::npos)
-                    pos = s.find(_neg, 1);
+                    pos = s.find(_symbols[1], 1);
                 if(pos != str_type::npos){
                     m_real = scalar_type(s.substr(0, pos));
-                    if(pos < s.size()-1 && s.back() == _imagi)
+                    if(pos < s.size()-1 && s.back() == _symbols[6])
                         m_imag = scalar_type(s.substr(pos+1, s.size()-1));
                 }
             }

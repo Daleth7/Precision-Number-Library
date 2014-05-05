@@ -261,9 +261,9 @@ namespace Precision{
         INT_TEMPL_
         typename INT_INST_::str_type INT_INST_::str()const{
             if(*this == INT_INST_(0))
-                return str_type(1, _plus) + str_type(1, _0[0]);
+                return str_type(1, _symbols[0]) + str_type(1, _0[0]);
             str_type toreturn(m_number.size() + 1, _0[0]);
-            toreturn[0] = (m_sign.positive() ? _plus : _neg);
+            toreturn[0] = (m_sign.positive() ? _symbols[0] : _symbols[1]);
             size_type i(1);
             for(
                 auto iter(m_number.rbegin());
@@ -276,18 +276,18 @@ namespace Precision{
         INT_TEMPL_
         typename INT_INST_::str_type INT_INST_::sci_note(size_type prec)const{
             if(*this == INT_INST_(0))
-                return str_type(1, _plus) + str_type(1, _0[0]);
+                return str_type(1, _symbols[0]) + str_type(1, _0[0]);
             else if(m_number.size() < 2)
-                return this->str() + str_type(1, _exp), str_type(1, _0[1]);
+                return this->str() + str_type(1, _symbols[3]), str_type(1, _0[1]);
 
             str_type toreturn(this->str());
             size_type exp(toreturn.size() - 2);
-            toreturn.insert(2, 1, _point);
+            toreturn.insert(2, 1, _symbols[2]);
             if(prec < exp)
                 toreturn.erase(3+prec);
-            if(toreturn.back() == _point)
+            if(toreturn.back() == _symbols[2])
                 toreturn.pop_back();
-            toreturn += str_type(1, _exp) + INT_INST_(exp).str().substr(1);
+            toreturn += str_type(1, _symbols[3]) + INT_INST_(exp).str().substr(1);
 
             return toreturn;
         }
@@ -298,9 +298,9 @@ namespace Precision{
         const{
             str_type toreturn(this->sci_note(prec));
             if(toreturn == str_type(1, _0[0])) return toreturn;
-            toreturn.insert(1, 1, _space);//Insert space after the sign
-            toreturn.insert(toreturn.find(_exp), 1, _space);
-            toreturn.insert(toreturn.find(_exp)+1, 1, _space);
+            toreturn.insert(1, 1, _symbols[4]);//Insert space after the sign
+            toreturn.insert(toreturn.find(_symbols[3]), 1, _symbols[4]);
+            toreturn.insert(toreturn.find(_symbols[3])+1, 1, _symbols[4]);
             return toreturn;
         }
 
@@ -462,7 +462,7 @@ namespace Precision{
         INT_TEMPL_
         INT_INST_::Int(const str_type& newnumber)
             : m_number(newnumber.size(), 0)
-            , m_sign(newnumber[0] == _neg ? -1 : 1)
+            , m_sign(newnumber[0] == _symbols[1] ? -1 : 1)
         {
             if(newnumber.size() > 0){
                 auto iter(m_number.begin());

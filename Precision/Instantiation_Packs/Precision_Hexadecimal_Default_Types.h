@@ -6,14 +6,13 @@
 namespace Precision{
     namespace Hexadecimal{
         namespace Default_Type{
+            using digit                         = char;
+            constexpr unsigned short k_base            = 16;
             struct image{
-                static constexpr char set[16]
+                static constexpr digit set[k_base]
                     {'0', '1', '2', '3', '4', '5', '6', '7',
                     '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
             };
-            using digit                         = char;
-            using decimal                       = std::ptrdiff_t;
-            constexpr decimal k_base            = 16;
         }
     }
 }

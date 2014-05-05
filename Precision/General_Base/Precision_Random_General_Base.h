@@ -18,9 +18,9 @@ namespace Precision{
                 const type& and3()const;
                 const type& and4()const;
                 typename type::lli order_of_entropy()const;
-                size_t push1()const;
-                size_t push2()const;
-                size_t push3()const;
+                std::size_t push1()const;
+                std::size_t push2()const;
+                std::size_t push3()const;
                 static constexpr typename type::digit_10_type base();
             //Retrieve and/or change state
                 type operator()();
@@ -63,7 +63,7 @@ namespace Precision{
                     const type& INand3 = 0xDDFECB7F,
                     const type& INand4 = 0xDFFFFFEF,
                 //These help refresh the number to avoid repetition
-                    size_t INpush1 = 8, size_t INpush2 = 11, size_t INpush3 = 18,
+                    std::size_t INpush1 = 8, std::size_t INpush2 = 11, std::size_t INpush3 = 18,
                 //By default, the object shall discard the first few states
                 //  to reach the maximum digit count.
                     bool call_discard = true
@@ -72,7 +72,7 @@ namespace Precision{
                 type m_seed, m_max, m_min;
                 type m_and1, m_and2, m_and3, m_and4;
                 typename type::lli m_order_of_entropy;
-                size_t m_push1, m_push2, m_push3; 
+                std::size_t m_push1, m_push2, m_push3; 
         };
     }
 }

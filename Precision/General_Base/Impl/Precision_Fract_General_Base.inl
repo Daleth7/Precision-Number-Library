@@ -160,7 +160,7 @@ namespace Precision{
         FRACT_TEMPL_
         typename FRACT_INST_::str_type FRACT_INST_::str()const{
             str_type temp(m_denom.str().substr(1));
-            return m_numer.str() + str_type(1, _slash) + temp;
+            return m_numer.str() + str_type(1, _symbols[5]) + temp;
         }
 
         FRACT_TEMPL_
@@ -170,11 +170,11 @@ namespace Precision{
                 this
                 -> whole()
                 . str()
-                + str_type(1, _space)
+                + str_type(1, _symbols[4])
                 + (m_numer%m_denom)
                 . str()
                 . substr(1)
-                + str_type(1, _slash)
+                + str_type(1, _symbols[5])
                 + m_denom
                 . str()
                 . substr(1)
@@ -370,7 +370,7 @@ namespace Precision{
                 this->Check_Pattern(
                     catalyst
                     . str()
-                    . substr(catalyst.str().find(_point) + 1)
+                    . substr(catalyst.str().find(_symbols[2]) + 1)
                     , catalyst
                 );
 
@@ -390,7 +390,7 @@ namespace Precision{
             , m_denom(1)
             , m_precision(inPrec)
         {
-            size_type pos(inImage.find(_slash));
+            size_type pos(inImage.find(_symbols[5]));
             m_numer = Integer(inImage.substr(0, pos));
             if(pos != str_type::npos)
                 m_denom = Integer(inImage.substr(pos+1));
@@ -412,7 +412,7 @@ namespace Precision{
             , m_precision(inFP.precision())
         {
             const str_type topass(inFP.str(0, true));
-            this->Check_Pattern(topass.substr(topass.find(_point)+1), inFP);
+            this->Check_Pattern(topass.substr(topass.find(_symbols[2])+1), inFP);
 
             if(m_denom == Integer(1)){
                 m_denom.shift_left(inFP.count_right_digits());

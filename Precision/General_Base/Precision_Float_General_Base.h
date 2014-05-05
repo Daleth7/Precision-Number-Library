@@ -7,31 +7,23 @@
 #include "Precision_Tags.h"
 #include "Shared_Constants.h"
 
-#include <vector>
-
 //Please refer to the documentation in Precision_Int_General_Base.h
 //  for a list of conditions for each template parameter.
 
-#define FLOAT_TEMPL_            \
-    template <                  \
-        typename CharT,         \
-        CharT const *const _0,  \
-        typename ByteType,      \
-        ByteType Base,          \
-        CharT _plus,            \
-        CharT _neg,             \
-        CharT _point,           \
-        CharT _exp,             \
-        CharT _space,           \
-        template <typename...>  \
-            class Container,    \
-        typename SignType       \
+#define FLOAT_TEMPL_                    \
+    template <                          \
+        typename CharT,                 \
+        CharT const *const _0,          \
+        typename ByteType,              \
+        ByteType Base,                  \
+        CharT const *const _symbols,    \
+        template <typename...>          \
+            class Container,            \
+        typename SignType               \
     >
 
 #define INST_PARAMS_                        \
-        CharT, _0, ByteType, Base,          \
-        _plus, _neg, _point, _exp, _space,  \
-        Container, SignType
+        CharT, _0, ByteType, Base, _symbols, Container, SignType
 
 #define FLOAT_INST_ Float <INST_PARAMS_>
 
@@ -39,11 +31,9 @@ namespace Precision{
     namespace General_Base{
         template <
             typename CharT, CharT const *const _0,
-            typename ByteType = precision_byte_type, ByteType Base = 10,
-            CharT _plus = CharT('+'), CharT _neg = CharT('-'),
-            CharT _point = CharT('.'), CharT _exp = CharT('E'),
-            CharT _space = CharT(' '),
-            template <typename...> class Container = std::vector,
+            typename ByteType = byte_type, ByteType Base = 10,
+            CharT const *const _symbols = Constant::symbols,
+            template <typename...> class Container = default_container_type,
             typename SignType = SignClass
         >
         class Float : Tag::Floating_Point, Tag::Signed {

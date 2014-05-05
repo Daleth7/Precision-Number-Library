@@ -6,13 +6,12 @@
 namespace Precision{
     namespace Octal{
         namespace Default_Type{
+            using digit                 = char;
+            constexpr unsigned short k_base    = 8;
             struct image{
-                static constexpr char set[8]
+                static constexpr digit set[k_base]
                     {'0', '1', '2', '3', '4', '5', '6', '7'};
             };
-            using digit                 = char;
-            using decimal               = std::ptrdiff_t;
-            constexpr decimal k_base    = 8;
         }
     }
 }

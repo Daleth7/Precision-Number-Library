@@ -1,3 +1,9 @@
 #include "Instantiation_Packs/Precision_ABC_Default_Types.h"
 
-constexpr char Precision::ABC::Default_Type::image::set[26];
+namespace Precision{
+    namespace ABC{
+        namespace Default_Type{
+            constexpr digit image::set[k_base];
+        }
+    }
+}
