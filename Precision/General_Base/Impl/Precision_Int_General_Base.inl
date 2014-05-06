@@ -57,7 +57,8 @@ namespace Precision{
                     big.m_number.push_back(carry);
             }
 
-            while(big.m_number.back() == 0) big.m_number.pop_back();
+            while(big.m_number.size() > 1 && big.m_number.back() == 0)
+                big.m_number.pop_back();
             this->m_number = big.m_number;
 
             return *this;
@@ -215,9 +216,10 @@ namespace Precision{
 
         INT_TEMPL_
         INT_INST_ INT_INST_::logical_xor(const INT_INST_& s)const{
-        //res = (a+b)%base
+        //res = (base-(a+b)%base)%base
             return std::move(this->logical_operation(
-                s, [](digit_10_type l, digit_10_type r){return (l+r)%Base;}
+                s, [](digit_10_type l, digit_10_type r)
+                    {return (Base-(l+r)%Base)%Base;}
             ));
         }
 
@@ -278,7 +280,8 @@ namespace Precision{
             if(*this == INT_INST_(0))
                 return str_type(1, _symbols[0]) + str_type(1, _0[0]);
             else if(m_number.size() < 2)
-                return this->str() + str_type(1, _symbols[3]), str_type(1, _0[1]);
+                //Display +#E0
+                return this->str() + str_type(1, _symbols[3]) + str_type(1, _0[0]);
 
             str_type toreturn(this->str());
             size_type exp(toreturn.size() - 2);
@@ -488,22 +491,10 @@ namespace Precision{
             : m_number(n)
             , m_sign(s)
         {
-            for(auto iter(m_number.begin()); iter != m_number.end(); ++iter){
-                if(*iter < 0 || *iter >= Base){
-                    bool bad(true);
-                    for(digit_10_type i(0); i < Base; ++i){
-                        if(_0[i] == _0[*iter]){
-                            *iter = i;
-                            bad = false;
-                            break;
-                        }
-                    }
-                    if(bad)
-                        *iter = 0;
-                }
-            }
+            for(auto iter(m_number.begin()); iter != m_number.end(); ++iter)
+                *iter = (*iter < 0 || *iter >= Base) ? 0 : *iter;
             std::reverse(m_number.begin(), m_number.end());
-            while(m_number.back() == 0)
+            while(m_number.size() > 1 && m_number.back() == 0)
                 m_number.pop_back();
         }
 
