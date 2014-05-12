@@ -47,9 +47,9 @@
                                 to writing "1.23 * 10^456".
         * space symbol      - An image depicting an empty space between two other
                                 images as in "+ 1234".
-                        The above five Constant::symbols are required as the minimum.
+                        The above five symbols are required as the minimum.
                         Depending on what the number type is tagged with from
-                        Precision::Tag, there may be additional Constant::symbols needed.
+                        Precision::Tag, there may be additional symbols needed.
         * slash_symbol      - An image depicting the slash sign to indicate a
                                 fractional number as in "12/345". Required for
                                 Fraction number types, tagged with Tag::Fraction.
@@ -67,7 +67,7 @@
                             * imaginary symbol: 'i'
                         Important note: It is the responsibility of the instantiator
                         to ensure _symbols is a valid parameter and that the array
-                        pointed to contains the appropriate Constant::symbols.
+                        pointed to contains the appropriate symbols.
     6) Container    - The container used to store indices to the array.
                         Most STL containers will work.
                         * Must support the following:
