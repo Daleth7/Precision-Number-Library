@@ -18,6 +18,9 @@
                         in Base N must be compatible as a template parameter to
                         std::basic_string<T>. The string type (str_type) of the
                         class shall be instantiated as std::basic_string<CharT>.
+                        The following functions must be supported for type CharT:
+                        * std::istream& operator>>(std::istream&, CharT&);
+                        * bool operator==(const CharT&, const CharT&);
     2) _0           - A pointer to the first digit in an array containing the images
                         of each digit.
                         Important note: It is the responsibility of the instantiator
