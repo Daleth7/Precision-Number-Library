@@ -95,7 +95,7 @@ Features currently under construction:
 
 Future features:
 
-- A revised system to get rid of the ugly constants in Precision/General_Base/Shared_Constants.h with compile-time constants
+- A revised system to replace the ugly constants in Precision/General_Base/Shared_Constants.h with compile-time constants
 
  - Possibly have constants system support general base as well (either by conversion from base 10 or by compile calculations)
 
