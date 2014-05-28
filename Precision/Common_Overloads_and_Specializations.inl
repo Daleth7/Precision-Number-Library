@@ -202,9 +202,9 @@ namespace Precision{
         inline UInt gcd(const UInt& f, const UInt& s)
             {return gcd<UInt>(f, s);}
 
-        inline Int gcf(const Int& f, const Int& s)
-            {return gcf<Int>(f, s);}
-        inline UInt gcf(const UInt& f, const UInt& s)
-            {return gcf<UInt>(f, s);}
+        inline Int lcm(const Int& f, const Int& s)
+            {return lcm<Int>(f, s);}
+        inline UInt lcm(const UInt& f, const UInt& s)
+            {return lcm<UInt>(f, s);}
     }
 }

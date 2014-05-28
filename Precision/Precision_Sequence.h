@@ -1,7 +1,7 @@
 #ifndef PRECISION_SERIES_CLASS_DEFINITION__H__
 #define PRECISION_SERIES_CLASS_DEFINITION__H__
 
-#include "General_Base/Precision_Tags.h"
+#include "General_Base/Impl/Precision_Tags.h"
 
 #include <vector>
 #include <functional>
@@ -130,6 +130,6 @@ namespace Precision{
 
 #undef SEQ_INST_
 
-#include "Impl/Precision_Sequence.inl"
+#include "Precision_Sequence.inl"
 
 #endif

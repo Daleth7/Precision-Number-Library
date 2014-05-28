@@ -1,12 +1,7 @@
 #ifndef PRECISION_HEXADECIMAL_GENERAL_BASE__H__
 #define PRECISION_HEXADECIMAL_GENERAL_BASE__H__
 
-#include "General_Base/Precision_Int_General_Base.h"
-#include "General_Base/Precision_Float_General_Base.h"
-#include "General_Base/Precision_Fract_General_Base.h"
-#include "General_Base/Precision_UInt_General_Base.h"
-#include "General_Base/Precision_UFloat_General_Base.h"
-#include "General_Base/Precision_UFract_General_Base.h"
+#include "General_Base.h"
 #include "Instantiation_Packs/Precision_Hexadecimal_Default_Types.h"
 
 #define DEFAULT_PARAMS                              \

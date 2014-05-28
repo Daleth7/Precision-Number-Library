@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+		<STYLE>
+            @import url("../doc_style.css");
+            <LINK rel="stylesheet" type="text/css" href="doc_style.css">
+		</STYLE>
+    </HEAD>
+    <BODY>
+        <H2>Integral Mathematics Subsystem
+            <FONT SIZE=2><SUB>(<FONT COLOR="#FF0000">template</FONT>)
+            </SUB></FONT></H2>
+        <P>
+            These operations are reserved for integral types only. Their
+            behaviour is not guaranteed should a non-integral number be
+            passed to them.
+        </P>
+        <TABLE WIDTH=90%>
+            <TR>
+                <TH>Namespace</TH>
+                <TH>Class</TH>
+                <TH>Category</TH>
+                <TH>Member</TH>
+            </TR>
+            <TR>
+                <TD ROWSPAN=20>Math</TD>
+                <TD ROWSPAN=20></TD>
+                <TD>Functions</TD>
+                <TD>
+                    <DL>
+                    <DT ID="factorial">Integer_Type
+                        factorial(const Integer_Type& start)</DT>
+                    <DD>
+                        Calculate the factorial of the parameter, which
+                        is defined to be:
+            <BR />
+                        <CODE>start!
+                            = (start-0)*(start-1)*(start-2)*...*(1)</CODE>
+            <BR />
+                        To find the factorial of a floating point number,
+                        use
+                        <I><A href="Precision_Math_Float.html#factorial_gamma">
+                            factorial_gamma(const Number_Type&)</A></I>.
+                    </DD>
+            <BR />
+                    <DT ID="factorial_range">Integer_Type
+                        factorial_range(const Integer_Type& start,
+                        const Integer_Type& end)</DT>
+                    <DD>
+                        Calculate the the product of a range, defined as:
+            <BR />
+                        <CODE>f(start, end)
+                            = (start+0)*(start+1)*(start+2)*
+                            ...
+                            *(end-2)*(end-1)*(end-0)</CODE>
+                    </DD>
+            <BR />
+                    <DT ID="gcd">Integer_Type
+                        gcd(const Integer_Type& f, const Integer_Type& s)</DT>
+                    <DD>
+                        Calculate the Greatest Common Divisor, or the Greatest
+                        Common Factor of the two parameters.
+                    </DD>
+            <BR />
+                    <DT ID="lcm">Integer_Type
+                        lcm(const Integer_Type& f, const Integer_Type& s)</DT>
+                    <DD>
+                        Calculate the Least Common Multiple.
+                    </DD>
+            <BR />
+                    <DT ID="fibonacci">Integer_Type
+                        fibonacci(std::size_t* term_request = nullptr,
+                            std::size_t starting_term = 1)</DT>
+                    <DD>
+                        Retrieve the next number in the Fibonacci sequence.
+                        The sequence itself is stored within the function.
+                        <DL>
+                            <DT>term_request</DT>
+                            <DD>An optional request to retrieve which
+                                term the sequence is currently on.</DD>
+                            <DT>starting_term</DT>
+                            <DD>A number aside from the default is a
+                                request to restart the sequence at the
+                                passed <I>starting_term</I>.</DD>
+                        </DL>
+                        <FONT COLOR="#EE0000"><B>Warning</B>:
+                        This function is due to be replaced by a
+                        <A href="Precision_Sequence.html"><I>
+                            Precision::Sequence</I></A> factory method.</FONT>
+            <BR />
+            <BR />
+                    </DD>
+                    <DT ID="erato_sieve">void
+                        erato_sieve(OutIter dest, std::size_t max)</DT>
+                    <DD>
+                        Construct a set of prime numbers and fill up a container
+                        with those numbers.
+                        <DL>
+                            <DT>dest</DT>
+                            <DD>A forward iterator of a container large enough
+                                to store the prime numbers (it is recommended
+                                to use <I>std::insert_iterator</I>
+                                or the equivalent if the size is unknown).
+                                The prime numbers are placed in the container
+                                through this parameter.</DD>
+                            <DT>max</DT>
+                            <DD>The maximum number possible in the set
+                                to generate. For example, if <I>max</I> is
+                                10, the generated set will be [2 3 5 7].</DD>
+                        </DL>
+            <BR />
+                        <FONT COLOR="#EE0000"><B>Warning</B>:
+                        This function is due to be replaced by a
+                        <A href="Precision_Sequence.html"><I>
+                            Precision::Sequence</I></A> factory method.</FONT>
+                    </DD>
+                    </DL>
+                </TD>
+            </TR>
+        </TABLE>
+    </BODY>
+</HTML>

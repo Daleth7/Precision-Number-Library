@@ -1,7 +1,7 @@
 #ifndef PRECISION_STRICT_SERIES_CLASS_DEFINITION__H__
 #define PRECISION_STRICT_SERIES_CLASS_DEFINITION__H__
 
-#include "General_Base/Precision_Tags.h"
+#include "General_Base/Impl/Precision_Tags.h"
 #include "Precision_Sequence.h"
 
 #include <vector>

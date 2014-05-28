@@ -3,8 +3,8 @@
 
 #include "Precision_Int_General_Base.h"
 
-#include "Precision_Tags.h"
-#include "Shared_Constants.h"
+#include "Impl/Precision_Tags.h"
+#include "Impl/Shared_Constants.h"
 
 #include <sstream>
 #include <utility>
@@ -53,15 +53,13 @@ namespace Precision{
                 using sign_type     = typename Signed_Int::sign_type;
                 using size_type     = typename Signed_Int::size_type;
         //Arithmetic operators
-                UINT_INST_& operator+=(const UINT_INST_& rhs){
-                    m_base += rhs.m_base;
-                    m_base.sign(1);
-                    return *this;
-                }
+                UINT_INST_& operator+=(const UINT_INST_& rhs)
+                    {return m_base += rhs.m_base, *this;}
 
                 UINT_INST_& operator-=(const UINT_INST_& rhs){
                     m_base -= rhs.m_base;
-                    m_base.sign(1);
+                    if(m_base.negative())
+                        m_base = 0;
                     return *this;
                 }
 
@@ -75,10 +73,10 @@ namespace Precision{
                     {return m_base %= rhs.m_base, *this;}
 
                 UINT_INST_& operator--()
-                    {return --m_base, *this;}
+                    {return (*this -= 1);}
 
                 UINT_INST_ operator--(int)
-                    {return m_base--;}
+                    {return (*this -= 1) + 1;}
 
                 UINT_INST_& operator++()
                     {return ++m_base, *this;}
@@ -112,8 +110,8 @@ namespace Precision{
                 UINT_INST_ logical_xor(const UINT_INST_& s)const
                     {return UINT_INST_(m_base.logical_xor(s.m_base));}
 
-                UINT_INST_ logical_inversion()const
-                    {return UINT_INST_(m_base.logical_inversion());}
+                Signed_Int logical_inversion()const
+                    {return m_base.logical_inversion();}
 
                 UINT_INST_ logical_shift(lli e)const
                     {return UINT_INST_(m_base.logical_shift(e));}
@@ -160,7 +158,10 @@ namespace Precision{
                 short compare(const UINT_INST_& s)const
                     {return m_base.compare(s.m_base);}
 
-                Signed_Int get_signed()const
+                const UINT_INST_& magnitude()const
+                    {return *this;}
+
+                const Signed_Int& get_signed()const
                     {return m_base;}
 
                 Signed_Int operator-()const

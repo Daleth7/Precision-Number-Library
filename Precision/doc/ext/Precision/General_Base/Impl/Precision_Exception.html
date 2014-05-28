@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+
+<HTML>
+    <HEAD>
+        <STYLE>
+            @import url("../../../doc_style.css");
+            <LINK rel="stylesheet" type="text/css" href="doc_style.css">
+        </STYLE>
+    </HEAD>
+    <BODY>
+        <H2>Precision::exception</H2>
+        <P>
+            Thrown by various systems in the library to indicate an issue
+            either with an operation or a domain issue. The class provides
+            integral codes, so that the client, during runtime, may check
+            the error. In addition to an error code, the origin of the
+            error shall be provided.
+            <BR />
+            This class inherits from <I>std::exception</I>.
+            <BR />
+            <BR />
+            <FONT SIZE=2>
+                Associated File: <B><A
+                    href="../../../../../General_Base/Impl/Precision_Exception.h"
+                >Precision/General_Base/Impl/Precision_Exception.h</A></B>
+            </FONT>
+            <BR />
+            <UL>
+                <LI><A href="#interface">Class Interface</A></LI>
+                <LI><A href="#example">Example Use</A></LI>
+            </UL>
+        </P>
+        <TABLE WIDTH=90% ID="interface">
+            <TR>
+                <TH>Namespace</TH>
+                <TH>Class</TH>
+                <TH>Category</TH>
+                <TH>Member</TH>
+            </TR>
+            <TR>
+                <TD ROWSPAN=20></TD>
+                <TD ROWSPAN=20>exception</TD>
+                <TD>Types</TD>
+                <TD>
+                    <DL>
+                    <DT>code</DT>
+                    <DD>An enumeration type representing the error codes.</DD>
+                    <DT>str_type</DT>
+                    <DD>
+                        The string type the class uses. It is an alias of
+                        <I>std::string</I>.
+                    </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Enumeration</TD>
+                <TD>
+                    <DL>
+                    <DT>insufficient_memory</DT>
+                    <DD>
+                        This usually indicates that the number of digits in a
+                        number would be high enough that <I>std::bad_alloc</I>
+                        would be thrown. When thrown, it means the allocation
+                        has not occurred yet but to do so would be ill-advised.
+                    </DD>
+                    <DT>divide_by_zero</DT>
+                    <DD>
+                        Hopefully self-explanatory. A division was requested
+                        where the denominator equates to 0. This would result
+                        in an insufficient_memory error if not checked for.
+                    </DD>
+                    <DT>indeterminate</DT>
+                    <DD>
+                        Following the mathematical convention, an example of
+                        an indeterminate result is a 0 divide by 0 operation.
+                        Therefore, this is similar to divide_by_zero and will
+                        probably be rarely used.
+                    </DD>
+                    <DT>complex_number</DT>
+                    <DD>
+                        This would be thrown if an operation would result in
+                        a complex result, but the number type only supports
+                        real values.
+                    </DD>
+                    <DT>invalid_digit</DT>
+                    <DD>
+                        This is thrown if, during translation, a symbol is not
+                        recognized as a valid digit. <I>invalid_digit</I> is
+                        usually only thrown by non-constructor functions. The
+                        default behaviour of the number types during construction
+                        is to replace invalid digits with 0.
+                    </DD>
+                    <DT>none</DT>
+                    <DD>
+                        This is the initial value of <I>exception</I>. Under no
+                        circumstances should this error code be used while
+                        throwing.
+                    </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Read Only</TD>
+                <TD>
+                    <DL>
+                    <DT>const char* what()const noexcept</DT>
+                    <DD>
+                        Returns the full error message, which follows the
+                        following format: "[Source] ~ [Error Message]".
+                    </DD>
+                    <DT>code type()const noexcept</DT>
+                    <DD>
+                        Returns the error code as listed in the enumeration
+                        section.
+                    </DD>
+                    <DT>const char* source()const noexcept</DT>
+                        <DD>Returns the name of error's origin.</DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Constructors and Destructor</TD>
+                <TD>
+                    <DL>
+                    <DT>exception(code err,
+                        const char* src="Unknown source")noexcept</DT>
+                    <DD>
+                        Construct an exception object with an error code and
+                        name of the error source.
+                    </DD>
+                    <DT>explicit exception(code, const str_type&)noexcept</DT>
+                    <DD>
+                        Similar to the above, but this accepts str_type objects.
+                        The same information should be passed to this constructor.
+                    </DD>
+                    <DT>exception(const exception&) = default</DT>
+                        <DD>Compiler generated copy constructor.</DD>
+                    <DT>exception& operator=(const exception&) = default</DT>
+                        <DD>Compiler generated copy assignment operator.</DD>
+                    <DT>~exception(){}</DT>
+                        <DD>Non-trivial destructor as it is virtual.</DD>
+                    </DL>
+                </TD>
+            </TR>
+        </TABLE>
+            <BR />
+        <TABLE STYLE="border-collapse:collapse;" ID="example">
+        <CAPTION>Example Use</CAPTION><TR><TD><OL><CODE>
+        <LI>#include "Precision.h"</LI>
+        <LI></LI>
+        <LI>#include &lt;iostream></LI>
+        <LI></LI>
+        <LI>int main(){</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;try{</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~Precision::Int(0);
+            //This is an unsafe operation since there is no maximum</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;}catch(Precision::exception& e){</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            std::cout &lt;&lt; e.what();
+            //Displays "Precision::General_Base::Int::operator~()
+            ~ Insufficient Memory"</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;}</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;return 0;</LI>
+        <LI>}</LI>
+        </CODE></OL></TD></TR></TABLE>
+    </BODY>
+</HTML>

@@ -23,6 +23,6 @@ namespace Precision{
     }
 }
 
-#include "Impl/Precision_Math_Shared_Helpers.inl"
+#include "Precision_Math_Shared_Helpers.inl"
 
 #endif

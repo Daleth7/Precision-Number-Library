@@ -1,12 +1,7 @@
 #ifndef PRECISION_DEFAULT_INSTANTION_BASE_10_H__
 #define PRECISION_DEFAULT_INSTANTION_BASE_10_H__
 
-#include "General_Base/Precision_Int_General_Base.h"
-#include "General_Base/Precision_Float_General_Base.h"
-#include "General_Base/Precision_Fract_General_Base.h"
-#include "General_Base/Precision_UInt_General_Base.h"
-#include "General_Base/Precision_UFloat_General_Base.h"
-#include "General_Base/Precision_UFract_General_Base.h"
+#include "General_Base.h"
 
 #include "Instantiation_Packs/Precision_Default_Types.h"
 
@@ -23,7 +18,7 @@ namespace Precision{
     using UFract    = General_Base::UFract <DEFAULT_TEMPLATE_PARAMS>;
 }
 
-#include "Impl/Common_Overloads_and_Specializations.inl"
+#include "Common_Overloads_and_Specializations.inl"
 
 #undef DEFAULT_TEMPLATE_PARAMS
 

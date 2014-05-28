@@ -4,8 +4,8 @@
 #include "Precision_Int_General_Base.h"
 #include "Precision_UInt_General_Base.h"
 
-#include "Precision_Tags.h"
-#include "Shared_Constants.h"
+#include "Impl/Precision_Tags.h"
+#include "Impl/Shared_Constants.h"
 
 //Please refer to the documentation in Precision_Int_General_Base.h
 //  for a list of conditions for each template parameter.

@@ -1,6 +1,6 @@
-#include "General_Base/Precision_Math_Shared_Functions.h"
-#include "General_Base/Precision_Tags.h"
-#include "General_Base/Precision_Math_Shared_Helpers.h"
+#include "General_Base/Impl/Precision_Math_Shared_Functions.h"
+#include "General_Base/Impl/Precision_Tags.h"
+#include "General_Base/Impl/Precision_Math_Shared_Helpers.h"
 
 #include <type_traits>
 
@@ -55,15 +55,15 @@ namespace Precision{
             {return cos(angle, pi_val)/sin(angle, pi_val);}
 
         template <typename Number_Type>
-        Number_Type arcsin(const Number_Type& result, const Number_Type& pi_val)
-            {return pi_val/Helper::cast(2, result) - arccos(result, pi_val);}
+        Number_Type asin(const Number_Type& result, const Number_Type& pi_val)
+            {return pi_val/Helper::cast(2, result) - acos(result, pi_val);}
 
         template <typename Number_Type>
-        Number_Type arccos(const Number_Type& result, const Number_Type& pi_val)
-            {return arcsec(Helper::cast(1, result)/result, pi_val);}
+        Number_Type acos(const Number_Type& result, const Number_Type& pi_val)
+            {return asec(Helper::cast(1, result)/result, pi_val);}
 
         template <typename Number_Type>
-        Number_Type arctan(const Number_Type& result, const Number_Type& pi_val){
+        Number_Type atan(const Number_Type& result, const Number_Type& pi_val){
             const short comp(result.magnitude().compare(1));
             if(comp == 0)
                 return Helper::cast(0, result);
@@ -85,11 +85,11 @@ namespace Precision{
         }
 
         template <typename Number_Type>
-        Number_Type arccsc(const Number_Type& result, const Number_Type& pi_val)
-            {return pi_val/Helper::cast(2, result) - arcsec(result, pi_val);}
+        Number_Type acsc(const Number_Type& result, const Number_Type& pi_val)
+            {return pi_val/Helper::cast(2, result) - asec(result, pi_val);}
 
         template <typename Number_Type>
-        Number_Type arcsec(const Number_Type& result, const Number_Type& pi_val){
+        Number_Type asec(const Number_Type& result, const Number_Type& pi_val){
             const short comp(result.magnitude().compare(1));
             if(comp == 0){
                 auto casted = Helper::cast(2, result);
@@ -118,8 +118,8 @@ namespace Precision{
         }
 
         template <typename Number_Type>
-        Number_Type arccot(const Number_Type& result, const Number_Type& pi_val)
-            {return pi_val/Helper::cast(2, result) - arctan(result, pi_val);}
+        Number_Type acot(const Number_Type& result, const Number_Type& pi_val)
+            {return pi_val/Helper::cast(2, result) - atan(result, pi_val);}
 
 
 
@@ -170,7 +170,7 @@ namespace Precision{
         ){return cosh(angle, pi_val)/sinh(angle, pi_val);}
 
         template <typename Number_Type>
-        Number_Type arcsinh(const Number_Type& angle){
+        Number_Type asinh(const Number_Type& angle){
             Number_Type toreturn(angle), _x(angle), old(0);
             const Number_Type _x_2(angle*angle);
             size_t N(1);
@@ -190,8 +190,8 @@ namespace Precision{
         }
 
         template <typename Number_Type>
-        Number_Type arccosh(const Number_Type& angle){
-            Number_Type e(Helper::cast(2, angle)*arctanh(angle));
+        Number_Type acosh(const Number_Type& angle){
+            Number_Type e(Helper::cast(2, angle)*atanh(angle));
             return e * (
                 Helper::cast(1, angle)
                 - angle
@@ -200,7 +200,7 @@ namespace Precision{
         }
 
         template <typename Number_Type>
-        Number_Type arctanh(const Number_Type& angle){
+        Number_Type atanh(const Number_Type& angle){
             Number_Type toreturn(angle), _x(angle), old(0);
             const Number_Type _x_2(angle*angle);
             size_t N(1);
@@ -212,15 +212,15 @@ namespace Precision{
         }
 
         template <typename Number_Type>
-        Number_Type arccsch(const Number_Type& angle)
-            {return arcsinh(Helper::cast(1, angle)/angle);}
+        Number_Type acsch(const Number_Type& angle)
+            {return asinh(Helper::cast(1, angle)/angle);}
 
         template <typename Number_Type>
-        Number_Type arcsech(const Number_Type& angle)
-            {return arccosh(Helper::cast(1, angle)/angle);}
+        Number_Type asech(const Number_Type& angle)
+            {return acosh(Helper::cast(1, angle)/angle);}
 
         template <typename Number_Type>
-        Number_Type arccoth(const Number_Type& angle)
-            {return arctanh(Helper::cast(1, angle)/angle);}
+        Number_Type acoth(const Number_Type& angle)
+            {return atanh(Helper::cast(1, angle)/angle);}
     }
 }

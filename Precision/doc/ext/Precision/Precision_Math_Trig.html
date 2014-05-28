@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+		<STYLE>
+            @import url("../doc_style.css");
+            <LINK rel="stylesheet" type="text/css" href="doc_style.css">
+		</STYLE>
+    </HEAD>
+    <BODY>
+        <H2>Trigonometric Mathematics Subsystem
+            <FONT SIZE=2><SUB>(<FONT COLOR="#FF0000">template</FONT>)
+            </SUB></FONT></H2>
+        <P>
+            These provide trigonometric operations for the Precision Number
+            Library. These support any number base and should work with most
+            number types.
+            <BR />
+            <BR />
+            <B>Note</B>: All trigonometric operations provided will treat
+            the parameter as if it were in radians or will return the
+            answer in radians.
+            <BR />
+            <BR />
+            <B>2<SUP>nd</SUP> Note</B>: Most of these operations will allow
+            the user to pass in a constant value that is equivalent to the
+            mathematical pi. This may be necessary if a different precision
+            of pi is needed or if <I>Number_Type</I> cannot be constructed
+            from <I>k_pi_str</I>, a C-string.
+            <BR />
+            <BR />
+            <FONT COLOR="#EE0000"><B>Warning</B>: All of these functions are
+            either currently under construction or still need to be tested
+            and fixed.</FONT>
+        </P>
+        <TABLE WIDTH=90%>
+            <TR>
+                <TH>Namespace</TH>
+                <TH>Class</TH>
+                <TH>Category</TH>
+                <TH>Member</TH>
+            </TR>
+            <TR>
+                <TD ROWSPAN=20>Math</TD>
+                <TD ROWSPAN=20></TD>
+                <TD>Functions</TD>
+                <TD>
+                    <DL>
+                    <DT ID="sin">Number_Type sin(const Number_Type& theta,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                        <DD>Calculate the sine of <I>theta</I>.</DD>
+            <BR />
+                    <DT ID="cos">Number_Type cos(const Number_Type& theta,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                        <DD>Calculate the cosine of <I>theta</I>.</DD>
+            <BR />
+                    <DT ID="tan">Number_Type tan(const Number_Type& theta,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                        <DD>Calculate the tangent of <I>theta</I>.</DD>
+            <BR />
+                    <DT ID="csc">Number_Type csc(const Number_Type& theta,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                        <DD>Calculate the cosecant of <I>theta</I>.</DD>
+            <BR />
+                    <DT ID="sec">Number_Type sec(const Number_Type& theta,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                        <DD>Calculate the secant of <I>theta</I>.</DD>
+            <BR />
+                    <DT ID="cot">Number_Type cot(const Number_Type& theta,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                        <DD>Calculate the cotangent of <I>theta</I>.</DD>
+            <BR />
+                    <DT ID="asin">Number_Type asin(const Number_Type& res,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                        <DD>Calculate the arcsine of <I>res</I>.</DD>
+            <BR />
+                    <DT ID="acos">Number_Type acos(const Number_Type& res,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                        <DD>Calculate the arccosine of <I>res</I>.</DD>
+            <BR />
+                    <DT ID="atan">Number_Type atan(const Number_Type& res,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                        <DD>Calculate the arctangent of <I>res</I>.</DD>
+            <BR />
+                    <DT ID="acsc">Number_Type acsc(const Number_Type& res,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                        <DD>Calculate the arccosecant of <I>res</I>.</DD>
+            <BR />
+                    <DT ID="asec">Number_Type asec(const Number_Type& res,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                        <DD>Calculate the arcsecant of <I>res</I>.</DD>
+            <BR />
+                    <DT ID="acot">Number_Type acot(const Number_Type& res,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                        <DD>Calculate the arccotangent of <I>res</I>.</DD>
+            <BR />
+                    <DT ID="sinh">Number_Type sinh(const Number_Type& theta,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                        <DD>Calculate the hyperbolic sine of <I>theta</I>.</DD>
+            <BR />
+                    <DT ID="cosh">Number_Type cosh(const Number_Type& theta,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                        <DD>Calculate the hyperbolic cosine of <I>theta</I>.</DD>
+            <BR />
+                    <DT ID="tanh">Number_Type tanh(const Number_Type& theta,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                    <DD>Calculate the hyperbolic
+                        tangent of <I>theta</I>.</DD>
+            <BR />
+                    <DT ID="csch">Number_Type csch(const Number_Type& theta,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                    <DD>Calculate the hyperbolic
+                        cosecant of <I>theta</I>.</DD>
+            <BR />
+                    <DT ID="sech">Number_Type sech(const Number_Type& theta,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                    <DD>Calculate the hyperbolic
+                        secant of <I>theta</I>.</DD>
+            <BR />
+                    <DT ID="coth">Number_Type coth(const Number_Type& theta,
+                        const Number_Type& pi = Number_Type(k_pi_str))</DT>
+                    <DD>Calculate the hyperbolic cotangent
+                        of <I>theta</I>.</DD>
+            <BR />
+                    <DT ID="asinh">Number_Type asinh(const Number_Type& res)</DT>
+                    <DD>Calculate the hyperbolic
+                        arcsine of <I>res</I>.</DD>
+            <BR />
+                    <DT ID="acosh">Number_Type acosh(const Number_Type& res)</DT>
+                    <DD>Calculate the hyperbolic
+                        arccosine of <I>res</I>.</DD>
+            <BR />
+                    <DT ID="atanh">Number_Type atanh(const Number_Type& res)</DT>
+                    <DD>Calculate the hyperbolic
+                        arctangent of <I>res</I>.</DD>
+            <BR />
+                    <DT ID="acsch">Number_Type acsch(const Number_Type& res)</DT>
+                    <DD>Calculate the hyperbolic
+                        arccosecant of <I>res</I>.</DD>
+            <BR />
+                    <DT ID="asech">Number_Type asech(const Number_Type& res)</DT>
+                    <DD>Calculate the hyperbolic
+                        arcsecant of <I>res</I>.</DD>
+            <BR />
+                    <DT ID="acoth">Number_Type acoth(const Number_Type& res)</DT>
+                    <DD>Calculate the hyperbolic arccotangent
+                        of <I>res</I>.</DD>
+                    </DL>
+                </TD>
+            </TR>
+        </TABLE>
+    </BODY>
+</HTML>

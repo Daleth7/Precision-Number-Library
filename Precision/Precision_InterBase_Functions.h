@@ -6,6 +6,6 @@ namespace Precision{
     Base_Return convert(const Base_Param&);
 }
 
-#include "Impl/Precision_InterBase_Functions.inl"
+#include "Precision_InterBase_Functions.inl"
 
 #endif

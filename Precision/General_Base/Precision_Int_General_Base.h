@@ -5,8 +5,8 @@
 #include <functional>
 #include <cstddef>
 
-#include "Precision_Tags.h"
-#include "Shared_Constants.h"
+#include "Impl/Precision_Tags.h"
+#include "Impl/Shared_Constants.h"
 #include "Precision_Sign_Class.h"
 
 /*  Template Parameters Clarification
@@ -15,17 +15,19 @@
         constexpr char digits[10] {'0', '1', '2', '3', '4',
             '5', '6', '7', '8', '9'};
     1) CharT        - The type of character or image used to represent each digit
-                        in Base N must be compatible as a template parameter to
+                        in Base N. Must be compatible as a template parameter to
                         std::basic_string<T>. The string type (str_type) of the
                         class shall be instantiated as std::basic_string<CharT>.
-                        The following functions must be supported for type CharT:
+                        The following or the equivalent of the following
+                        functions must be supported for type CharT:
                         * std::istream& operator>>(std::istream&, CharT&);
                         * bool operator==(const CharT&, const CharT&);
-    2) _0           - A pointer to the first digit in an array containing the images
-                        of each digit.
-                        Important note: It is the responsibility of the instantiator
-                        to ensure _0 is a valid parameter and that the array
-                        pointed to contains the appropriate images.
+    2) _0           - A pointer to the first digit in an array containing the
+                        images of each digit. The array must have external
+                        linkage.
+                        Important note: It is the responsibility of the
+                        instantiator to ensure _0 is a valid parameter and that
+                        the array pointed to contains the appropriate images.
     3) ByteType     - The type used for the computer representation of each
                         digit. This type also sets the maximum base that may
                         be used and affects the dynamic storage size. Defaulted
@@ -34,10 +36,10 @@
                         one byte in size. It is recommended to use
                         Precision::byte_type for small bases.
     4) Base         - The base N the class shall represent. Defaulted to 10.
-    5) _symbols     - A pointer to the first symbol in an array with external linkage
-                        and that contains the images of each symbol. Each symbol is
-                        further defined below in the order it should appear in the
-                        array.
+    5) _symbols     - A pointer to the first symbol in an array with external
+                        linkage and that contains the images of each symbol.
+                        Each symbol is further defined below in the order it
+                        should appear in the array.
         * plus symbol       - An image depicting the plus sign to indicate a
                                 positive number as in "+123".
         * minus symbol      - An image depicting the minus sign to indicate a
@@ -46,21 +48,21 @@
                                 separation between a number's whole part and
                                 decimal part as in "123.456".
         * exponent symbol   - An image depicting the exponential sign to represent
-                                a power of 10 as in "1.23 E 456" which is equivalent
-                                to writing "1.23 * 10^456".
+                                a power of 10 as in "1.23 E 456" which is
+                                equivalent to writing "1.23 * 10^456".
         * space symbol      - An image depicting an empty space between two other
                                 images as in "+ 1234".
                         The above five symbols are required as the minimum.
                         Depending on what the number type is tagged with from
                         Precision::Tag, there may be additional symbols needed.
-        * slash_symbol      - An image depicting the slash sign to indicate a
+        * slash symbol      - An image depicting the slash sign to indicate a
                                 fractional number as in "12/345". Required for
                                 Fraction number types, tagged with Tag::Fraction.
-        * imaginary_symbol  - An image depicting the imaginary number to indicate a
-                                complex number as in "a + bi". Required for
+        * imaginary symbol  - An image depicting the imaginary number to indicate
+                                a complex number as in "a + bi". Required for
                                 Complex number types, tagged with Tag::Complex.
-                        _symbols is defaulted to Constant::symbols which points to an
-                        array containing images of type const char:
+                        _symbols is defaulted to Constant::symbols which points
+                        to an array containing images of type const char:
                             * plus symbol:      '+'
                             * minus symbol:     '-'
                             * point symbol:     '.'
@@ -68,9 +70,10 @@
                             * space symbol:     ' '
                             * slash symbol:     '/'
                             * imaginary symbol: 'i'
-                        Important note: It is the responsibility of the instantiator
-                        to ensure _symbols is a valid parameter and that the array
-                        pointed to contains the appropriate symbols.
+                        Important note: It is the responsibility of the
+                        instantiator to ensure _symbols is a valid parameter and
+                        that the array pointed to contains the appropriate
+                        symbols.
     6) Container    - The container used to store indices to the array.
                         Most STL containers will work.
                         * Must support the following:
@@ -78,16 +81,17 @@
                             * Bidirectional iterators
                             * Container::begin()
                             * Container::end()
-                            * Container::rbegin()
-                            * Container::rend()
+                            * Container::crbegin()
+                            * Container::crend()
                             * Container::push_back()
                             * Container::size()
                             * Container::insert(iterator, size_type, digit_type)
                             * Container::erase(iterator, size_type)
                             * Container::erase(iterator)
                         Defaulted to Precision::default_container_type.
-    7) SignType     - The type used to represent the sign of the number, i.e. whether
-                        it is positive or negative. Must support the following:
+    7) SignType     - The type used to represent the sign of the number, i.e.
+                        whether it is positive or negative. Must support the
+                        following:
                             * signed_integral_type SignType::value()const
                             * bool SignType::positive()const
                             * bool SignType::negative()const
@@ -188,6 +192,9 @@ namespace Precision{
                 bool odd()const;
                 bool positive()const;
                 bool negative()const;
+            //When calling digit(index) or digit_10(index), index shall be
+            //  relative to the rightmost digit of the number, e.g. calling
+            //  digit(0) on the number "123456789" will return "9".
                 image_type digit(size_type)const;
                 digit_10_type digit_10(size_type)const;
 
@@ -229,6 +236,7 @@ namespace Precision{
                     const std::function<digit_10_type
                         (digit_10_type,digit_10_type)>&
                 )const;
+
             private:
             //Numbers are stored in reverse, e.g. 190 040 002 would be
             //   stored as 002 040 091. The number is reversed because

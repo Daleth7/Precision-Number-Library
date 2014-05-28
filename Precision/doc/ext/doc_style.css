@@ -1,0 +1,49 @@
+A {
+    text-decoration:none;
+}
+A:VISITED {
+    color:#555517;
+}
+A:LINK {
+    color:blue;
+}
+A:ACTIVE {
+    color:red;
+}
+P {
+    font-family:"Arial","Times New Roman","Calibri";
+    font-size:12pt;
+    color:"white";
+    text-indent:40pt;
+    A:VISITED:"white";
+    A:LINK:"black";
+    A:ACTIVE:"green";
+    }
+TABLE, TH, TD {
+    background-color:#FFFFFF;
+    color:#000000;
+    margin: 0 auto;
+    border:1px solid black
+    }
+H2 {
+    font-family:"Serif","Arial","Calibri";
+    color:"black";
+    text-align:center;
+    }
+H3 {
+    font-family:"Serif","Arial","Calibri";
+    color:"black";
+    text-align:left;
+    }
+BODY {
+    background-color:#86D053;
+    }
+IFRAME {
+    width: 95%;
+    height: 500px;
+    display:block;
+    margin: 0 auto;
+    }
+DT {
+    font-style:italic;
+    }

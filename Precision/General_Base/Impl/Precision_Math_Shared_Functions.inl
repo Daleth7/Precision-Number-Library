@@ -1,32 +1,43 @@
 #include <type_traits>
-#include "General_Base/Precision_Tags.h"
-#include "General_Base/Precision_Math_Shared_Helpers.h"
-#include "General_Base/Precision_Exception.h"
+#include <cmath>
+#include "Precision_Tags.h"
+#include "Precision_Math_Shared_Helpers.h"
+#include "Precision_Exception.h"
 
 namespace Precision{
     namespace Math{
-        template <typename Number_Type>
-        Number_Type sqrt(const Number_Type& base){
-            if(base.negative()){
-                throw exception(
-                    exception::complex_number,
-                    "Precision::Math::sqrt(Number_Type)"
-                );
-            }else if(
-                base == Helper::cast(0, base) ||
-                base == Helper::cast(1, base)
-            )   return base;
-        //Uses Babylonian method:
-        //  http://en.wikipedia.org/wiki/Methods_of_computing_square_roots
-        //      #Babylonian_method
-            Number_Type toreturn(base/Helper::cast(2, base)), old(0);
-            while(!Helper::are_equal(old, toreturn, true)){
-                old = toreturn;
-                toreturn = (toreturn + base/toreturn)/Helper::cast(2, base);
+        namespace Helper{
+            template <typename Number_Type>
+            Number_Type sqrt_helper(const Number_Type& base, std::true_type)
+                {return std::sqrt(base);}
+
+            template <typename Number_Type>
+            Number_Type sqrt_helper(const Number_Type& base, std::false_type){
+                if(base.negative()){
+                    throw exception(
+                        exception::complex_number,
+                        "Precision::Math::sqrt(Number_Type)"
+                    );
+                }else if(
+                    base == Helper::cast(0, base) ||
+                    base == Helper::cast(1, base)
+                )   return base;
+            //Uses Babylonian method:
+            //  http://en.wikipedia.org/wiki/Methods_of_computing_square_roots
+            //      #Babylonian_method
+                Number_Type toreturn(base/Helper::cast(2, base)), old(0);
+                while(!Helper::are_equal(old, toreturn, true)){
+                    old = toreturn;
+                    toreturn = (toreturn + base/toreturn)/Helper::cast(2, base);
+                }
+                return toreturn;
             }
-            return toreturn;
         }
 
+        template <typename Number_Type>
+        Number_Type sqrt(const Number_Type& base)
+            {return Helper::sqrt_helper(base,
+                typename std::is_fundamental<Number_Type>::type());}
 
         template <typename Number_Type, typename Integer_Type>
         Number_Type root(const Number_Type& base, const Integer_Type& n){
@@ -289,7 +300,7 @@ namespace Precision{
         }
 
         template <typename Integer_Type>
-        Integer_Type gcf(const Integer_Type& a, const Integer_Type& b)
+        Integer_Type lcm(const Integer_Type& a, const Integer_Type& b)
             {return (a*b)/gcd(a, b);}
 
         template <typename Number_Type>

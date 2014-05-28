@@ -4,8 +4,8 @@
 #include "Precision_Int_General_Base.h"
 #include "Precision_Float_General_Base.h"
 
-#include "Precision_Tags.h"
-#include "Shared_Constants.h"
+#include "Impl/Precision_Tags.h"
+#include "Impl/Shared_Constants.h"
 
 //Please refer to the documentation in Precision_Int_General_Base.h
 //  for a list of conditions for each template parameter.
@@ -48,7 +48,6 @@ namespace Precision{
                 using digit_10_type = typename Integer::digit_10_type;
                 using ld            = typename Floating::ld;
                 using lli           = typename Integer::lli;
-                using ulli          = unsigned long long int;
                 using size_type     = typename Integer::size_type;
         //Arithmetic operators
                 FRACT_INST_& operator+=(const FRACT_INST_&);

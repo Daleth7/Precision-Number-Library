@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+
+<HTML>
+    <HEAD>
+        <STYLE>
+            @import url("../doc_style.css");
+            <LINK rel="stylesheet" type="text/css" href="doc_style.css">
+        </STYLE>
+    </HEAD>
+    <BODY>
+        <H2>Decimal Literal Operators</H2>
+        <P>
+            For the <A href="Precision_Default.html">decimal instantiation</A>,
+            there is a set of literal operators in the global space. They
+            allow the client to construct objects with the usual parameters,
+            i.e. integer values and string objects. For each supported number
+            type, there are two literal operators that accept strings. One
+            parses the string as if calling the constructor while the other
+            parses the string as if it contained an order of magnitude, e.g.
+            "123.45 E 67", which is equivalent to writing "123.45 *
+            10<SUP>67</SUP>".
+            <BR />
+            <BR />
+            <FONT SIZE=2>
+                Associated File: <B><A
+                    href="../../../../General_Base/Precision_Literal_Operators.h"
+                >Precision/General_Base/Precision_Literal_Operators.h</A></B>
+            </FONT>
+            <BR />
+            <UL>
+                <LI><A href="#interface">Function Information</A></LI>
+                <LI><A href="#example">Example Use</A></LI>
+            </UL>
+            <BR />
+        </P>
+            <BR />
+        <TABLE WIDTH=90% id="interface">
+            <TR>
+                <TH>Precision::Int</TH>
+                <TD>
+                    <DL>
+                        <DT>Int operator"" _P_Int(char
+                            const *const, std::size_t)</DT>
+                        <DD>
+                            Construct a <I>Precision::Int</I> object from
+                            a string. E.g. <CODE>"123"_P_Int</CODE>
+                        </DD>
+            <BR />
+                        <DT>Int operator"" _P_Int_E(char
+                            const *const, std::size_t)</DT>
+                        <DD>
+                            Construct a <I>Precision::Int</I> object from
+                            a string where the number is followed by an
+                            order of magnitude.
+                            <CODE>E.g. "142.22E-2"_P_Int_E</CODE>
+                        </DD>
+            <BR />
+                        <DT>Int operator"" _P_Int(unsigned long long)</DT>
+                        <DD>
+                            Construct a <I>Precision::Int</I> object from
+                            an unsigned integer value.
+                            E.g. <CODE>237864_P_Int</CODE>
+            <BR />
+                            <B>Note</B>: Remember that, even if the integer
+                            is prefixed with a negative sign, the sign is
+                            parsed as a lower precedent operator, i.e.
+                            writing <CODE>-123_P_Int</CODE> is equivalent
+                            to <CODE>-(123_P_Int)</CODE>.
+                        </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TH>Precision::Float</TH>
+                <TD>
+                    <DL>
+                        <DT>Float operator"" _P_Float(char
+                            const *const, std::size_t)</DT>
+                        <DD>
+                            Construct a <I>Precision::Float</I> object from
+                            a string. E.g. <CODE>"123.456"_P_Float</CODE>
+                        </DD>
+            <BR />
+                        <DT>Float operator"" _P_Float_E(char
+                            const *const, std::size_t)</DT>
+                        <DD>
+                            Construct a <I>Precision::Float</I> object from
+                            a string where the number is followed by an
+                            order of magnitude.
+                            <CODE>E.g. "142.22E-7"_P_Float_E</CODE>
+                        </DD>
+            <BR />
+                        <DT>Float operator"" _P_Float(unsigned long long)</DT>
+                        <DD>
+                            Construct a <I>Precision::Float</I> object from
+                            an unsigned integer value.
+                            E.g. <CODE>237864_P_Float</CODE>
+                        </DD>
+            <BR />
+                        <DT>Float operator"" _P_Float(long double)</DT>
+                        <DD>
+                            Construct a <I>Precision::Float</I> object from
+                            an signed, floating point value.
+                            E.g. <CODE>-237.864_P_Float</CODE>
+                        </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TH>Precision::UInt</TH>
+                <TD>
+                    <DL>
+                        <DT>UInt operator"" _P_UInt(char
+                            const *const, std::size_t)</DT>
+                        <DD>
+                            Construct a <I>Precision::UInt</I> object from
+                            a string. E.g. <CODE>"123"_P_UInt</CODE>
+                        </DD>
+            <BR />
+                        <DT>UInt operator"" _P_UInt_E(char
+                            const *const, std::size_t)</DT>
+                        <DD>
+                            Construct a <I>Precision::UInt</I> object from
+                            a string where the number is followed by an
+                            order of magnitude.
+                            <CODE>E.g. "142.22E-2"_P_UInt_E</CODE>
+                        </DD>
+            <BR />
+                        <DT>UInt operator"" _P_UInt(unsigned long long)</DT>
+                        <DD>
+                            Construct a <I>Precision::UInt</I> object from
+                            an unsigned integer value.
+                            E.g. <CODE>237864_P_UInt</CODE>
+                        </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TH>Precision::UFloat</TH>
+                <TD>
+                    <DL>
+                        <DT>UFloat operator"" _P_UFloat(char
+                            const *const, std::size_t)</DT>
+                        <DD>
+                            Construct a <I>Precision::UFloat</I> object from
+                            a string. E.g. <CODE>"123.456"_P_UFloat</CODE>
+                        </DD>
+            <BR />
+                        <DT>UFloat operator"" _P_UFloat_E(char
+                            const *const, std::size_t)</DT>
+                        <DD>
+                            Construct a <I>Precision::UFloat</I> object from
+                            a string where the number is followed by an
+                            order of magnitude.
+                            <CODE>E.g. "142.22E-7"_P_UFloat_E</CODE>
+                        </DD>
+            <BR />
+                        <DT>UFloat operator"" _P_UFloat(unsigned long long)</DT>
+                        <DD>
+                            Construct a <I>Precision::UFloat</I> object from
+                            an unsigned integer value.
+                            E.g. <CODE>237864_P_UFloat</CODE>
+                        </DD>
+            <BR />
+                        <DT>UFloat operator"" _P_UFloat(long double)</DT>
+                        <DD>
+                            Construct a <I>Precision::UFloat</I> object from
+                            a floating point value.
+                            E.g. <CODE>237.864_P_UFloat</CODE>
+                        </DD>
+                    </DL>
+                </TD>
+            </TR>
+        </TABLE>
+            <BR />
+        <TABLE STYLE="border-collapse:collapse;" ID="example">
+        <CAPTION>Example Use</CAPTION><TR><TD><OL><CODE>
+        <LI>#include "Precision/Precision_Default.h"</LI>
+        <LI></LI>
+        <LI>#include &lt;iostream></LI>
+        <LI></LI>
+        <LI>int main(){</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;std::cout</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt; (-123_P_Int).str() &lt;&lt; '\n'</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt; ("8882"_P_Int).str() &lt;&lt; '\n'</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt; ("82"_P_Int_E).str() &lt;&lt; '\n'</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt; ("82.3E10"_P_Int_E).str() &lt;&lt; '\n'</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;;</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;return 0;</LI>
+        <LI>}</LI>
+        </CODE></OL></TD></TR></TABLE>
+    </BODY>
+</HTML>

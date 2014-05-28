@@ -11,9 +11,8 @@ namespace Precision{
                 insufficient_memory = 0,
                 divide_by_zero,
                 indeterminate,  //Will probably be rarely used 
-                complex_number,
-                invalid_digit, //Not sure if this should be kept;
-                               //   should only be thrown during construction
+                complex_number, //Only thrown by types not supporting complex
+                invalid_digit,
                 none
             };
             using str_type = std::string;

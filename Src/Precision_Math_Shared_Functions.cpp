@@ -1,4 +1,4 @@
-#include "General_Base/Precision_Math_Shared_Functions.h"
+#include "General_Base/Impl/Precision_Math_Shared_Functions.h"
 
 namespace Precision{
     namespace Math{

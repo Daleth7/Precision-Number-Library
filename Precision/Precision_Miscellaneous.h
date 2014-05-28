@@ -10,6 +10,6 @@ namespace Precision{
     std::string Num_to_Words(Int);
 }
 
-#include "Impl/Precision_Miscellaneous.inl"
+#include "Precision_Miscellaneous.inl"
 
 #endif

@@ -4,8 +4,8 @@
 #include "Precision_Float_General_Base.h"
 #include "Precision_UInt_General_Base.h"
 
-#include "Precision_Tags.h"
-#include "Shared_Constants.h"
+#include "Impl/Precision_Tags.h"
+#include "Impl/Shared_Constants.h"
 
 //Please refer to the documentation in Precision_Int_General_Base.h
 //  for a list of conditions for each template parameter.
@@ -54,15 +54,13 @@ namespace Precision{
                 using size_type     = typename Signed_Float::size_type;
                 using sign_type     = typename Signed_Float::sign_type;
         //Arithmetic operators
-                UFLOAT_INST_& operator+=(const UFLOAT_INST_& rhs){
-                    m_base += rhs.m_base;
-                    m_base.sign(1);
-                    return *this;
-                }
+                UFLOAT_INST_& operator+=(const UFLOAT_INST_& rhs)
+                    {return m_base += rhs.m_base, *this;}
 
                 UFLOAT_INST_& operator-=(const UFLOAT_INST_& rhs){
                     m_base -= rhs.m_base;
-                    m_base.sign(1);
+                    if(m_base.negative())
+                        m_base = 0;
                     return *this;
                 }
 
@@ -76,10 +74,10 @@ namespace Precision{
                     {return m_base %= rhs.m_base, *this;}
 
                 UFLOAT_INST_& operator--()
-                    {return --m_base, *this;}
+                    {return (*this -= 1);}
 
                 UFLOAT_INST_ operator--(int)
-                    {return UFLOAT_INST_(m_base--);}
+                    {return (*this -= 1) + 1;}
 
                 UFLOAT_INST_& operator++()
                     {return ++m_base, *this;}
@@ -133,6 +131,9 @@ namespace Precision{
                 size_type count_right_digits()const
                     {return m_base.count_right_digits();}
 
+                const UFLOAT_INST_& magnitude()const
+                    {return *this;}
+
                 size_type precision()const
                     {return m_base.precision();}
 
@@ -148,7 +149,7 @@ namespace Precision{
                 UFLOAT_INST_ remainder(const UFLOAT_INST_& s)const
                     {return UFLOAT_INST_(m_base.remainder(s.m_base));}
 
-                Signed_Float get_signed()const
+                const Signed_Float& get_signed()const
                     {return m_base;}
                 
                 Signed_Float operator-()const
@@ -185,6 +186,15 @@ namespace Precision{
                 UFLOAT_INST_& invert()
                     {return m_base.invert(), *this;}
 
+                UFLOAT_INST_& exponentiate(const Integer& s)
+                    {return m_base.exponentiate(s), *this;}
+
+                UFLOAT_INST_& exponentiate(const UFLOAT_INST_& s)
+                    {return m_base.exponentiate(s.m_base), *this;}
+
+                UFLOAT_INST_& exponentiate(const Signed_Float& s)
+                    {return m_base.exponentiate(s), *this;}
+
                 void swap(UFLOAT_INST_& s)
                     {m_base.swap(s.m_base);}
 
@@ -203,55 +213,51 @@ namespace Precision{
                     ld inFP = 0.0,
                     size_type inPrec = k_default_prec
                 )
-                    : m_base(inFP*(inFP>0?1:-1), inPrec)
-                {}
+                    : m_base(inFP, inPrec)
+                {m_base.sign(1);}
 
                 UFloat(
                     const str_type& inImage,
                     size_type inPrec = k_default_prec
                 )
-                    : m_base(
-                        inImage[0] == _symbols[1] || inImage[0] == _symbols[0]
-                            ? inImage.substr(1) : inImage,
-                        inPrec
-                    )
-                {}
+                    : m_base(inImage, inPrec)
+                {m_base.sign(1);}
 
                 explicit UFloat(
                     const Integer& inInt,
                     size_type inPrec = k_default_prec
                 )
-                    : m_base(inInt, inPrec)
-                {m_base.sign(1);}
+                    : m_base(inInt.magnitude(), inPrec)
+                {}
 
                 explicit UFloat(
                     Integer&& inInt,
                     size_type inPrec = k_default_prec
                 )
-                    : m_base(std::move(inInt), inPrec)
-                {m_base.sign(1);}
+                    : m_base(inInt.magnitude(), inPrec)
+                {}
 
                 explicit UFloat(
                     const UInteger& inInt,
                     size_type inPrec = k_default_prec
                 )
                     : m_base(inInt, inPrec)
-                {m_base.sign(1);}
+                {}
 
                 explicit UFloat(
                     UInteger&& inInt,
                     size_type inPrec = k_default_prec
                 )
                     : m_base(std::move(inInt), inPrec)
-                {m_base.sign(1);}
+                {}
 
                 explicit UFloat(const Signed_Float& inFP)
-                    : m_base(inFP)
-                {m_base.sign(1);}
+                    : m_base(inFP.magnitude())
+                {}
 
                 explicit UFloat(Signed_Float&& inFP)
-                    : m_base(std::move(inFP))
-                {m_base.sign(1);}
+                    : m_base(inFP.magnitude())
+                {}
 
                 UFloat(const UFLOAT_INST_&)            =default;
                 UFloat(UFLOAT_INST_&&)                 =default;

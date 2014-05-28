@@ -1,8 +1,8 @@
 #ifndef PRECISION_COMPLEX_NUMBER_DEFINITION___H___
 #define PRECISION_COMPLEX_NUMBER_DEFINITION___H___
 
-#include "Precision_Tags.h"
-#include "Shared_Constants.h"
+#include "Impl/Precision_Tags.h"
+#include "Impl/Shared_Constants.h"
 
 //Please refer to the documentation in Precision_Int_General_Base.h
 //  for a list of conditions for each template parameter.
@@ -20,11 +20,12 @@
         CharT const *const _symbols,    \
         template <typename...>          \
             class Container,            \
-        typename SignType               \
+        typename SignType,              \
+        typename Scalar_type            \
     >
 
 #define COMP_INST_  \
-    Number <CharT, _0, ByteType, Base, _symbols Container, SignType>
+    Number <CharT, _0, ByteType, Base, _symbols, Container, SignType, Scalar_Type>
 
 namespace Precision{
     namespace General_Base{

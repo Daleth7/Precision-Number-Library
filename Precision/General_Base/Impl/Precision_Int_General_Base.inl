@@ -1,5 +1,5 @@
-#include "General_Base/Precision_Math_Shared_Functions.h"
-#include "General_Base/Precision_Exception.h"
+#include "Precision_Math_Shared_Functions.h"
+#include "Precision_Exception.h"
 
 #include <functional>
 #include <algorithm>
@@ -59,7 +59,7 @@ namespace Precision{
 
             while(big.m_number.size() > 1 && big.m_number.back() == 0)
                 big.m_number.pop_back();
-            this->m_number = big.m_number;
+            this->m_number = std::move(big.m_number);
 
             return *this;
         }
@@ -216,7 +216,7 @@ namespace Precision{
 
         INT_TEMPL_
         INT_INST_ INT_INST_::logical_xor(const INT_INST_& s)const{
-        //res = (base-(a+b)%base)%base
+        //res = (~((a+b)%base))%base
             return std::move(this->logical_operation(
                 s, [](digit_10_type l, digit_10_type r)
                     {return (Base-(l+r)%Base)%Base;}
@@ -268,8 +268,8 @@ namespace Precision{
             toreturn[0] = (m_sign.positive() ? _symbols[0] : _symbols[1]);
             size_type i(1);
             for(
-                auto iter(m_number.rbegin());
-                iter != m_number.rend();
+                auto iter(m_number.crbegin());
+                iter != m_number.crend();
                 ++iter, ++i
             )   toreturn[i] = _0[*iter];
             return toreturn;
@@ -332,8 +332,8 @@ namespace Precision{
             else if(m_number.size() < s.m_number.size())    return -1;
             else if(m_number.size() > s.m_number.size())    return 1;
             for(
-                auto titer(m_number.rbegin()), siter(s.m_number.rbegin());
-                titer != m_number.rend();
+                auto titer(m_number.crbegin()), siter(s.m_number.crbegin());
+                titer != m_number.crend();
                 ++titer, ++siter
             ){
                 if(*titer < *siter)         return -m_sign.value();
@@ -392,8 +392,8 @@ namespace Precision{
 
         INT_TEMPL_
         typename INT_INST_::digit_10_type INT_INST_::digit_10(size_type i)const{
-            auto toreturn(m_number.rbegin());
-            advance(toreturn, i);
+            auto toreturn(m_number.cbegin());
+            std::advance(toreturn, i);
             return *toreturn;
         }
 
@@ -428,7 +428,7 @@ namespace Precision{
                 m_number = diglist_type(1, 0);
             else{
                 auto end(m_number.begin());
-                advance(end, e);
+                std::advance(end, e);
                 m_number.erase(m_number.begin(), end);
             }
         }
@@ -540,10 +540,10 @@ namespace Precision{
             }
             if(div_req != nullptr){
                 quotient.m_sign = this->m_sign * rhs.m_sign;
-                *div_req = quotient;
+                *div_req = std::move(quotient);
             }
             if(mod_req != nullptr)
-                *mod_req = remainder;
+                *mod_req = std::move(remainder);
         }
 
         INT_TEMPL_

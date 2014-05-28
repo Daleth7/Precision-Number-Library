@@ -32,77 +32,35 @@ namespace Precision{
             {return m_and4;}
 
         template <typename Integer_Type>
-        auto Random<Integer_Type>::order_of_entropy()const->typename type::lli
+        auto Random<Integer_Type>::order_of_entropy()const->lli
             {return m_order_of_entropy;}
 
         template <typename Integer_Type>
-        std::size_t Random<Integer_Type>::push1()const{return m_push1;}
+        auto Random<Integer_Type>::push1()const->size_type
+            {return m_push1;}
 
         template <typename Integer_Type>
-        std::size_t Random<Integer_Type>::push2()const{return m_push2;}
+        auto Random<Integer_Type>::push2()const->size_type
+            {return m_push2;}
 
         template <typename Integer_Type>
-        std::size_t Random<Integer_Type>::push3()const{return m_push3;}
+        auto Random<Integer_Type>::push3()const->size_type
+            {return m_push3;}
 
         template <typename Integer_Type>
-        constexpr auto
-            Random<Integer_Type>::base()->typename type::digit_10_type
-        {return (type::base());}
+        constexpr auto Random<Integer_Type>::base()->digit_10_type
+            {return wrap::base;}
 
     //Retrive and/or change state
 
         template <typename Integer_Type>
-        auto Random<Integer_Type>::operator()()->type   {
-        //Algorithm is a modified form of the SFMT as described in this paper:
-        // http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/ARTICLES/sfmt.pdf
-            typename type::str_type image(m_seed.str());
-            const std::size_t quad(image.size()/4);
-            type
-                word_1(image.substr(0, quad)),
-                word_2(image.substr(quad+1, quad)),
-                word_3(image.substr(2*quad+1, quad)),
-                word_4(image.substr(3*quad+1))
-            ;
-            m_seed.shift(m_order_of_entropy);
-            image =
-                m_seed
-                . logical_shift_left(m_push1)
-                . logical_xor(m_seed)                                   //wA
-
-                . logical_xor(type(
-                    word_1
-                        . logical_shift_right(m_push2)
-                        . logical_and(m_and1)
-                        . str()
-                    + word_2
-                        . logical_shift_right(m_push2)
-                        . logical_and(m_and2)
-                        . str()
-                        . substr(1)
-                    + word_3
-                        . logical_shift_right(m_push2)
-                        . logical_and(m_and3)
-                        . str()
-                        . substr(1)
-                    + word_4
-                        . logical_shift_right(m_push2)
-                        . logical_and(m_and4)
-                        . str()
-                        . substr(1)
-                    ))                                                  //wB
-                . logical_xor(m_seed.logical_shift_right(m_push1))      //wC
-                . logical_xor(m_seed.logical_shift_left(m_push3))       //wD
-                . str()
-                . substr(1)
-            ;
-
-            std::reverse(image.begin(), image.end());
-            return m_seed = (type(image)%(m_max-m_min) + m_min);
-        }
+        auto Random<Integer_Type>::operator()()->type
+            {return this->generate(typename std::is_fundamental<type>::type());}
 
         template <typename Integer_Type>
         Random<Integer_Type>& Random<Integer_Type>::discard()
-            {return this->operator()(), *this;}
+            {return this->generate
+                (typename std::is_fundamental<type>::type()), *this;}
     //Change settings
 
         template <typename Integer_Type>
@@ -135,19 +93,19 @@ namespace Precision{
 
         template <typename Integer_Type>
         Random<Integer_Type>&
-            Random<Integer_Type>::order_of_entropy(typename type::lli ooe)
+            Random<Integer_Type>::order_of_entropy(lli ooe)
         {return m_order_of_entropy = ooe, *this;}
 
         template <typename Integer_Type>
-        Random<Integer_Type>& Random<Integer_Type>::push1(size_t p1)
+        Random<Integer_Type>& Random<Integer_Type>::push1(size_type p1)
             {return m_push1 = p1, *this;}
 
         template <typename Integer_Type>
-        Random<Integer_Type>& Random<Integer_Type>::push2(size_t p2)
+        Random<Integer_Type>& Random<Integer_Type>::push2(size_type p2)
             {return m_push1 = p2, *this;}
 
         template <typename Integer_Type>
-        Random<Integer_Type>& Random<Integer_Type>::push3(size_t p3)
+        Random<Integer_Type>& Random<Integer_Type>::push3(size_type p3)
             {return m_push1 = p3, *this;}
 
     //Constructor
@@ -156,23 +114,94 @@ namespace Precision{
         Random<Integer_Type>::Random(
             const type& INseed,
             const type& INmax, const type& INmin,
-            typename type::lli INorder_of_entropy,
+            bool call_discard,
+            lli INorder_of_entropy,
             const type& INand1, const type& INand2,
             const type& INand3, const type& INand4,
-            std::size_t INpush1, std::size_t INpush2, std::size_t INpush3,
-            bool call_discard
+            size_type INpush1, size_type INpush2, size_type INpush3
         )
-            : m_seed(INseed.positive() ? INseed : 1)
+            : m_seed(wrap::positive(INseed) ? INseed : 1)
             , m_max(INmax), m_min(INmin)
             , m_and1(INand1), m_and2(INand2), m_and3(INand3), m_and4(INand4)
             , m_order_of_entropy(INorder_of_entropy)
             , m_push1(INpush1), m_push2(INpush2), m_push3(INpush3)
         {
             if(call_discard){
-                std::size_t i(7);
+                size_type i(7);
                 while(i-- > 0)
                     this->discard();
             }
+        }
+
+        template <typename IntegerType>
+        auto Random<IntegerType>::generate(std::true_type) -> type
+        {
+        //Algorithm is a modified form of the SFMT as described in this paper:
+        // http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/ARTICLES/sfmt.pdf
+            const size_type quad(sizeof(type)>>1);
+            type
+                word_1(m_seed & ((1<<quad)-1)),
+                word_2((m_seed & ((1<<(quad*2))-1)) ^ word_1),
+                word_3((m_seed & ((1<<(quad*3))-1)) ^ word_1 ^ word_2),
+                word_4(m_seed ^ word_1 ^ word_2 ^ word_3)
+            ;
+            m_seed *= m_order_of_entropy;
+            m_seed ^=
+                (m_seed << m_push1)                     //wA
+                ^ (
+                    ((word_1 >> m_push2) & m_and1)
+                    ^ ((word_2  >> m_push2) & m_and2)
+                    ^ ((word_3 >> m_push2) & m_and3)
+                    ^ ((word_4 >> m_push2) & m_and4)
+                    )                                   //wB
+                ^ (m_seed >> m_push1)                   //wC
+                ^ (m_seed << m_push3)                   //wD
+            ;
+
+            return m_seed = m_seed%(m_max-m_min) + m_min;
+        }
+
+        template <typename IntegerType>
+        auto Random<IntegerType>::generate(std::false_type) -> type
+        {
+        //Algorithm is a modified form of the SFMT as described in this paper:
+        // http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/ARTICLES/sfmt.pdf
+            typename type::str_type image(m_seed.str());
+            const size_type quad(image.size()/4);
+            m_seed.shift(m_order_of_entropy);
+            image =
+                m_seed
+                . logical_shift_left(m_push1)
+                . logical_xor(m_seed)                                   //wA
+                . logical_xor(type(
+                    type(image.substr(0, quad))
+                        . logical_shift_right(m_push2)
+                        . logical_and(m_and1)
+                        . str()
+                    + type(image.substr(quad+1, quad))
+                        . logical_shift_right(m_push2)
+                        . logical_and(m_and2)
+                        . str()
+                        . substr(1)
+                    + type(image.substr(2*quad+1, quad))
+                        . logical_shift_right(m_push2)
+                        . logical_and(m_and3)
+                        . str()
+                        . substr(1)
+                    + type(image.substr(3*quad+1))
+                        . logical_shift_right(m_push2)
+                        . logical_and(m_and4)
+                        . str()
+                        . substr(1)
+                    ))                                                  //wB
+                . logical_xor(m_seed.logical_shift_right(m_push1))      //wC
+                . logical_xor(m_seed.logical_shift_left(m_push3))       //wD
+                . str()
+                . substr(1)
+            ;
+
+            std::reverse(image.begin(), image.end());
+            return m_seed = (type(image)%(m_max-m_min) + m_min);
         }
     }
 }

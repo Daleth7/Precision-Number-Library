@@ -1,4 +1,4 @@
-#include "General_Base/Precision_Exception.h"
+#include "General_Base/Impl/Precision_Exception.h"
 
 namespace Precision{
     const char* exception::what()const noexcept

@@ -43,7 +43,7 @@ namespace Precision{
         Integer_Type gcd(const Integer_Type&, const Integer_Type&);
 
         template <typename Integer_Type>
-        Integer_Type gcf(const Integer_Type&, const Integer_Type&);
+        Integer_Type lcm(const Integer_Type&, const Integer_Type&);
 
     //Arithmetic-Geometric mean
         template <typename Number_Type>
@@ -51,6 +51,6 @@ namespace Precision{
     }
 }
 
-#include "Impl/Precision_Math_Shared_Functions.inl"
+#include "Precision_Math_Shared_Functions.inl"
 
 #endif

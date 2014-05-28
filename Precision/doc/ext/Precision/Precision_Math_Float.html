@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+		<STYLE>
+            @import url("../doc_style.css");
+            <LINK rel="stylesheet" type="text/css" href="doc_style.css">
+		</STYLE>
+    </HEAD>
+    <BODY>
+        <H2>Floating Point and Fractional Mathematics Subsystem
+            <FONT SIZE=2><SUB>(<FONT COLOR="#FF0000">template</FONT>)
+            </SUB></FONT></H2>
+        <P>
+            These operations will work with most of the number types from
+            the Precision Number Library. As part of the Precision Number
+            Library, these methods will also work for any number base.
+            <BR />
+            Most of the listed methods should work with integral types as
+            well.
+            <BR />
+            <BR />
+            <FONT COLOR="#EE0000"><B>Warning</B>: Most of these functions are
+            either currently under construction or still need to be tested
+            and fixed.</FONT>
+        </P>
+        <TABLE WIDTH=90%>
+            <TR>
+                <TH>Namespace</TH>
+                <TH>Class</TH>
+                <TH>Category</TH>
+                <TH>Member</TH>
+            </TR>
+            <TR>
+                <TD ROWSPAN=20>Math</TD>
+                <TD ROWSPAN=20></TD>
+                <TD>Functions</TD>
+                <TD>
+                    <DL>
+                    <DT ID="remainder">Floating_Type
+                        remainder(const Floating_Type& f,
+                        const Floating_Type& s)</DT>
+                    <DD>
+                        Calculate the remainder from dividing the
+                        first parameter by the second.
+                    </DD>
+            <BR />
+                    <DT ID="sqrt">Number_Type sqrt(const Number_Type& num)</DT>
+                        <DD>Calculate the square root of the parameter.</DD>
+            <BR />
+                    <DT ID="root">Number_Type root(const Number_Type& num,
+                        const Number_Type& n)
+                        <FONT SIZE=2><SUB>
+                            (<FONT COLOR="#FF0000">untested</FONT>)</SUB></FONT>
+                        </DT>
+                    <DD>
+                        Calculate the n<SUP>th</SUP> root of the parameter. The
+                        behaviour of this function is equivalent to:
+            <BR />
+                        <I><CODE>num<SUP>1/n</SUP></CODE></I>
+                    </DD>
+            <BR />
+                    <DT ID="factorial_gamma">Number_Type
+                        factorial_gamma(const Number_Type& num)
+                        <FONT SIZE=2><SUB>
+                            (<FONT COLOR="#FF0000">untested</FONT>)</SUB></FONT>
+                        </DT>
+                        <DD>Calculate factorial of a non-integral function.</DD>
+            <BR />
+                    <DT ID="ln">Number_Type ln(const Number_Type& num)</DT>
+                        <DD>Calculate the natural logarithm of the number.</DD>
+            <BR />
+                    <DT ID="log">Number_Type log(const Number_Type& num)</DT>
+                    <DD>Calculate the common logarithm (logarithm of base 10)
+                        of the number.</DD>
+            <BR />
+                    <DT ID="log2">Number_Type log(const Number_Type& num,
+                        const Number_Type& base)</DT>
+                    <DD>Calculate the logarithm of the number with a given
+                        <I>base</I>.</DD>
+            <BR />
+                    <DT ID="exp">Number_Type exp(const Number_Type& x)</DT>
+                    <DD>
+                        Calculate Euler's constant raised to the power of
+                        <I>x</I>. The behaviour of this function is
+                        equivalent to:
+            <BR />
+                        <CODE>e<SUP><I>x</I></SUP></CODE>
+                    </DD>
+            <BR />
+                    <DT ID="exponentiate">Number_Type
+                        exponentiate(const Number_Type& f,
+                        const Number_Type& s)</DT>
+                    <DD>Calculate the first parameter raised
+                        to the power of the second parameter.</DD>
+            <BR />
+                    <DT ID="agm">Number_Type agm(const Number_Type& f,
+                        const Number_Type& s)</DT>
+                    <DD>Calculate the Arithmetic-Geometric Mean
+                        of the two parameters.</DD>
+                    </DL>
+                </TD>
+            </TR>
+        </TABLE>
+    </BODY>
+</HTML>

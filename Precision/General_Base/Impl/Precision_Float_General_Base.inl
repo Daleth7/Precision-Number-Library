@@ -1,5 +1,5 @@
-#include "General_Base/Precision_Math_Shared_Functions.h"
-#include "General_Base/Precision_Exception.h"
+#include "Precision_Math_Shared_Functions.h"
+#include "Precision_Exception.h"
 
 #include <sstream>
 #include <utility>

@@ -1,3 +1,5 @@
+#ifdef START_TESTING_THIS_SYSTEM
+
 #ifndef PRECISION_COMPLEX_NUMBER_DEFINITION___H___
 #define PRECISION_COMPLEX_NUMBER_DEFINITION___H___
 
@@ -19,12 +21,13 @@
         CharT const *const _symbols,    \
         template <typename...>          \
             class Container,            \
-        typename SignType               \
+        typename SignType,              \
+        typename ScalarType             \
     >
 
 #define INST_PARAMS_                            \
-        CharT, _0, ByteType, Base, _symbols,    \
-        Container, SignType, ScalarType
+        CharT, _0, ByteType, Base, _symbols, Container, SignType
+    
 
 namespace Precision{
     namespace General_Base{
@@ -39,7 +42,11 @@ namespace Precision{
                 typename SignType = SignClass,
                 typename ScalarType = General_Base::Int<INST_PARAMS_>
             >
-            struct Int : Tag::Integral, Tag::Signed, Number<INT_INST_>{
+            struct Int
+                : Tag::Integral
+                , Tag::Signed
+                , Number<INST_PARAMS_, Scalar_Type>
+            {
         //Read-only
                 str_type str()const;
                 str_type str_w_spaces()const;
@@ -73,7 +80,11 @@ namespace Precision{
                 typename SignType = SignClass,
                 typename ScalarType = General_Base::Float<INST_PARAMS_>
             >
-            struct Float : Tag::Floating, Tag::Signed, Number<FLOAT_INST_>{
+            struct Float
+                : Tag::Floating
+                , Tag::Signed
+                , Number<INST_PARAMS_, Scalar_Type>
+            {
         //Read-only
                 str_type str(size_type = 0, bool inShowFull = false)const;
                 str_type str_w_spaces(size_type = 0, bool inShowFull = false)const;
@@ -108,7 +119,11 @@ namespace Precision{
                 typename SignType = SignClass,
                 typename ScalarType = General_Base::Fract<INST_PARAMS_>
             >
-            struct Fract : Tag::Fraction, Tag::Signed, Number<FRACT_INST_>{
+            struct Fract
+                : Tag::Fraction
+                , Tag::Signed
+                , Number<INST_PARAMS_, Scalar_Type>
+            {
         //Read-only
                 str_type str(size_type = 0, bool inShowFull = false)const;
                 str_type str_w_spaces(size_type = 0, bool inShowFull = false)const;
@@ -137,13 +152,14 @@ namespace Precision{
                 ~Fract()                                    = default;
             };
 
-            template <INST_PARAMS_, typename ScalarType>
+            COMP_TEMPL_
             void make_from_scalar(
                 const ScalarType& real,
                 const ScalarType& imaginary,
                 COMP_INST*
             );
-            template <INST_PARAMS_, typename ScalarType>
+
+            COMP_TEMPL_
             void make_from_polar(
                 const ScalarType& magnitude,
                 const ScalarType& phase,
@@ -157,5 +173,7 @@ namespace Precision{
 
 #undef COMP_TEMPL_
 #undef INST_PARAMS_
+
+#endif
 
 #endif

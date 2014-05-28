@@ -1,6 +1,7 @@
 #ifndef PRECISION_MATH_TRIG_FUNCTIONS_GENERAL_BASE__H__
 #define PRECISION_MATH_TRIG_FUNCTIONS_GENERAL_BASE__H__
-#include "General_Base/Shared_Constants.h"
+
+#include "General_Base/Impl/Shared_Constants.h"
 
 //Trigonomic functions -- default is radians
 namespace Precision{
@@ -42,37 +43,37 @@ namespace Precision{
         );
 
         template <typename Number_Type>
-        Number_Type arcsin(
+        Number_Type asin(
             const Number_Type&,
             const Number_Type& = Number_Type(k_pi_str)
         );
 
         template <typename Number_Type>
-        Number_Type arccos(
+        Number_Type acos(
             const Number_Type&,
             const Number_Type& = Number_Type(k_pi_str)
         );
 
         template <typename Number_Type>
-        Number_Type arctan(
+        Number_Type atan(
             const Number_Type&,
             const Number_Type& = Number_Type(k_pi_str)
         );
 
         template <typename Number_Type>
-        Number_Type arccsc(
+        Number_Type acsc(
             const Number_Type&,
             const Number_Type& = Number_Type(k_pi_str)
         );
 
         template <typename Number_Type>
-        Number_Type arcsec(
+        Number_Type asec(
             const Number_Type&,
             const Number_Type& = Number_Type(k_pi_str)
         );
 
         template <typename Number_Type>
-        Number_Type arccot(
+        Number_Type acot(
             const Number_Type&,
             const Number_Type& = Number_Type(k_pi_str)
         );
@@ -116,25 +117,25 @@ namespace Precision{
         );
 
         template <typename Number_Type>
-        Number_Type arcsinh(const Number_Type&);
+        Number_Type asinh(const Number_Type&);
 
         template <typename Number_Type>
-        Number_Type arccosh(const Number_Type&);
+        Number_Type acosh(const Number_Type&);
 
         template <typename Number_Type>
-        Number_Type arctanh(const Number_Type&);
+        Number_Type atanh(const Number_Type&);
 
         template <typename Number_Type>
-        Number_Type arccsch(const Number_Type&);
+        Number_Type acsch(const Number_Type&);
 
         template <typename Number_Type>
-        Number_Type arcsech(const Number_Type&);
+        Number_Type asech(const Number_Type&);
 
         template <typename Number_Type>
-        Number_Type arccoth(const Number_Type&);
+        Number_Type acoth(const Number_Type&);
     }
 }
 
-#include "Impl/Precision_Math_Trigonometry.inl"
+#include "Precision_Math_Trigonometry.inl"
 
 #endif

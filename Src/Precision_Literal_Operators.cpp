@@ -4,9 +4,9 @@
 
 inline namespace Precision{
 
-    Int operator"" _Precision_Int(char const *const raw, std::size_t)
+    Int operator"" _P_Int(char const *const raw, std::size_t)
         {return Int(Int::str_type(raw));}
-    Int operator"" _Precision_Int_E(char const *const raw, std::size_t)
+    Int operator"" _P_Int_E(char const *const raw, std::size_t)
     {
         using str_type = Int::str_type;
         const str_type convert(raw);
@@ -39,14 +39,14 @@ inline namespace Precision{
         
         return base;
     }
-    Int operator"" _Precision_Int(unsigned long long cooked)
+    Int operator"" _P_Int(unsigned long long cooked)
         {return Int(cooked);}
 
-    Float operator"" _Precision_Float(
+    Float operator"" _P_Float(
         char const *const raw,
         std::size_t
     ){return Float(raw);}
-    Float operator"" _Precision_Float_E(
+    Float operator"" _P_Float_E(
         char const *const raw,
         std::size_t
     ){
@@ -66,42 +66,42 @@ inline namespace Precision{
         return toreturn;
 
     }
-    Float operator"" _Precision_Float(long double cooked)
+    Float operator"" _P_Float(long double cooked)
         {return Float(cooked);}
-    Float operator"" _Precision_Float(unsigned long long cooked)
+    Float operator"" _P_Float(unsigned long long cooked)
         {return Float(cooked);}
 
 
-    UInt operator"" _Precision_UInt(
+    UInt operator"" _P_UInt(
         char const *const raw,
         std::size_t
     ){return UInt::str_type(raw);}
 
-    UInt operator"" _Precision_UInt_E(
+    UInt operator"" _P_UInt_E(
         char const *const raw,
         std::size_t
-    ){return operator"" _Precision_Int_E(raw, 0);}
+    ){return operator"" _P_Int_E(raw, 0);}
 
-    UInt operator"" _Precision_UInt
+    UInt operator"" _P_UInt
         (unsigned long long cooked)
     {return cooked;}
 
 
-    UFloat operator"" _Precision_UFloat(
+    UFloat operator"" _P_UFloat(
         char const *const raw,
         std::size_t
     ){return UFloat::str_type(raw);}
 
-    UFloat operator"" _Precision_UFloat_E(
+    UFloat operator"" _P_UFloat_E(
         char const *const raw,
         std::size_t
-    ){return UFloat(operator"" _Precision_Float_E(raw, 0));}
+    ){return UFloat(operator"" _P_Float_E(raw, 0));}
 
-    UFloat operator"" _Precision_UFloat
+    UFloat operator"" _P_UFloat
         (unsigned long long cooked)
     {return UFloat(cooked);}
 
-    UFloat operator"" _Precision_UFloat
+    UFloat operator"" _P_UFloat
         (long double cooked)
     {return UFloat(cooked);}
 

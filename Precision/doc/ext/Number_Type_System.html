@@ -1,0 +1,215 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+		<STYLE>
+            @import url("doc_style.css");
+            <LINK rel="stylesheet" type="text/css" href="doc_style.css">
+		</STYLE>
+    </HEAD>
+    <BODY>
+        <H2>Number Type System</H2>
+        <P>
+            This system is the heart of the library, providing number types
+            of arbitrary precision and the ability to instantiate custom
+            number bases.
+            <BR />
+            <BR />
+            <FONT SIZE=1>[<A href="#list">
+                Skip to the list of related classes and functions.</A>]</FONT>
+            <BR />
+            <BR />
+            A default instantiation of base 10 numbers is provided. The
+            hexadecimal base, octal base, and an exotic base are also provided.
+            <BR />
+            <BR />
+            The number types currently provided by the Number Type System are:
+            <UL>
+                <LI><I>Int</I></LI>
+                <LI><I>Float</I></LI>
+                <LI><I>Fract</I></LI>
+                <LI><I>UInt</I></LI>
+                <LI><I>UFloat</I></LI>
+                <LI><I>UFract</I></LI>
+            </UL>
+            Number types still under construction include:
+            <UL><LI><I>Complex</I></LI></UL>
+            The namespace qualifiers of each provided instantiation are:
+            <BLOCKQUOTE><DL>
+                <DT><I>Base 10</I></DT><DD>Precision::FOO</DD>
+                <DT><I>Hexadecimal</I></DT><DD>Precision::Hexadecimal::FOO</DD>
+                <DT><I>Octal</I></DT><DD>Precision::Octal::FOO</DD>
+                <DT><I>ABC</I></DT><DD>Precision::ABC::FOO</DD>
+            </DL></BLOCKQUOTE>
+            So, for example, to use the Float class in the Octal base, one would
+            use <CODE>Precision::Octal::Float</CODE>.
+            <BR />
+            <BR />
+            <BR />
+            The Number Type System also contains templates for instantiating
+            number types of custom bases. For instantiating these types, the
+            following information is required (in the same order one would
+            pass them as template arguments):
+            <OL>
+                <LI><I>typename CharT</I>
+                    - The type of character or image used to represent each digit
+                        in Base N. Must be compatible as a template parameter to
+                        std::basic_string&lt;T>. The string type (str_type) of the
+                        class shall be instantiated as std::basic_string&lt;CharT>.
+                        The following or the equivalent of the following
+                        functions must be supported for type CharT:
+                    <UL>
+                        <LI>std::istream& operator>>(std::istream&, CharT&);</LI>
+                        <LI>bool operator==(const CharT&, const CharT&);</LI>
+                    </UL></LI>
+                <LI><I>CharT const* _0</I>
+                    - A pointer to the first digit in an array containing the
+                        images of each digit. The array must have external linkage.
+                        Important note: It is the responsibility of the
+                        instantiator to ensure _0 is a valid parameter and that
+                        the array pointed to contains the appropriate images.</LI>
+                <LI><I>typename ByteType</I>
+                    - The type used for the computer representation of each
+                        digit. This type also sets the maximum base that may
+                        be used and affects the dynamic storage size. The
+                        library provides a default type:
+                        <I>Precision::byte_type</I>, which is sufficient for
+                        bases 127 and below. This default type is also the
+                        default value of the argument.
+                        <BR />
+                        <B>Note:</B> The bahaviour of the instantiated types
+                        is not guaranteed for bases below 2.</LI>
+                <LI><I>ByteType N</I>
+                    - The base N the class shall represent. The default
+                        value of this argument is 10.</LI>
+            </OL>
+            More information on how to instantiate the number types can be
+            found
+            <A href="Precision/General_Base/Precision_Int_General_Base.html">here</A>.
+            <BR />
+            An example instantiation would be:
+        </P>
+        <TABLE STYLE="border-collapse:collapse;"><TR><TD><OL>
+        <LI>#include "Precision.h"</LI>
+        <LI></LI>
+        <LI>#include &lt;iostream></LI>
+        <LI></LI>
+        <LI>Precision::byte_type base = 13;</LI>
+        <LI>char images[base+1] = "0123456789ABC";</LI>
+        <LI></LI>
+        <LI>int main(){</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;typedef
+            Precision::General_Base::Int&lt;char, images,
+            Precision::byte_type, base> my_base;</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;std::cout &lt;&lt;
+            "I don't make jokes in base " &lt;&lt; my_base::base();</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;return 0;</LI>
+        <LI>}</LI>
+        </OL></TD></TR></TABLE>
+            <BR />
+            <BR />
+        <P ID="list">
+            Related classes and functions:
+            <UL>
+                <LI><A href="Precision/Precision_Default.html">Decimal</A>:</LI>
+                <UL>
+                    <LI><A href="Precision/Precision_Default.html">
+                        Precision::Int</A></LI>
+                    <LI><A href="Precision/Precision_Default.html">
+                        Precision::Float</A></LI>
+                    <LI><A href="Precision/Precision_Default.html">
+                        Precision::Fract</A></LI>
+                    <LI><A href="Precision/Precision_Default.html">
+                        Precision::UInt</A></LI>
+                    <LI><A href="Precision/Precision_Default.html">
+                        Precision::UFloat</A></LI>
+                    <LI><A href="Precision/Precision_Default.html">
+                        Precision::UFract</A></LI>
+                    <LI><A href="Precision/Precision_Literal_Operators.html">
+                        Literal Operators</A></LI>
+                </UL>
+                <LI><A href="Precision/Precision_Hexadecimal.html">Hexadecimal</A>:</LI>
+                <UL>
+                    <LI><A href="Precision/Precision_Hexadecimal.html">
+                        Precision::Hexadecimal::Int</A></LI>
+                    <LI><A href="Precision/Precision_Hexadecimal.html">
+                        Precision::Hexadecimal::Float</A></LI>
+                    <LI><A href="Precision/Precision_Hexadecimal.html">
+                        Precision::Hexadecimal::Fract</A></LI>
+                    <LI><A href="Precision/Precision_Hexadecimal.html">
+                        Precision::Hexadecimal::UInt</A></LI>
+                    <LI><A href="Precision/Precision_Hexadecimal.html">
+                        Precision::Hexadecimal::UFloat</A></LI>
+                    <LI><A href="Precision/Precision_Hexadecimal.html">
+                        Precision::Hexadecimal::UFract</A></LI>
+                </UL>
+                <LI><A href="Precision/Precision_Octal.html">Octal</A>:</LI>
+                <UL>
+                    <LI><A href="Precision/Precision_Octal.html">
+                        Precision::Octal::Int</A></LI>
+                    <LI><A href="Precision/Precision_Octal.html">
+                        Precision::Octal::Float</A></LI>
+                    <LI><A href="Precision/Precision_Octal.html">
+                        Precision::Octal::Fract</A></LI>
+                    <LI><A href="Precision/Precision_Octal.html">
+                        Precision::Octal::UInt</A></LI>
+                    <LI><A href="Precision/Precision_Octal.html">
+                        Precision::Octal::UFloat</A></LI>
+                    <LI><A href="Precision/Precision_Octal.html">
+                        Precision::Octal::UFract</A></LI>
+                </UL>
+                <LI><A href="Precision/Precision_ABC.html">ABC</A>:</LI>
+                <UL>
+                    <LI><A href="Precision/Precision_ABC.html">
+                        Precision::ABC::Int</A></LI>
+                    <LI><A href="Precision/Precision_ABC.html">
+                        Precision::ABC::Float</A></LI>
+                    <LI><A href="Precision/Precision_ABC.html">
+                        Precision::ABC::Fract</A></LI>
+                    <LI><A href="Precision/Precision_ABC.html">
+                        Precision::ABC::UInt</A></LI>
+                    <LI><A href="Precision/Precision_ABC.html">
+                        Precision::ABC::UFloat</A></LI>
+                    <LI><A href="Precision/Precision_ABC.html">
+                        Precision::ABC::UFract</A></LI>
+                </UL>
+                <LI><A href="Precision/General_Base.html">General Base</A>:</LI>
+                <UL>
+                    <LI><A
+                        href="Precision/General_Base/Precision_Int_General_Base.html"
+                    >Precision::General_Base::Int</A></LI>
+                    <LI><A
+                        href="Precision/General_Base/Precision_Float_General_Base.html"
+                    >Precision::General_Base::Float</A></LI>
+                    <LI><A 
+                        href="Precision/General_Base/Precision_Fract_General_Base.html"
+                    >Precision::General_Base::Fract</A></LI>
+                    <LI><A
+                        href="Precision/General_Base/Precision_UInt_General_Base.html"
+                    >Precision::General_Base::UInt</A></LI>
+                    <LI><A
+                        href="Precision/General_Base/Precision_UFloat_General_Base.html"
+                    >Precision::General_Base::UFloat</A></LI>
+                    <LI><A
+                        href="Precision/General_Base/Precision_UFract_General_Base.html"
+                    >Precision::General_Base::UFract</A></LI>
+                    <LI><A
+                        href="Precision/General_Base/Precision_InterBase_Functions.html"
+                    >Precision::convert</A></LI>
+                </UL>
+                <LI>Miscellaneous:</LI>
+                <UL>
+                    <LI><A href="Precision/General_Base/Precision_Sign_Class.html">
+                        Precision::SignClass</A></LI>
+                    <LI><A
+                        href="Precision/General_Base/Impl/Precision_Tags.html"
+                    >Tag Subsystem</A></LI>
+                    <LI><A
+                        href="Precision/General_Base/Impl/Precision_Exception.html"
+                    >Precision::exception</A></LI>
+                </UL>
+            </UL>
+        </P>
+    </BODY>
+</HTML>
