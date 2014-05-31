@@ -140,7 +140,7 @@
             </UL>
         </P>
             <BR />
-        <H3>Features currently under construction:</H3>
+        <H3>Features currently under construction or are being repaired:</H3>
         <P>
             <UL>
                 <LI>
@@ -149,11 +149,19 @@
                 </LI>
                 <LI>
                     Binary Number Specialization
-                    (<A href="Precision/Precision_Binary">Precision::Binary</A>)
+                    (<A href="Precision/Precision_Binary.html">
+                        Precision::Binary</A>)
                 </LI>
+                <UL>
+                    <LI>Fixing issue with exponentiating binaries.</LI>
+                    <LI>Finding a way to make the specialization partial,
+                        so that the client may customize the memory block
+                        size.</LI>
+                </UL>
                 <LI>
                     Complex Number System
-                    (<A href="Precision/Precision_Complex">Precision::Complex</A>)
+                    (<A href="Precision/Precision_Complex.html">
+                        Precision::Complex</A>)
                 </LI>
                 <LI>
                     Number Sequence System (
@@ -167,8 +175,8 @@
                         Precision::StrictRecursiveSequence</A>)
                 </LI>
                 <LI>
-                    Limited Mathematics System
-                    (<A href="Precision/Precision_Math">Precision::Math</A>)
+                    Mathematics System
+                    (<A href="Mathematics_System.html">Precision::Math</A>)
                 </LI>
                 <UL>
                     <LI>
@@ -176,6 +184,29 @@
                         Precision/General_Base/Impl/Math_Shared_Functions.h
                         (included by Precision/Precision_Math.h)
                         are fully functional
+                    </LI>
+                </UL>
+                <LI>
+                    Floating point construction
+                    (<A href=
+            "Precision/General_Base/Precision_Float_General_Base.html#con_default"
+                        >Precision::Float</A>)
+                </LI>
+                <UL>
+                    <LI>
+                        Investigating why for higher bases, constructing from
+                        a floating point value gives junk values.
+                    </LI>
+                </UL>
+                <LI>
+                    Make Base function
+                    (<A href="Precision/Extra_Bases.html">
+                        Precision::make_TYPEBASE</A>)
+                </LI>
+                <UL>
+                    <LI>
+                        Figure out how to write the proper function templates
+                        instead of pasting multiple forms.
                     </LI>
                 </UL>
             </UL>
@@ -233,6 +264,7 @@
                         custom allocators
                     </LI>
                 </UL>
+                <LI>An Abstract and Conservative number type systems.</LI>
             </UL>
         </P>
     <BODY>

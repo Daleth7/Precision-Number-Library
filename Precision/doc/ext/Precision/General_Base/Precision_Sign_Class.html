@@ -40,7 +40,7 @@
                 <TD>Types</TD>
                 <TD>
                     <DL>
-                    <DT>signed_type</DT>
+                    <DT ID="signed_type">signed_type</DT>
                     <DD>
                         The primitive signed type, of which this class
                         is a proxy.
@@ -52,19 +52,19 @@
                 <TD>Read Only</TD>
                 <TD>
                     <DL>
-                    <DT>signed_type value()const</DT>
+                    <DT ID="value">signed_type value()const</DT>
                         <DD>Returns either 1 (positive) or -1 (negative).</DD>
-                    <DT>bool positive()const</DT>
+                    <DT ID="positive">bool positive()const</DT>
                     <DD>
                         Returns true or false as if using
                         SignClassObj == 1 (positive).
                     </DD>
-                    <DT>bool negative()const</DT>
+                    <DT ID="negative">bool negative()const</DT>
                     <DD>
                         Returns true or false as if using
                         SignClassObj == -1 (positive).
                     </DD>
-                    <DT>operator signed_type()const</DT>
+                    <DT ID="cast_signed">operator signed_type()const</DT>
                     <DD>
                         Returns the primitive value version of the class value.
                         This is equivalent to calling value().
@@ -76,25 +76,25 @@
                 <TD>Modifiers</TD>
                 <TD>
                     <DL>
-                    <DT>void flip()</DT>
-                    <DT>void negate()</DT>
+                    <DT ID="flip">void flip()</DT>
+                    <DT ID="negate">void negate()</DT>
                     <DD>
                         Reverse the sign, e.g. if the class value is 1, it
                         becomes -1 and vice versa. Both <I>flip()</I> and
                         <I>negate()</I> do the same thing.
                     </DD>
-                    <DT>void assign(signed_type new_value)</DT>
+                    <DT ID="assign">void assign(signed_type new_value)</DT>
                     <DD>
                         Replace the current value of the class with a new value.
                         If <I>new_value</I> is 0 or positive, the new value is
                         1 (positive). Otherwise, it is -1 (negative).
                     </DD>
-                    <DT>void make_positive()</DT>
+                    <DT ID="make_positive">void make_positive()</DT>
                     <DD>
                         Replace the current value of the class with 1 (positive).
                         This is as if calling assign(1).
                     </DD>
-                    <DT>void make_negative()</DT>
+                    <DT ID="make_negative">void make_negative()</DT>
                     <DD>
                         Replace the current value of the class with -1 (negative).
                         This is as if calling assign(-1).
@@ -106,22 +106,22 @@
                 <TD>Constructors and Destructor</TD>
                 <TD>
                     <DL>
-                    <DT>SignClass(signed_type new_value)</DT>
+                    <DT ID="con">SignClass(signed_type new_value)</DT>
                     <DD>
                         Construct a SignClass object whose initial value is
                         <I>new_value</I>.
                     </DD>
-                    <DT>SignClass() = default</DT>
+                    <DT ID="default">SignClass() = default</DT>
                         <DD>Compiler generated default constructor.</DD>
-                    <DT>SignClass(const SignClass&) = default</DT>
+                    <DT ID="con_copy">SignClass(const SignClass&) = default</DT>
                         <DD>Compiler generated copy constructor.</DD>
-                    <DT>SignClass(SignClass&&) = default</DT>
+                    <DT ID="con_move">SignClass(SignClass&&) = default</DT>
                         <DD>Compiler generated move constructor.</DD>
-                    <DT>SignClass& operator=(const SignClass&) = default</DT>
+                    <DT ID="con_copy_eq">SignClass& operator=(const SignClass&) = default</DT>
                         <DD>Compiler generated copy assignment operator.</DD>
-                    <DT>SignClass& operator=(SignClass&&) = default</DT>
+                    <DT ID="con_move_eq">SignClass& operator=(SignClass&&) = default</DT>
                         <DD>Compiler generated move assignment operator.</DD>
-                    <DT>~SignClass() = default</DT>
+                    <DT ID="destruct">~SignClass() = default</DT>
                         <DD>Compiler generated destructor.</DD>
                     </DL>
                 </TD>

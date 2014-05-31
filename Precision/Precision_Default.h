@@ -3,11 +3,11 @@
 
 #include "General_Base.h"
 
-#include "Instantiation_Packs/Precision_Default_Types.h"
+#include "General_Base/Precision_Shared_Pack.h"
 
 #define DEFAULT_TEMPLATE_PARAMS                     \
-    Default_Type::digit, Default_Type::image::set,  \
-    byte_type, Default_Type::k_base
+    Base36::image::type, Base36::image::glyphs,  \
+    byte_type, 10
 
 namespace Precision{
     using Int       = General_Base::Int <DEFAULT_TEMPLATE_PARAMS>;

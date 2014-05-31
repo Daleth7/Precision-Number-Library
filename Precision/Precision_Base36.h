@@ -1,16 +1,15 @@
-#ifndef PRECISION_OCTAL_BASE_INSTANTIATION__H__
-#define PRECISION_OCTAL_BASE_INSTANTIATION__H__
+#ifndef PRECISION_BASE3636_GENERAL_BASE__H__
+#define PRECISION_BASE3636_GENERAL_BASE__H__
 
 #include "General_Base.h"
 
 #include "General_Base/Precision_Shared_Pack.h"
 
 #define DEFAULT_PARAMS                     \
-    Base36::image::type, Base36::image::glyphs,  \
-    byte_type, 8
+    image::type, image::glyphs, byte_type, 36
 
 namespace Precision{
-    namespace Octal{
+    namespace Base36{
         using Int       = General_Base::Int <DEFAULT_PARAMS>;
         using Float     = General_Base::Float <DEFAULT_PARAMS>;
         using Fract     = General_Base::Fract <DEFAULT_PARAMS>;

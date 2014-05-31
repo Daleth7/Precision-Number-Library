@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+		<STYLE>
+            @import url("../doc_style.css");
+            <LINK rel="stylesheet" type="text/css" href="doc_style.css">
+		</STYLE>
+    </HEAD>
+    <BODY>
+        <H2>Extra Bases</H2>
+        <P>
+            <FONT SIZE=2>
+                Associated File: <B><A href="../../../Extra_Bases.h">
+                Precision/Extra_Bases.h</A></B>
+            </FONT>
+            <BR />
+            <BR />
+            The Precision Number Library provides not just the decimal
+            instantiation, but also instantiations for the following bases:
+            <UL>
+                <LI><A href="Precision_Binary.html">Binary</A></LI>
+                <LI><A href="Precision_Octal.html">Octal</A></LI>
+                <LI><A href="Precision_Hexadecimal.html">Hexadecimal</A></LI>
+                <LI><A href="Precision_Base36.html">Base 36</A></LI>
+                <LI><A href="Precision_ABC.html">ABC</A></LI>
+            </UL>
+            <BR />
+            <UL>
+                <LI><A href="#interface">Class Interface Information</A></LI>
+                <LI><A href="#example">Example Use</A></LI>
+                <UL>
+                    <LI> This is only of the make functions. Use the links
+                        to each number base for more examples.</LI>
+                </UL>
+            </UL>
+            Specifically, the Binary base is a specialization that is memory
+            efficient at the cost of speed (though the bitwise operations
+            are actually faster). It also includes a couple more member types and
+            additional shifting operations. More information about this
+            specialization can be found <A href="Precision_Binary.html">here</A>.
+            <BR />
+            <BR />
+            Additionally, make functions are available to create one of the
+            number types using default template parameters. These make functions
+            are only for bases 2 to 36.
+            <BR />
+            <BR />
+            To access these functions, define USE_BASE_MAKER_ before including
+            the header.
+            <BR />
+            <FONT COLOR="#EE0000"><B>Warning</B>: The current implementation
+                takes a few seconds longer to compile, hence the need to
+                define a macro in order to use it.</FONT>
+            <BR />
+            To call of these functions, use the following format, replacing
+            the contents in square brackets with the desired parameters):
+            "make_[Number Type][Number Base]([Either an integer or a string])".
+            <BR />
+            Example calls would be:
+            <BR />
+            <CODE>make_int7(1000);</CODE>
+            <BR />
+            <CODE>make_float14("AB45.C03");</CODE>
+            <BR />
+        </P>
+        <TABLE WIDTH=90% id="interface">
+            <TR>
+                <TD>
+                    <DL>
+                    <DT>[TYPE]&lt;char, Base36::image::glyphs, byte_type,
+                        [BASE], Constant::symbols, std::vector, SignClass>
+                        <B>make_[TYPE][BASE](long long int i)</B></DT>
+                    <DD>
+                        Construct a number that is a <I>TYPE</I> and is of
+                        base <I>BASE</I> from an integral value.
+                    </DD>
+            <BR />
+                    <DT>[TYPE]&lt;char, Base36::image::glyphs, byte_type,
+                        [BASE], Constant::symbols, std::vector, SignClass>
+                        <B>make_[TYPE][BASE](const std::string& s)</B></DT>
+                    <DD>
+                        Construct a number that is a <I>TYPE</I> and is of
+                        base <I>BASE</I> from an string.
+                    </DD>
+                    </DL>
+                </TD>
+            </TR>
+        </TABLE>
+            <BR />
+        <TABLE STYLE="border-collapse:collapse;" ID="example">
+        <CAPTION>Example Use</CAPTION><TR><TD><OL><CODE>
+        <LI>#define USE_BASE_MAKER_ // Define this to use make functions</LI>
+        <LI>#include "Precision/Extra_Bases.h"</LI>
+        <LI></LI>
+        <LI>#include &lt;iostream></LI>
+        <LI></LI>
+        <LI>int main(){</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;using namespace std;</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;auto b7 = Precision::make_int7(1000);</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; b7.str(); //+2626</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            Precision::make_float14("-BA.40C").str(); //+BA.40C</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            Precision::make_ufract36("ASJDDHE/2398AEHFEJ").str();
+            //+ASJDDHE/2398AEHFEJ</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;return 0;</LI>
+        <LI>}</LI>
+        </CODE></OL></TD></TR></TABLE>
+    <BODY>
+</HTML>

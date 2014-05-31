@@ -32,7 +32,7 @@
                         digit. This type also sets the maximum base that may
                         be used and affects the dynamic storage size. Defaulted
                         to Precision::byte_type, which is guaranteed to allow a
-                        base up to at least 127 and is guaranteed to be at least
+                        base up to 64 and is guaranteed to be at least
                         one byte in size. It is recommended to use
                         Precision::byte_type for small bases.
     4) Base         - The base N the class shall represent. Defaulted to 10.

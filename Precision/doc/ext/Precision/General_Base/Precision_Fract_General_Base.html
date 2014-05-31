@@ -73,7 +73,7 @@
                     digit. This type also sets the maximum base that may
                     be used and affects the dynamic storage size. Defaulted
                     to <I>Precision::byte_type</I>, which is guaranteed to
-                    allow a base up to at least 127 and is guaranteed to be at
+                    allow a base up to 64 and is guaranteed to be at
                     least one byte in size. It is recommended to use
                     <I>Precision::byte_type</I> for small bases.
                 </TD>
@@ -238,7 +238,7 @@
                 <TD>Types</TD>
                 <TD>
                     <DL>
-                        <DT><I>Integer</I></DT>
+                        <DT><I ID="Integer_t">Integer</I></DT>
                         <DD>
                             While this class is the fraction version,
                             <I>Integer</I> represents the whole number version.
@@ -248,7 +248,7 @@
                             <I><A href="Precision_Int_General_Base.html">
                             Precision::General_Base::Int</A></I>.
                         </DD>
-                        <DT><I>Floating</I></DT>
+                        <DT ID="Floating"><I>Floating</I></DT>
                         <DD>
                             The floating point number version that is returned
                             when calling methods such as <I>decimal()</I>. This
@@ -256,57 +256,57 @@
                             <I><A href="Precision_Float_General_Base.html">
                             Precision::General_Base::Float</A></I>.
                         </DD>
-                        <DT><I>str_type</I></DT>
+                        <DT ID="str_type"><I>str_type</I></DT>
                         <DD>
                             The type which represents a string of CharT objects.
                             It is used to display the number. <I>str_type</I> is
                             equivalent to <I>std::basic_string&lt;CharT></I>.
                         </DD>
-                        <DT><I>lli</I></DT>
+                        <DT ID="lli"><I>lli</I></DT>
                         <DD>
                             A primitive type that represents a signed, integral
                             number with a wide range. The client need not worry
                             about this type.
                         </DD>
-                        <DT><I>ld</I></DT>
+                        <DT ID="ld"><I>ld</I></DT>
                         <DD>
                             A primitive type that represents a signed, floating
                             point number with a wide range and large precision.
                             The client need not worry about this type.
                         </DD>
-                        <DT><I>image_type</I></DT>
+                        <DT ID="image_type"><I>image_type</I></DT>
                         <DD>
                             A type whose objects represent the visual display
                             of each digit. This type is equivalent to
                             <I>CharT</I>.
                         </DD>
-                        <DT><I>digit_type</I></DT>
+                        <DT ID="digit_type"><I>digit_type</I></DT>
                         <DD>
                             A type whose objects are the computer representations
                             of each digit. This type is equivalent to
                             <I>ByteType</I>.
                         </DD>
-                        <DT><I>diglist_type</I></DT>
+                        <DT ID="diglist_type"><I>diglist_type</I></DT>
                         <DD>
                             A container that stores each digit of the number.
                             This type is equivalent to
                             <I>Container&lt;CharT></I>. For the most part, the
                             client need not worry about this type.
                         </DD>
-                        <DT><I>digit_10_type</I></DT>
+                        <DT ID="digit_10_type"><I>digit_10_type</I></DT>
                         <DD>
                             An alias of <I>digit_type</I>. This is used to
                             distinguish semantic differences. The client need
                             not worry about this type.
                         </DD>
-                        <DT><I>sign_type</I></DT>
+                        <DT ID="sign_type"><I>sign_type</I></DT>
                         <DD>
                             The type whose objects represent positive and
                             negative. This type is equivalent to <I>SignType</I>.
                             For the most part, the client need not worry about
                             this type.
                         </DD>
-                        <DT><I>size_type</I></DT>
+                        <DT ID="size_type"><I>size_type</I></DT>
                         <DD>
                             A type whose objects represent a counting system such
                             as when checking size or using indices. This type is
@@ -319,30 +319,30 @@
                 <TD>Read only</TD>
                 <TD>
                     <DL>
-                    <DT>sign_type sign()const</DT>
+                    <DT ID="sign">sign_type sign()const</DT>
                     <DD>
                         Return an object that represents what sign the number
                         is, i.e. positive or negative.
                     </DD>
             <BR />
-                    <DT>str_type str()const</DT>
+                    <DT ID="str">str_type str()const</DT>
                     <DD>Return the visual display of the number as a string.</DD>
             <BR />
-                    <DT>str_type mixed()const</DT>
+                    <DT ID="mixed">str_type mixed()const</DT>
                     <DD>Similar to <I>str()</I> but this function formats
                         the number in its mixed form, that is, a whole number
                         followed by a proper fraction.</DD>
             <BR />
-                    <DT>Fract magnitude()const</DT>
+                    <DT ID="magnitude">Fract magnitude()const</DT>
                     <DD>
                         Return the absolute value of the number, or the
                         distance between 0 and the number.
                     </DD>
             <BR />
-                    <DT>size_type precision()const</DT>
+                    <DT ID="precision">size_type precision()const</DT>
                     <DD>Return the precision of the number.</DD>
             <BR />
-                    <DT>short compare(const Fract& s)const</DT>
+                    <DT ID="compare">short compare(const Fract& s)const</DT>
                     <DD>
                         Return a code number representing how the number
                         compares to the parameter, i.e. it will be as if
@@ -355,8 +355,8 @@
                         </UL>
                     </DD>
             <BR />
-                    <DT>Integer whole()const</DT>
-                    <DT>Integer integer()const</DT>
+                    <DT ID="whole">Integer whole()const</DT>
+                    <DT ID="integer">Integer integer()const</DT>
                     <DD>
                         Return the whole part of the number, e.g.
             <BR />
@@ -364,8 +364,9 @@
                             == Fract::Integer("-5")</CODE>
                     </DD>
             <BR />
-                    <DT>Floating floating_point()const</DT>
-                    <DT>Floating decimal()const</DT>
+                    <DT ID="floating_point">Floating
+                        floating_point()const</DT>
+                    <DT ID="decimal">Floating decimal()const</DT>
                     <DD>
                         Return the number in its floating point form, i.e.
                         as if the numerator was divided by the denominator.
@@ -373,14 +374,14 @@
                         be used in constructing the floating point number.
                     </DD>
             <BR />
-                    <DT>Integer gcd(const Fract& s)const</DT>
+                    <DT ID="gcd">Integer gcd(const Fract& s)const</DT>
                     <DD>Return the Greatest Common Denominator of this number
                         and the parameter.</DD>
             <BR />
-                    <DT>Fract operator-()const</DT>
+                    <DT ID="op_negate">Fract operator-()const</DT>
                     <DD>Return the negated version of the number.</DD>
             <BR />
-                    <DT>Fract operator~()const</DT>
+                    <DT ID="op_complement">Fract operator~()const</DT>
                     <DD>
                         <B>Note</B>: This is not the bitwise complement operator.
             <BR />
@@ -388,53 +389,54 @@
                         calling <I>inverse()</I>.
                     </DD>
             <BR />
-                    <DT>bool even()const</DT>
+                    <DT ID="even">bool even()const</DT>
                     <DD>
                         Check if the number is even, i.e. if the number is a
                         multiple of 2. This will check the rightmost digit
                         as if calling <CODE>decimal().digit_10(0)</CODE>.
                     </DD>
             <BR />
-                    <DT>bool odd()const</DT>
+                    <DT ID="odd">bool odd()const</DT>
                     <DD>
                         Check if the number is odd, i.e. if the number is not
                         a multiple of 2. This will check the rightmost digit
                         as if calling <CODE>decimal().digit_10(0)</CODE>.
                     </DD>
             <BR />
-                    <DT>bool positive()const</DT>
+                    <DT ID="positive">bool positive()const</DT>
                     <DD>
                         Check if the number is positive, i.e. if the number is
                         greater than 0.
                     </DD>
             <BR />
-                    <DT>bool negative()const</DT>
+                    <DT ID="negative">bool negative()const</DT>
                     <DD>
                         Check if the number is negative, i.e. if the number is
                         less than 0.
                     </DD>
             <BR />
-                    <DT>Integer numerator()const</DT>
+                    <DT ID="numerator">Integer numerator()const</DT>
                     <DD>Return the numerator, or the
                         top number of the fraction.</DD>
             <BR />
-                    <DT>Integer denominator()const</DT>
+                    <DT ID="denominator">Integer denominator()const</DT>
                     <DD>Return the denominator, or the
                         bottom number of the fraction.</DD>
             <BR />
-                    <DT>Fract remainder(const Fract& s)const</DT>
+                    <DT ID="remainder">Fract
+                        remainder(const Fract& s)const</DT>
                     <DD>
                         Return the remainder of dividing this number by the
                         parameter.
                     </DD>
             <BR />
-                    <DT>Fract inverse()const</DT>
+                    <DT ID="inverse">Fract inverse()const</DT>
                     <DD>
                         Return a copy of this number inverted. This is as if
                         dividing 1 by this number, or <CODE>1/[This]</CODE>.
                     </DD>
             <BR />
-                    <DT>bool is_integer()const</DT>
+                    <DT ID="is_integer">bool is_integer()const</DT>
                     <DD>
                         Return whether or not this number could be considered
                         whole. This is true if:
@@ -443,7 +445,7 @@
                             % [This].denominator() == 0</CODE>
                     </DD>
             <BR />
-                    <DT>image_type digit(size_type index)const</DT>
+                    <DT ID="digit">image_type digit(size_type index)const</DT>
                     <DD>
                         Obtain one of the digits of the number in its floating
                         point form, the returned value in its visual
@@ -453,20 +455,21 @@
                         with a precision of 1 will return "4".
                     </DD>
             <BR />
-                    <DT>digit_10_type digit_10(size_type index)const</DT>
+                    <DT ID="digit_10">digit_10_type
+                        digit_10(size_type index)const</DT>
                     <DD>
                         Similar to <I>digit(size_type)</I> but returns the digit
                         in its computer representation, which will inevitably
                         be shown as base 10.
                     </DD>
             <BR />
-                    <DT>static digit_10_type base()</DT>
+                    <DT ID="base">static digit_10_type base()</DT>
                     <DD>
                         Return, in base 10, the number base of the number type.
                         This will effectively return <I>Base</I>.
                     </DD>
             <BR />
-                    <DT>static image_type const* digit0()</DT>
+                    <DT ID="digit0">static image_type const* digit0()</DT>
                     <DD>
                         Return a pointer to the array used by the number type.
                         The array will contain the visual symbols that represent
@@ -479,17 +482,20 @@
                 <TD>Modifiers</TD>
                 <TD>
                     <DL>
-                    <DT>void precision(size_type new_precision)</DT>
+                    <DT ID="precision_mod">void
+                        precision(size_type new_precision)</DT>
                     <DD>
                         Change the precision the number remembers. This is
                         possible since the number only uses the precision
                         when constructing its floating point form.
                     </DD>
             <BR />
-                    <DT>void numerator(const Integer& new_numerator)</DT>
+                    <DT ID="numerator_mod">void
+                        numerator(const Integer& new_numerator)</DT>
                         <DD>Replace the old numerator with the new one.</DD>
             <BR />
-                    <DT>void denominator(const Integer& new_denominator)</DT>
+                    <DT ID="denominator">void
+                        denominator(const Integer& new_denominator)</DT>
                     <DD>
                         Replace the old denominator with the new one.
             <BR />
@@ -498,43 +504,44 @@
                         error to be thrown.
                     </DD>
             <BR />
-                    <DT>void shift(lli count)</DT>
+                    <DT ID="shift">void shift(lli count)</DT>
                     <DD>
                         Multiply the number by an order of magnitude of
                         <I>Base</I>. This effectively multiplies the number
                         by <I>Base<SUP>count</SUP></I>.
                     </DD>
             <BR />
-                    <DT>void shift_left(size_type count)</DT>
+                    <DT ID="shift_left">void shift_left(size_type count)</DT>
                     <DD>
                         Similar to <I>shift(lli)</I> where the behaviour is
                         effectively <I>Base<SUP>count</SUP></I>.
                     </DD>
             <BR />
-                    <DT>void shift_right(size_type count)</DT>
+                    <DT ID="shift_right">void shift_right(size_type count)</DT>
                     <DD>
                         Similar to <I>shift(lli)</I> where the behaviour is
                         effectively <I>Base<SUP>-count</SUP></I>.
                     </DD>
             <BR />
-                    <DT>void sign(sign_type new_sign)</DT>
+                    <DT ID="sign_mod">void sign(sign_type new_sign)</DT>
                     <DD>Assign a new sign for the number.</DD>
             <BR />
-                    <DT>void negate()</DT>
+                    <DT ID="negate">void negate()</DT>
                     <DD>
                         Reverse the sign of the number. This is similar to
                         calling <I>operator-()</I>, except the number is
                         modified.
                     </DD>
             <BR />
-                    <DT>Fract& exponentiate(const Integer& s)</DT>
+                    <DT ID="exponentiate">Fract&
+                        exponentiate(const Integer& s)</DT>
                     <DD>
                         Take the power of this number by the parameter and
                         store the result in this number. Return a reference
                         to this number to allow for function chaining.
                     </DD>
             <BR />
-                    <DT>Fract& exponentiate(const Fract& s)</DT>
+                    <DT ID="exponentatef">Fract& exponentiate(const Fract& s)</DT>
                     <DD>
                         Take the power of this number by the parameter and
                         store the result in this number. Return a reference
@@ -543,14 +550,14 @@
                         different algorithm.
                     </DD>
             <BR />
-                    <DT>Fract& invert()</DT>
+                    <DT ID="invert">Fract& invert()</DT>
                     <DD>
                         Invert this number as if dividing 1 by this number,
                         i.e. <CODE>1/[This]</CODE>. Return a reference to this
                         number to allow for function chaining.
                     </DD>
             <BR />
-                    <DT>void swap(Fract& s)</DT>
+                    <DT ID="swap">void swap(Fract& s)</DT>
                     <DD>Switch the values of this number and the parameter.</DD>
                     </DL>
                 </TD>
@@ -559,35 +566,35 @@
                 <TD>Arithmetic operators</TD>
                 <TD>
                     <DL>
-                    <DT>Fract& operator+=(const Fract& s)</DT>
+                    <DT ID="op_plus_eq">Fract& operator+=(const Fract& s)</DT>
                     <DD>
                         Add the parameter to this number and assign the sum
                         to this number. Return a reference to this number to
                         allow for function chaining.
                     </DD>
             <BR />
-                    <DT>Fract& operator-=(const Fract& s)</DT>
+                    <DT ID="op_minus_eq">Fract& operator-=(const Fract& s)</DT>
                     <DD>
                         Subtract the parameter from this number and assign the
                         difference to this number. Return a reference to this
                         number to allow for function chaining.
                     </DD>
             <BR />
-                    <DT>Fract& operator*=(const Fract& s)</DT>
+                    <DT ID="op_mult_eq">Fract& operator*=(const Fract& s)</DT>
                     <DD>
                         Multiply the parameter to this number and assign the
                         product to this number. Return a reference to this
                         number to allow for function chaining.
                     </DD>
             <BR />
-                    <DT>Fract& operator/=(const Fract& s)</DT>
+                    <DT ID="op_divide_eq">Fract& operator/=(const Fract& s)</DT>
                     <DD>
                         Divide this number by the parameter and assign the
                         quotient to this number. Return a reference to this
                         number to allow for function chaining.
                     </DD>
             <BR />
-                    <DT>Fract& operator%=(const Fract& s)</DT>
+                    <DT ID="op_mod_eq">Fract& operator%=(const Fract& s)</DT>
                     <DD>
                         <B>Note</B>: This is not the modulus operator.
             <BR /> 
@@ -596,7 +603,7 @@
                         number to allow for function chaining.
                     </DD>
             <BR />
-                    <DT>Fract& operator^=(const Fract& s)</DT>
+                    <DT ID="op_exp_eq">Fract& operator^=(const Fract& s)</DT>
                     <DD>
                         <B>Note</B>: This is not the bitwise XOR operator.
             <BR />
@@ -605,23 +612,23 @@
                         number to allow function chaining.
                     </DD>
             <BR />
-                    <DT>Fract& operator--()</DT>
+                    <DT ID="op_pre_dec">Fract& operator--()</DT>
                     <DD>
                         Decrement this number by 1 and return a reference
                         to the result (this number).
                     </DD>
             <BR />
-                    <DT>Fract operator--(int)</DT>
+                    <DT ID="op_post_dec">Fract operator--(int)</DT>
                     <DD>Decrement this number by 1 but
                         return the original value.</DD>
             <BR />
-                    <DT>Fract& operator++()</DT>
+                    <DT ID="op_pre_inc">Fract& operator++()</DT>
                     <DD>
                         Increment this number by 1 and return a reference
                         to the result (this number).
                     </DD>
             <BR />
-                    <DT>Fract operator++(int)</DT>
+                    <DT ID="op_post_inc">Fract operator++(int)</DT>
                     <DD>Increment this number by 1 but
                         return the original value.</DD>
                     </DL>
@@ -631,13 +638,15 @@
                 <TD>Type casts</TD>
                 <TD>
                     <DL>
-                    <DT>explicit operator Integer()const</DT>
+                    <DT ID="cast_int">explicit
+                        operator Integer()const</DT>
                     <DD>
                         Return the whole part of this number as
                         if calling <I>integer()</I>.
                     </DD>
             <BR />
-                    <DT>explicit operator Floating()const</DT>
+                    <DT ID="cast_float">explicit operator
+                        Floating()const</DT>
                     <DD>
                         Return the whole part of this number as
                         if calling <I>floating_point()</I>.
@@ -649,14 +658,14 @@
                 <TD>Constructors and destructor</TD>
                 <TD>
                     <DL>
-                    <DT>Fract(ld new_number = 0.0,
+                    <DT ID="con_default">Fract(ld new_number = 0.0,
                         size_type new_precision = k_default_prec)</DT>
                     <DD>
                         Construct a fraction from a floating point value and
                         remember the given precision, <I>new_precision</I>.
                     </DD>
             <BR />
-                    <DT>Fract(const str_type& str,
+                    <DT ID="con_str">Fract(const str_type& str,
                         size_type new_precision = k_default_prec)</DT>
                     <DD>
                         Construct an object from the visual representation of
@@ -664,39 +673,41 @@
                         slow since each digit has to be verified.
                     </DD>
             <BR />
-                    <DT>Fract(const Integer& whole,
+                    <DT ID="con_int">Fract(const Integer& whole,
                         size_type new_precision = k_default_prec)</DT>
                     <DD>
                         Construct an object from an integral value and a set
                         precision. The denominator shall be set to 1.
                     </DD>
             <BR />
-                    <DT>Fract(const Floating& whole)</DT>
+                    <DT ID="con_float">Fract(const Floating& whole)</DT>
                     <DD>
                         Construct an object from a floating point value. The
                         precision of the floating point value shall be
                         remembered by the constructed <I>Fract</I> object.
                     </DD>
             <BR />
-                    <DT>Fract(const Integer& new_numerator,
+                    <DT ID="con_int_int">Fract(const Integer& new_numerator,
                         const Integer& new_denominator,
                         size_type new_precision = k_default_prec)</DT>
                     <DD>Construct an object given the
                         numerator, denominator, and a set precision.</DD>
             <BR />
-                    <DT>Fract(const Fract&) = default</DT>
+                    <DT ID="con_copy">Fract(const Fract&) = default</DT>
                         <DD>Compiler generated copy constructor.</DD>
             <BR />
-                    <DT>Fract(Fract&&) = default</DT>
+                    <DT ID="con_move">Fract(Fract&&) = default</DT>
                         <DD>Compiler generated move constructor.</DD>
             <BR />
-                    <DT>Fract& operator=(const Fract&) = default</DT>
+                    <DT ID="con_copy_eq">Fract&
+                        operator=(const Fract&) = default</DT>
                         <DD>Compiler generated copy assignment operator.</DD>
             <BR />
-                    <DT>Fract& operator=(Fract&&) = default</DT>
+                    <DT ID="con_move_eq">Fract&
+                        operator=(Fract&&) = default</DT>
                         <DD>Compiler generated move assignment operator.</DD>
             <BR />
-                    <DT>~Fract() = default</DT>
+                    <DT ID="destruct">~Fract() = default</DT>
                         <DD>Compiler generated destructor.</DD>
                     </DL>
                 </TD>
@@ -707,47 +718,47 @@
                 <TD>Related non-members</TD>
                 <TD>
                     <DL>
-                    <DT>Fract operator+(Fract, const Fract&)</DT>
+                    <DT ID="op_plus">Fract operator+(Fract, const Fract&)</DT>
                         <DD>Add the two parameters together.</DD>
             <BR />
-                    <DT>Fract operator-(Fract, const Fract&)</DT>
+                    <DT ID="op_minus">Fract operator-(Fract, const Fract&)</DT>
                         <DD>Find the difference of the two parameters.</DD>
             <BR />
-                    <DT>Fract operator*(Fract, const Fract&)</DT>
+                    <DT ID="op_mult">Fract operator*(Fract, const Fract&)</DT>
                         <DD>Multiply the two parameters together.</DD>
             <BR />
-                    <DT>Fract operator/(Fract, const Fract&)</DT>
+                    <DT ID="op_divide">Fract operator/(Fract, const Fract&)</DT>
                         <DD>Divide the the first parameter by the second.</DD>
             <BR />
-                    <DT>Fract operator%(Fract, const Fract&)</DT>
+                    <DT ID="op_mod">Fract operator%(Fract, const Fract&)</DT>
                         <DD>Find the remainder.</DD>
             <BR />
-                    <DT>Fract operator^(Fract, const Fract&)</DT>
+                    <DT ID="op_exp">Fract operator^(Fract, const Fract&)</DT>
                         <DD>Exponentiate the first parameter by the second.</DD>
             <BR />
-                    <DT>bool operator==(const Fract&, const Fract&)</DT>
+                    <DT ID="op_is_eq">bool operator==(const Fract&, const Fract&)</DT>
                         <DD>Test if the two parameters are equal.</DD>
             <BR />
-                    <DT>bool operator!=(const Fract&, const Fract&)</DT>
+                    <DT ID="op_not_eq">bool operator!=(const Fract&, const Fract&)</DT>
                         <DD>Test if the two parameters are not equal.</DD>
             <BR />
-                    <DT>bool operator>=(const Fract&, const Fract&)</DT>
+                    <DT ID="op_geq">bool operator>=(const Fract&, const Fract&)</DT>
                     <DD>Test if the first parameter is
                         greater than or equal to the second.</DD>
             <BR />
-                    <DT>bool operator&lt;=(const Fract&, const Fract&)</DT>
+                    <DT ID="op_leq">bool operator&lt;=(const Fract&, const Fract&)</DT>
                     <DD>Test if the first parameter is
                         less than or equal to the second.</DD>
             <BR />
-                    <DT>bool operator>(const Fract&, const Fract&)</DT>
+                    <DT ID="op_g">bool operator>(const Fract&, const Fract&)</DT>
                     <DD>Test if the first parameter is
                         greater than the second.</DD>
             <BR />
-                    <DT>bool operator&lt;(const Fract&, const Fract&)</DT>
+                    <DT ID="op_l">bool operator&lt;(const Fract&, const Fract&)</DT>
                     <DD>Test if the first parameter is
                         less than the second.</DD>
             <BR />
-                    <DT>bool operator!(const Fract&)</DT>
+                    <DT ID="op_not">bool operator!(const Fract&)</DT>
                         <DD>Test if the parameter is equal to 0.</DD>
                     </DL>
                 </TD>
@@ -758,7 +769,7 @@
                 <TD>Related, global non-members</TD>
                 <TD>
                     <DL>
-                    <DT>void swap(Precision::General_Base::Fract&,
+                    <DT ID="g_swap">void swap(Precision::General_Base::Fract&,
                         Precision::General_Base::Fract&)
                         </DT>
                     <DD>Switch the value of the first

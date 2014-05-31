@@ -123,9 +123,6 @@ namespace Precision{
                     {return UINT_INST_(m_base.logical_shift_right(e));}
 
         //Read-only functions
-                bool is_integer()const
-                    {return true;}
-
                 sign_type sign()const
                     {return 1;}
 
@@ -179,7 +176,7 @@ namespace Precision{
 
         //Other modifiers
                 void sign(sign_type){}
-                    //Multiplies integer by a power of ten
+                    //Multiplies integer by a power of Base
                 void shift(lli tens_exp)
                     {m_base.shift(tens_exp);}
 

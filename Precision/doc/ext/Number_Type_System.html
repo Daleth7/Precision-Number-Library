@@ -35,10 +35,10 @@
             <UL><LI><I>Complex</I></LI></UL>
             The namespace qualifiers of each provided instantiation are:
             <BLOCKQUOTE><DL>
-                <DT><I>Base 10</I></DT><DD>Precision::FOO</DD>
-                <DT><I>Hexadecimal</I></DT><DD>Precision::Hexadecimal::FOO</DD>
-                <DT><I>Octal</I></DT><DD>Precision::Octal::FOO</DD>
-                <DT><I>ABC</I></DT><DD>Precision::ABC::FOO</DD>
+                <DT>Base 10</DT><DD>Precision::FOO</DD>
+                <DT>Hexadecimal</DT><DD>Precision::Hexadecimal::FOO</DD>
+                <DT>Octal</DT><DD>Precision::Octal::FOO</DD>
+                <DT>ABC</DT><DD>Precision::ABC::FOO</DD>
             </DL></BLOCKQUOTE>
             So, for example, to use the Float class in the Octal base, one would
             use <CODE>Precision::Octal::Float</CODE>.
@@ -84,7 +84,9 @@
             </OL>
             More information on how to instantiate the number types can be
             found
-            <A href="Precision/General_Base/Precision_Int_General_Base.html">here</A>.
+            <A
+            href="Precision/General_Base/Precision_Int_General_Base.html#template"
+            >here</A>.
             <BR />
             An example instantiation would be:
         </P>
@@ -94,7 +96,7 @@
         <LI>#include &lt;iostream></LI>
         <LI></LI>
         <LI>Precision::byte_type base = 13;</LI>
-        <LI>char images[base+1] = "0123456789ABC";</LI>
+        <LI>constexpr char images[base+1] = "0123456789ABC";</LI>
         <LI></LI>
         <LI>int main(){</LI>
         <LI>&nbsp;&nbsp;&nbsp;&nbsp;typedef
@@ -195,7 +197,7 @@
                         href="Precision/General_Base/Precision_UFract_General_Base.html"
                     >Precision::General_Base::UFract</A></LI>
                     <LI><A
-                        href="Precision/General_Base/Precision_InterBase_Functions.html"
+                        href="Precision/Precision_InterBase_Functions.html"
                     >Precision::convert</A></LI>
                 </UL>
                 <LI>Miscellaneous:</LI>
@@ -210,6 +212,914 @@
                     >Precision::exception</A></LI>
                 </UL>
             </UL>
+            <BR />
+            <BR />
+            The general interfaces are as follows:
+            <BR />
         </P>
+        <TABLE WIDTH=90%>
+            <TR>
+                <TH>Namespace</TH>
+                <TH>Class</TH>
+                <TH>Category</TH>
+                <TH>Member</TH>
+            </TR>
+            <TR>
+                <TD ROWSPAN=19>General_Base</TD>
+                <TD ROWSPAN=7>
+                    <A href="Precision/General_Base/Precision_Int_General_Base.html">
+                    Int&lt;CharT, _0, ByteType, Base,
+                    _symbols, Container, SignType></A></TD>
+                <TD>Types</TD>
+                <TD>
+                    <DL>
+                    <DT>str_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#str_type">details</A>]</SUB></DT>
+                    <DT>lli
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#lli">details</A>]</SUB></DT>
+                    <DT>ld
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#ld">details</A>]</SUB></DT>
+                    <DT>image_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#image_type">details</A>]</SUB></DT>
+                    <DT>digit_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#digit_type">details</A>]</SUB></DT>
+                    <DT>diglist_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#diglist_type">details</A>]</SUB></DT>
+                    <DT>digit_10_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#digit_10_type">details</A>]</SUB></DT>
+                    <DT>sign_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#sign_type">details</A>]</SUB></DT>
+                    <DT>size_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#size_type">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Read only</TD>
+                <TD>
+                    <DL>
+                    <DT>sign_type sign()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#sign">details</A>]</SUB></DT>
+                    <DT>str_type str()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#str">details</A>]</SUB></DT>
+                    <DT>str_type sci_note(size_type
+                        precision = k_display_prec)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#sci_note">details</A>]</SUB></DT>
+                    <DT>str_type sci_note_w_spaces(size_type
+                        precision = k_display_prec)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#sci_note_w_spaces">details</A>]</SUB></DT>
+                    <DT>Int magnitude()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#magnitude">details</A>]</SUB></DT>
+                    <DT>size_type count_digits()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#count_digits">details</A>]</SUB></DT>
+                    <DT>short compare(const Int& s)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#compare">details</A>]</SUB></DT>
+                    <DT>Int operator-()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_negate">details</A>]</SUB></DT>
+                    <DT>Int operator~()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_complement">details</A>]</SUB></DT>
+                    <DT>bool even()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#even">details</A>]</SUB></DT>
+                    <DT>bool odd()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#odd">details</A>]</SUB></DT>
+                    <DT>bool positive()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#positive">details</A>]</SUB></DT>
+                    <DT>bool negative()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#negative">details</A>]</SUB></DT>
+                    <DT>image_type digit(size_type index)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#digit">details</A>]</SUB></DT>
+                    <DT>digit_10_type digit_10(size_type index)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#digit_10">details</A>]</SUB></DT>
+                    <DT>static digit_10_type base()
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#base">details</A>]</SUB></DT>
+                    <DT>static image_type const* digit0()
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#digit0">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Modifiers</TD>
+                <TD>
+                    <DL>
+                    <DT>void shift(lli count)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#shift">details</A>]</SUB></DT>
+                    <DT>void shift_left(size_type count)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#shift_left">details</A>]</SUB></DT>
+                    <DT>void shift_right(size_type count)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#shift_right">details</A>]</SUB></DT>
+                    <DT>void sign(sign_type new_sign)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#sign_mod">details</A>]</SUB></DT>
+                    <DT>void negate()
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#negate">details</A>]</SUB></DT>
+                    <DT>void swap(Int& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#swap">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Arithmetic operators</TD>
+                <TD>
+                    <DL>
+                    <DT>Int& operator+=(const Int& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_plus_eq">details</A>]</SUB></DT>
+                    <DT>Int& operator-=(const Int& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_minus_eq">details</A>]</SUB></DT>
+                    <DT>Int& operator*=(const Int& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_mult_eq">details</A>]</SUB></DT>
+                    <DT>Int& operator/=(const Int& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_divide_eq">details</A>]</SUB></DT>
+                    <DT>Int& operator%=(const Int& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_mod_eq">details</A>]</SUB></DT>
+                    <DT>Int& operator--()
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_pre_dec">details</A>]</SUB></DT>
+                    <DT>Int operator--(int)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_post_dec">details</A>]</SUB></DT>
+                    <DT>Int& operator++()
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_pre_inc">details</A>]</SUB></DT>
+                    <DT>Int operator++(int)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_post_inc">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Bitwise operators</TD>
+                <TD>
+                    <DL>
+                    <DT>Int& operator&=(const Int& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_and_eq">details</A>]</SUB></DT>
+                    <DT>Int& operator|=(const Int& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_or_eq">details</A>]</SUB></DT>
+                    <DT>Int& operator^=(const Int& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_xor_eq">details</A>]</SUB></DT>
+                    <DT>Int& operator&lt;&lt;=(const Int& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_lshift_eq">details</A>]</SUB></DT>
+                    <DT>Int& operator>>=(const Int& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_rshift_eq">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Logical operators</TD>
+                <TD>
+                    <DL>
+                    <DT>Int logical_and(const Int& s)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#logical_and">details</A>]</SUB></DT>
+                    <DT>Int logical_or(const Int& s)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#logical_or">details</A>]</SUB></DT>
+                    <DT>Int logical_xor(const Int& s)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#logical_xor">details</A>]</SUB></DT>
+                    <DT>Int logical_inversion()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#logical_inversion">details</A>]</SUB></DT>
+                    <DT>Int logical_shift(lli count)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#logical_shift">details</A>]</SUB></DT>
+                    <DT>Int logical_shift_left(size_type count)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#logical_lshift">details</A>]</SUB></DT>
+                    <DT>Int logical_shift_right(size_type count)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#logical_rshift">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Constructors and destructor</TD>
+                <TD>
+                    <DL>
+                    <DT>Int(lli new_number = 0)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#con_default">details</A>]</SUB></DT>
+                    <DT>Int(const str_type& str)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#con_str">details</A>]</SUB></DT>
+                    <DT>Int(const diglist_type& new_number,
+                        sign_type new_sign)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#con_dig">details</A>]</SUB></DT>
+                    <DT>Int(const Int&) = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#con_copy">details</A>]</SUB></DT>
+                    <DT>Int(Int&&) = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#con_move">details</A>]</SUB></DT>
+                    <DT>Int& operator=(const Int&) = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#con_copy_eq">details</A>]</SUB></DT>
+                    <DT>Int& operator=(Int&&) = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#con_move_eq">details</A>]</SUB></DT>
+                    <DT>~Int() = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#con_destruct">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD ROWSPAN=6>
+                    <A href="Precision/General_Base/Precision_Float_General_Base.html">
+                    Float&lt;CharT, _0, ByteType, Base,
+                    _symbols, Container, SignType></A></TD>
+                <TD>Types</TD>
+                <TD>
+                    <DL>
+                    <DT>Integer
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#Integer_t">details</A>]</SUB></DT>
+                    <DT>UInteger
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#UInteger">details</A>]</SUB></DT>
+                    <DT>str_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#str_type">details</A>]</SUB></DT>
+                    <DT>lli
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#lli">details</A>]</SUB></DT>
+                    <DT>ld
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#ld">details</A>]</SUB></DT>
+                    <DT>image_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#image_type">details</A>]</SUB></DT>
+                    <DT>digit_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#digit_type">details</A>]</SUB></DT>
+                    <DT>diglist_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#diglist_type">details</A>]</SUB></DT>
+                    <DT>digit_10_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#digit_10_type">details</A>]</SUB></DT>
+                    <DT>sign_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#sign_type">details</A>]</SUB></DT>
+                    <DT>size_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#size_type">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Read only</TD>
+                <TD>
+                    <DL>
+                    <DT>sign_type sign()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#sign">details</A>]</SUB></DT>
+                    <DT>str_type str(
+                        size_type precision = 0,
+                        bool inShowFull = false)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#str">details</A>]</SUB></DT>
+                    <DT>str_type sci_note(size_type
+                        precision = k_display_prec,
+                        bool inShowFull = false)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#sci_note">details</A>]</SUB></DT>
+                    <DT>str_type sci_note_w_spaces(size_type
+                        precision = k_display_prec,
+                        bool inShowFull = false)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#sci_note_w_spaces">details</A>]</SUB></DT>
+                    <DT>Float magnitude()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#magnitude">details</A>]</SUB></DT>
+                    <DT>size_type count_digits()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#count_digits">details</A>]</SUB></DT>
+                    <DT>size_type count_left_digits()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#count_ldigits">details</A>]</SUB></DT>
+                    <DT>size_type count_right_digits()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#count_rdigits">details</A>]</SUB></DT>
+                    <DT>size_type precision()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#precision">details</A>]</SUB></DT>
+                    <DT>short compare(const Float& s)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#compare">details</A>]</SUB></DT>
+                    <DT>Integer integer()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#integer">details</A>]</SUB></DT>
+                    <DT>bool show_full()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#show_full">details</A>]</SUB></DT>
+                    <DT>Float operator-()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_negate">details</A>]</SUB></DT>
+                    <DT>Float operator~()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_complement">details</A>]</SUB></DT>
+                    <DT>bool even()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#even">details</A>]</SUB></DT>
+                    <DT>bool odd()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#odd">details</A>]</SUB></DT>
+                    <DT>bool positive()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#positive">details</A>]</SUB></DT>
+                    <DT>bool negative()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#negative">details</A>]</SUB></DT>
+                    <DT>Float remainder(const Float& s)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#remainder">details</A>]</SUB></DT>
+                    <DT>Float inverse()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#inverse">details</A>]</SUB></DT>
+                    <DT>bool is_integer()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#is_integer">details</A>]</SUB></DT>
+                    <DT>image_type digit(size_type index)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#digit">details</A>]</SUB></DT>
+                    <DT>digit_10_type digit_10(size_type index)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#digit_10">details</A>]</SUB></DT>
+                    <DT>static digit_10_type base()
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#base">details</A>]</SUB></DT>
+                    <DT>static image_type const* digit0()
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#digit0">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Modifiers</TD>
+                <TD>
+                    <DL>
+                    <DT>bool show_full(bool inShowfull)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#show_full_mod">details</A>]</SUB></DT>
+                    <DT>void shift(lli count)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#shift">details</A>]</SUB></DT>
+                    <DT>void shift_left(size_type count)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#shift_left">details</A>]</SUB></DT>
+                    <DT>void shift_right(size_type count)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#shift_right">details</A>]</SUB></DT>
+                    <DT>void sign(sign_type new_sign)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#sign_mod">details</A>]</SUB></DT>
+                    <DT>void negate()
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#negate">details</A>]</SUB></DT>
+                    <DT>Float& exponentiate(const Integer& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#exponentiate">details</A>]</SUB></DT>
+                    <DT>Float& exponentiate(const Float& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#exponentiatef">details</A>]</SUB></DT>
+                    <DT>Float& invert()
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#invert">details</A>]</SUB></DT>
+                    <DT>void swap(Float& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#swap">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Arithmetic operators</TD>
+                <TD>
+                    <DL>
+                    <DT>Float& operator+=(const Float& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_plus_eq">details</A>]</SUB></DT>
+                    <DT>Float& operator-=(const Float& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_minus_eq">details</A>]</SUB></DT>
+                    <DT>Float& operator*=(const Float& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_mult_eq">details</A>]</SUB></DT>
+                    <DT>Float& operator/=(const Float& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_divide_eq">details</A>]</SUB></DT>
+                    <DT>Float& operator%=(const Float& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_mod_eq">details</A>]</SUB></DT>
+                    <DT>Float& operator^=(const Float& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_exp_eq">details</A>]</SUB></DT>
+                    <DT>Float& operator--()
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_pre_dec">details</A>]</SUB></DT>
+                    <DT>Float operator--(int)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_post_dec">details</A>]</SUB></DT>
+                    <DT>Float& operator++()
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_pre_inc">details</A>]</SUB></DT>
+                    <DT>Float operator++(int)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_post_inc">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Type Cast</TD>
+                <TD>
+                    <DL>
+                    <DT>explicit operator Integer()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#cast_int">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Constructors and destructor</TD>
+                <TD>
+                    <DL>
+                    <DT>Float(ld new_number = 0.0,
+                        size_type new_precision = k_default_prec)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#con_default">details</A>]</SUB></DT>
+                    <DT>Float(const str_type& str,
+                        size_type new_precision = k_default_prec)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#con_str">details</A>]</SUB></DT>
+                    <DT>Float(const Integer& new_number)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#con_int">details</A>]</SUB></DT>
+                    <DT>Float(const Integer& new_number,
+                        size_type new_precision = k_default_prec)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#con_int_size">details</A>]</SUB></DT>
+                    <DT>Float(const UInteger& new_number)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#con_uint">details</A>]</SUB></DT>
+                    <DT>Float(const Float&) = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#con_copy">details</A>]</SUB></DT>
+                    <DT>Float(Float&&) = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#con_move">details</A>]</SUB></DT>
+                    <DT>Float& operator=(const Float&) = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#con_copy_eq">details</A>]</SUB></DT>
+                    <DT>Float& operator=(Float&&) = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#con_move_eq">details</A>]</SUB></DT>
+                    <DT>~Float() = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#con_destruct">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD ROWSPAN=6>
+                    <A href="Precision/General_Base/Precision_Fract_General_Base.html">
+                    Fract&lt;CharT, _0, ByteType, Base,
+                    _symbols, Container, SignType></A></TD>
+                <TD>Types</TD>
+                <TD>
+                    <DL>
+                    <DT>Integer
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#Integer_t">details</A>]</SUB></DT>
+                    <DT>Float
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#Float">details</A>]</SUB></DT>
+                    <DT>str_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#str_type">details</A>]</SUB></DT>
+                    <DT>lli
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#lli">details</A>]</SUB></DT>
+                    <DT>ld
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#ld">details</A>]</SUB></DT>
+                    <DT>image_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#image_type">details</A>]</SUB></DT>
+                    <DT>digit_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#digit_type">details</A>]</SUB></DT>
+                    <DT>diglist_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#diglist_type">details</A>]</SUB></DT>
+                    <DT>digit_10_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#digit_10_type">details</A>]</SUB></DT>
+                    <DT>sign_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#sign_type">details</A>]</SUB></DT>
+                    <DT>size_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#size_type">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Read only</TD>
+                <TD>
+                    <DL>
+                    <DT>sign_type sign()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#sign">details</A>]</SUB></DT>
+                    <DT>str_type str()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#str">details</A>]</SUB></DT>
+                    <DT>str_type mixed()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#mixed">details</A>]</SUB></DT>
+                    <DT>Fract magnitude()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#magnitude">details</A>]</SUB></DT>
+                    <DT>size_type precision()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#precision">details</A>]</SUB></DT>
+                    <DT>short compare(const Fract& s)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#compare">details</A>]</SUB></DT>
+                    <DT>Integer whole()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#whole">details</A>]</SUB></DT>
+                    <DT>Integer integer()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#integer">details</A>]</SUB></DT>
+                    <DT>Floating floating_point()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#floating_point">details</A>]</SUB></DT>
+                    <DT>Floating decimal()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#decimal">details</A>]</SUB></DT>
+                    <DT>Integer gcd(const Fract& s)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#gcd">details</A>]</SUB></DT>
+                    <DT>Fract operator-()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_negate">details</A>]</SUB></DT>
+                    <DT>Fract operator~()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_complement">details</A>]</SUB></DT>
+                    <DT>bool even()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#even">details</A>]</SUB></DT>
+                    <DT>bool odd()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#odd">details</A>]</SUB></DT>
+                    <DT>bool positive()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#positive">details</A>]</SUB></DT>
+                    <DT>bool negative()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#negative">details</A>]</SUB></DT>
+                    <DT>Integer numerator()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#numerator">details</A>]</SUB></DT>
+                    <DT>Integer denominator()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#denominator">details</A>]</SUB></DT>
+                    <DT>Fract remainder(const Fract& s)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#remainder">details</A>]</SUB></DT>
+                    <DT>Fract inverse()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#inverse">details</A>]</SUB></DT>
+                    <DT>bool is_integer()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#is_integer">details</A>]</SUB></DT>
+                    <DT>image_type digit(size_type index)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#digit">details</A>]</SUB></DT>
+                    <DT>digit_10_type digit_10(size_type index)const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#digit_10">details</A>]</SUB></DT>
+                    <DT>static digit_10_type base()
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#base">details</A>]</SUB></DT>
+                    <DT>static image_type const* digit0()
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#digit0">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Modifiers</TD>
+                <TD>
+                    <DL>
+                    <DT>void precision(size_type new_precision)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#precision_mod">details</A>]</SUB></DT>
+                    <DT>void numerator(const Integer& new_numerator)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#numerator_mod">details</A>]</SUB></DT>
+                    <DT>void denominator(const Integer& new_denominator)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#denominator_mod">details</A>]</SUB></DT>
+                    <DT>void shift(lli count)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#shift">details</A>]</SUB></DT>
+                    <DT>void shift_left(size_type count)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#shift_left">details</A>]</SUB></DT>
+                    <DT>void shift_right(size_type count)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#shift_right">details</A>]</SUB></DT>
+                    <DT>void sign(sign_type new_sign)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#sign_mod">details</A>]</SUB></DT>
+                    <DT>void negate()
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#negate">details</A>]</SUB></DT>
+                    <DT>Fract& exponentiate(const Integer& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#exponentiate">details</A>]</SUB></DT>
+                    <DT>Fract& exponentiate(const Fract& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#exponentiatef">details</A>]</SUB></DT>
+                    <DT>Fract& invert()
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#invert">details</A>]</SUB></DT>
+                    <DT>void swap(Fract& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#swap">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Arithmetic operators</TD>
+                <TD>
+                    <DL>
+                    <DT>Fract& operator+=(const Fract& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_plus_eq">details</A>]</SUB></DT>
+                    <DT>Fract& operator-=(const Fract& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_minus_eq">details</A>]</SUB></DT>
+                    <DT>Fract& operator*=(const Fract& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_mult_eq">details</A>]</SUB></DT>
+                    <DT>Fract& operator/=(const Fract& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_divide_eq">details</A>]</SUB></DT>
+                    <DT>Fract& operator%=(const Fract& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_mod_eq">details</A>]</SUB></DT>
+                    <DT>Fract& operator^=(const Fract& s)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_exp_eq">details</A>]</SUB></DT>
+                    <DT>Fract& operator--()
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_pre_dec">details</A>]</SUB></DT>
+                    <DT>Fract operator--(int)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_post_dec">details</A>]</SUB></DT>
+                    <DT>Fract& operator++()
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_pre_inc">details</A>]</SUB></DT>
+                    <DT>Fract operator++(int)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_post_inc">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Type Cast</TD>
+                <TD>
+                    <DL>
+                    <DT>explicit operator Integer()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#cast_int">details</A>]</SUB></DT>
+                    <DT>explicit operator Floating()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#cast_float">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Constructors and destructor</TD>
+                <TD>
+                    <DL>
+                    <DT>Fract(ld new_number = 0.0,
+                        size_type new_precision = k_default_prec)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#con_default">details</A>]</SUB></DT>
+                    <DT>Fract(const str_type& str,
+                        size_type new_precision = k_default_prec)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#con_str">details</A>]</SUB></DT>
+                    <DT>Fract(const Integer& new_number,
+                        size_type new_precision = k_default_prec)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#con_int">details</A>]</SUB></DT>
+                    <DT>Fract(const Floating& new_number)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#con_float">details</A>]</SUB></DT>
+                    <DT>Fract(const Integer& new_numerator,
+                        const Integer& new_denominator,
+                        size_type new_precision = k_default_prec)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#con_int">details</A>]</SUB></DT>
+                    <DT>Fract(const Fract&) = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#con_copy">details</A>]</SUB></DT>
+                    <DT>Fract(Fract&&) = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#con_move">details</A>]</SUB></DT>
+                    <DT>Fract& operator=(const Fract&) = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#con_copy_eq">details</A>]</SUB></DT>
+                    <DT>Fract& operator=(Fract&&) = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#con_move_eq">details</A>]</SUB></DT>
+                    <DT>~Fract() = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#con_destruct">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD></TD>
+                <TD></TD>
+                <TD>Related non-members</TD>
+                <TD>
+                    <DL>
+                    <DT>Int operator+(Int, const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_plus">details</A>]</SUB></DT>
+                    <DT>Int operator-(Int, const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_minus">details</A>]</SUB></DT>
+                    <DT>Int operator*(Int, const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_mult">details</A>]</SUB></DT>
+                    <DT>Int operator/(Int, const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_divide">details</A>]</SUB></DT>
+                    <DT>Int operator%(Int, const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_mod">details</A>]</SUB></DT>
+                    <DT>Int operator&(Int, const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_and">details</A>]</SUB></DT>
+                    <DT>Int operator|(Int, const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_or">details</A>]</SUB></DT>
+                    <DT>Int operator^(Int, const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_xor">details</A>]</SUB></DT>
+                    <DT>Int operator&lt;&lt;(Int, const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_lshift">details</A>]</SUB></DT>
+                    <DT>Int operator>>(Int, const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_rshift">details</A>]</SUB></DT>
+                    <DT>bool operator==(const Int&, const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_is_eq">details</A>]</SUB></DT>
+                    <DT>bool operator!=(const Int&, const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_not_eq">details</A>]</SUB></DT>
+                    <DT>bool operator>=(const Int&, const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_geq">details</A>]</SUB></DT>
+                    <DT>bool operator&lt;=(const Int&, const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_leq">details</A>]</SUB></DT>
+                    <DT>bool operator>(const Int&, const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_g">details</A>]</SUB></DT>
+                    <DT>bool operator&lt;(const Int&, const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_l">details</A>]</SUB></DT>
+                    <DT>bool operator!(const Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#op_not">details</A>]</SUB></DT>
+                    <DT>Float operator+(Float, const Float&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_plus">details</A>]</SUB></DT>
+                    <DT>Float operator-(Float, const Float&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_minus">details</A>]</SUB></DT>
+                    <DT>Float operator*(Float, const Float&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_mult">details</A>]</SUB></DT>
+                    <DT>Float operator/(Float, const Float&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_divide">details</A>]</SUB></DT>
+                    <DT>Float operator%(Float, const Float&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_mod">details</A>]</SUB></DT>
+                    <DT>Float operator^(Float, const Float&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_exp">details</A>]</SUB></DT>
+                    <DT>bool operator==(const Float&, const Float&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_is_eq">details</A>]</SUB></DT>
+                    <DT>bool operator!=(const Float&, const Float&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_not_eq">details</A>]</SUB></DT>
+                    <DT>bool operator>=(const Float&, const Float&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_geq">details</A>]</SUB></DT>
+                    <DT>bool operator&lt;=(const Float&, const Float&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_leq">details</A>]</SUB></DT>
+                    <DT>bool operator>(const Float&, const Float&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_g">details</A>]</SUB></DT>
+                    <DT>bool operator&lt;(const Float&, const Float&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_l">details</A>]</SUB></DT>
+                    <DT>bool operator!(const Float&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#op_not">details</A>]</SUB></DT>
+                    <DT>Fract operator+(Fract, const Fract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_plus">details</A>]</SUB></DT>
+                    <DT>Fract operator-(Fract, const Fract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_minus">details</A>]</SUB></DT>
+                    <DT>Fract operator*(Fract, const Fract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_mult">details</A>]</SUB></DT>
+                    <DT>Fract operator/(Fract, const Fract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_divide">details</A>]</SUB></DT>
+                    <DT>Fract operator%(Fract, const Fract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_mod">details</A>]</SUB></DT>
+                    <DT>Fract operator^(Fract, const Fract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_exp">details</A>]</SUB></DT>
+                    <DT>bool operator==(const Fract&, const Fract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_is_eq">details</A>]</SUB></DT>
+                    <DT>bool operator!=(const Fract&, const Fract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_not_eq">details</A>]</SUB></DT>
+                    <DT>bool operator>=(const Fract&, const Fract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_geq">details</A>]</SUB></DT>
+                    <DT>bool operator&lt;=(const Fract&, const Fract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_leq">details</A>]</SUB></DT>
+                    <DT>bool operator>(const Fract&, const Fract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_g">details</A>]</SUB></DT>
+                    <DT>bool operator&lt;(const Fract&, const Fract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_l">details</A>]</SUB></DT>
+                    <DT>bool operator!(const Fract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#op_not">details</A>]</SUB></DT>
+                    <DT>UInt operator+(UInt, const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_plus">details</A>]</SUB></DT>
+                    <DT>UInt operator-(UInt, const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_minus">details</A>]</SUB></DT>
+                    <DT>UInt operator*(UInt, const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_mult">details</A>]</SUB></DT>
+                    <DT>UInt operator/(UInt, const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_divide">details</A>]</SUB></DT>
+                    <DT>UInt operator%(UInt, const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_mod">details</A>]</SUB></DT>
+                    <DT>UInt operator&(UInt, const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_and">details</A>]</SUB></DT>
+                    <DT>UInt operator|(UInt, const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_or">details</A>]</SUB></DT>
+                    <DT>UInt operator^(UInt, const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_xor">details</A>]</SUB></DT>
+                    <DT>UInt operator&lt;&lt;(UInt, const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_lshift">details</A>]</SUB></DT>
+                    <DT>UInt operator>>(UInt, const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_rshift">details</A>]</SUB></DT>
+                    <DT>bool operator==(const UInt&, const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_is_eq">details</A>]</SUB></DT>
+                    <DT>bool operator!=(const UInt&, const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_not_eq">details</A>]</SUB></DT>
+                    <DT>bool operator>=(const UInt&, const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_geq">details</A>]</SUB></DT>
+                    <DT>bool operator&lt;=(const UInt&, const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_leq">details</A>]</SUB></DT>
+                    <DT>bool operator>(const UInt&, const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_g">details</A>]</SUB></DT>
+                    <DT>bool operator&lt;(const UInt&, const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_l">details</A>]</SUB></DT>
+                    <DT>bool operator!(const UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#op_not">details</A>]</SUB></DT>
+                    <DT>UFloat operator+(UFloat, const UFloat&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFloat_General_Base.html#op_plus">details</A>]</SUB></DT>
+                    <DT>UFloat operator-(UFloat, const UFloat&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFloat_General_Base.html#op_minus">details</A>]</SUB></DT>
+                    <DT>UFloat operator*(UFloat, const UFloat&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFloat_General_Base.html#op_mult">details</A>]</SUB></DT>
+                    <DT>UFloat operator/(UFloat, const UFloat&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFloat_General_Base.html#op_divide">details</A>]</SUB></DT>
+                    <DT>UFloat operator%(UFloat, const UFloat&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFloat_General_Base.html#op_mod">details</A>]</SUB></DT>
+                    <DT>UFloat operator^(UFloat, const UFloat&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFloat_General_Base.html#op_exp">details</A>]</SUB></DT>
+                    <DT>bool operator==(const UFloat&, const UFloat&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFloat_General_Base.html#op_is_eq">details</A>]</SUB></DT>
+                    <DT>bool operator!=(const UFloat&, const UFloat&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFloat_General_Base.html#op_not_eq">details</A>]</SUB></DT>
+                    <DT>bool operator>=(const UFloat&, const UFloat&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFloat_General_Base.html#op_geq">details</A>]</SUB></DT>
+                    <DT>bool operator&lt;=(const UFloat&, const UFloat&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFloat_General_Base.html#op_leq">details</A>]</SUB></DT>
+                    <DT>bool operator>(const UFloat&, const UFloat&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFloat_General_Base.html#op_g">details</A>]</SUB></DT>
+                    <DT>bool operator&lt;(const UFloat&, const UFloat&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFloat_General_Base.html#op_l">details</A>]</SUB></DT>
+                    <DT>bool operator!(const UFloat&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFloat_General_Base.html#op_not">details</A>]</SUB></DT>
+                    <DT>UFract operator+(UFract, const UFract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFract_General_Base.html#op_plus">details</A>]</SUB></DT>
+                    <DT>UFract operator-(UFract, const UFract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFract_General_Base.html#op_minus">details</A>]</SUB></DT>
+                    <DT>UFract operator*(UFract, const UFract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFract_General_Base.html#op_mult">details</A>]</SUB></DT>
+                    <DT>UFract operator/(UFract, const UFract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFract_General_Base.html#op_divide">details</A>]</SUB></DT>
+                    <DT>UFract operator%(UFract, const UFract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFract_General_Base.html#op_mod">details</A>]</SUB></DT>
+                    <DT>UFract operator^(UFract, const UFract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFract_General_Base.html#op_exp">details</A>]</SUB></DT>
+                    <DT>bool operator==(const UFract&, const UFract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFract_General_Base.html#op_is_eq">details</A>]</SUB></DT>
+                    <DT>bool operator!=(const UFract&, const UFract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFract_General_Base.html#op_not_eq">details</A>]</SUB></DT>
+                    <DT>bool operator>=(const UFract&, const UFract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFract_General_Base.html#op_geq">details</A>]</SUB></DT>
+                    <DT>bool operator&lt;=(const UFract&, const UFract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFract_General_Base.html#op_leq">details</A>]</SUB></DT>
+                    <DT>bool operator>(const UFract&, const UFract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFract_General_Base.html#op_g">details</A>]</SUB></DT>
+                    <DT>bool operator&lt;(const UFract&, const UFract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFract_General_Base.html#op_l">details</A>]</SUB></DT>
+                    <DT>bool operator!(const UFract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFract_General_Base.html#op_not">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Global</TD>
+                <TD></TD>
+                <TD>Related, global non-members</TD>
+                <TD>
+                    <DL>
+                    <DT>void swap(Precision::General_Base::Int&,
+                        Precision::General_Base::Int&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Int_General_Base.html#g_swap">details</A>]</SUB></DT>
+                    <DT>void swap(Precision::General_Base::Float&,
+                        Precision::General_Base::Float&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Float_General_Base.html#g_swap">details</A>]</SUB></DT>
+                    <DT>void swap(Precision::General_Base::Fract&,
+                        Precision::General_Base::Fract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_Fract_General_Base.html#g_swap">details</A>]</SUB></DT>
+                    <DT>void swap(Precision::General_Base::UInt&,
+                        Precision::General_Base::UInt&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UInt_General_Base.html#g_swap">details</A>]</SUB></DT>
+                    <DT>void swap(Precision::General_Base::UFloat&,
+                        Precision::General_Base::UFloat&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFloat_General_Base.html#g_swap">details</A>]</SUB></DT>
+                    <DT>void swap(Precision::General_Base::UFract&,
+                        Precision::General_Base::UFract&)
+                        <SUB>[<A href="Precision/General_Base/Precision_UFract_General_Base.html#g_swap">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD ROWSPAN=4></TD>
+                <TD ROWSPAN=4>SignClass</TD>
+                <TD>Types</TD>
+                <TD>
+                    <DL>
+                    <DT>signed_type
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#signed_type">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Read Only</TD>
+                <TD>
+                    <DL>
+                    <DT>signed_type value()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#value">details</A>]</SUB></DT>
+                    <DT>bool positive()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#positive">details</A>]</SUB></DT>
+                    <DT>bool negative()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#negative">details</A>]</SUB></DT>
+                    <DT>operator signed_type()const
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#cast_signed">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Modifier</TD>
+                <TD>
+                    <DL>
+                    <DT>void flip()
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#flip">details</A>]</SUB></DT>
+                    <DT>void negate()
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#negate">details</A>]</SUB></DT>
+                    <DT>void assign(signed_type new_value)
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#assign">details</A>]</SUB></DT>
+                    <DT>void make_positive()
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#make_pos">details</A>]</SUB></DT>
+                    <DT>void make_negative()
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#make_neg">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Constructors and Destructor</TD>
+                <TD>
+                    <DL>
+                    <DT>SignClass(signed_type new_value)
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#con">details</A>]</SUB></DT>
+                    <DT>SignClass() = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#con_default">details</A>]</SUB></DT>
+                    <DT>SignClass(const SignClass&) = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#con_copy">details</A>]</SUB></DT>
+                    <DT>SignClass(SignClass&&) = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#con_move">details</A>]</SUB></DT>
+                    <DT>SignClass& operator=(const SignClass&) = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#con_copy_eq">details</A>]</SUB></DT>
+                    <DT>SignClass& operator=(SignClass&&) = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#con_move_eq">details</A>]</SUB></DT>
+                    <DT>~SignClass() = default
+                        <SUB>[<A href="Precision/General_Base/Precision_Sign_Class.html#destruct">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD ROWSPAN=3></TD>
+                <TD ROWSPAN=3>exception</TD>
+                <TD>Types</TD>
+                <TD>
+                    <DL>
+                    <DT>code
+                        <SUB>[<A href="Precision/General_Base/Impl/Precision_Exception.html#code">details</A>]</SUB></DT>
+                    <DT>str_type
+                        <SUB>[<A href="Precision/General_Base/Impl/Precision_Exception.html#str_type">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Read Only</TD>
+                <TD>
+                    <DL>
+                    <DT>const char* what()const noexcept
+                        <SUB>[<A href="Precision/General_Base/Impl/Precision_Exception.html#what">details</A>]</SUB></DT>
+                    <DT>code type()const noexcept
+                        <SUB>[<A href="Precision/General_Base/Impl/Precision_Exception.html#type">details</A>]</SUB></DT>
+                    <DT>const char* source()const noexcept
+                        <SUB>[<A href="Precision/General_Base/Impl/Precision_Exception.html#source">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Constructors and Destructor</TD>
+                <TD>
+                    <DL>
+                    <DT>exception(code err,
+                        const char* src="Unknown source")noexcept
+                        <SUB>[<A href="Precision/General_Base/Impl/Precision_Exception.html#con">details</A>]</SUB></DT>
+                    <DT>explicit exception(code, const str_type&)noexcept
+                        <SUB>[<A href="Precision/General_Base/Impl/Precision_Exception.html#con2">details</A>]</SUB></DT>
+                    <DT>exception(const exception&) = default
+                        <SUB>[<A href="Precision/General_Base/Impl/Precision_Exception.html#con_copy">details</A>]</SUB></DT>
+                    <DT>exception& operator=(const exception&) = default
+                        <SUB>[<A href="Precision/General_Base/Impl/Precision_Exception.html#con_copy_eq">details</A>]</SUB></DT>
+                    <DT>~exception()
+                        <SUB>[<A href="Precision/General_Base/Impl/Precision_Exception.html#destruct">details</A>]</SUB></DT>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD ROWSPAN=20>Tag</TD>
+                <TD COLSPAN=20>Integral
+                    <SUB>[<A href="Precision/General_Base/Impl/Precision_Tags.html#Integral">details</A>]</SUB></TD>
+            </TR>
+            <TR><TD COLSPAN=20>Floating_Point
+                <SUB>[<A href="Precision/General_Base/Impl/Precision_Tags.html#Float">details</A>]</SUB></TD></TR>
+            <TR><TD COLSPAN=20>Fraction
+                <SUB>[<A href="Precision/General_Base/Impl/Precision_Tags.html#Fraction">details</A>]</SUB></TD></TR>
+            <TR><TD COLSPAN=20>Complex
+                <SUB>[<A href="Precision/General_Base/Impl/Precision_Tags.html#Complex">details</A>]</SUB></TD></TR>
+            <TR><TD COLSPAN=20>Polar
+                <SUB>[<A href="Precision/General_Base/Impl/Precision_Tags.html#Polar">details</A>]</SUB></TD></TR>
+            <TR><TD COLSPAN=20>Unsigned
+                <SUB>[<A href="Precision/General_Base/Impl/Precision_Tags.html#Unsigned">details</A>]</SUB></TD></TR>
+            <TR><TD COLSPAN=20>Signed
+                <SUB>[<A href="Precision/General_Base/Impl/Precision_Tags.html#Signed">details</A>]</SUB></TD></TR>
+            <TR><TD COLSPAN=20>Set
+                <SUB>[<A href="Precision/General_Base/Impl/Precision_Tags.html#Set">details</A>]</SUB></TD></TR>
+        </TABLE>
     </BODY>
 </HTML>

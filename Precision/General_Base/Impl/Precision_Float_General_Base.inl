@@ -403,10 +403,9 @@ namespace Precision{
                 //Use std::fixed to ensure converting the whole number
                 ss << std::fixed << (inFP * newsign);
             std::string s(ss.str());
-            const size_t pos(s.find('.')), e(s.size() - pos - 1);
+            const size_type pos(s.find('.')), e(s.size() - pos - 1);
             s.erase(pos, 1);
-            ss.str("");
-            ss << s;
+            ss.str(s);
             lli whole_part(0);
             ss >> whole_part;
             m_whole = Integer(whole_part);

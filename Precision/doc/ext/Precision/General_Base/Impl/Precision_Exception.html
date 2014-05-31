@@ -43,9 +43,9 @@
                 <TD>Types</TD>
                 <TD>
                     <DL>
-                    <DT>code</DT>
+                    <DT ID="code">code</DT>
                     <DD>An enumeration type representing the error codes.</DD>
-                    <DT>str_type</DT>
+                    <DT ID="str_type">str_type</DT>
                     <DD>
                         The string type the class uses. It is an alias of
                         <I>std::string</I>.
@@ -104,17 +104,17 @@
                 <TD>Read Only</TD>
                 <TD>
                     <DL>
-                    <DT>const char* what()const noexcept</DT>
+                    <DT ID="what">const char* what()const noexcept</DT>
                     <DD>
                         Returns the full error message, which follows the
                         following format: "[Source] ~ [Error Message]".
                     </DD>
-                    <DT>code type()const noexcept</DT>
+                    <DT ID="type">code type()const noexcept</DT>
                     <DD>
                         Returns the error code as listed in the enumeration
                         section.
                     </DD>
-                    <DT>const char* source()const noexcept</DT>
+                    <DT ID="source">const char* source()const noexcept</DT>
                         <DD>Returns the name of error's origin.</DD>
                     </DL>
                 </TD>
@@ -123,22 +123,23 @@
                 <TD>Constructors and Destructor</TD>
                 <TD>
                     <DL>
-                    <DT>exception(code err,
+                    <DT ID="con">exception(code err,
                         const char* src="Unknown source")noexcept</DT>
                     <DD>
                         Construct an exception object with an error code and
                         name of the error source.
                     </DD>
-                    <DT>explicit exception(code, const str_type&)noexcept</DT>
+                    <DT ID="con2">explicit exception(code, const str_type&)noexcept</DT>
                     <DD>
                         Similar to the above, but this accepts str_type objects.
                         The same information should be passed to this constructor.
                     </DD>
-                    <DT>exception(const exception&) = default</DT>
+                    <DT ID="con_copy">exception(const exception&) = default</DT>
                         <DD>Compiler generated copy constructor.</DD>
-                    <DT>exception& operator=(const exception&) = default</DT>
+                    <DT ID="con_copy_eq">exception& operator=(const exception&)
+                        = default</DT>
                         <DD>Compiler generated copy assignment operator.</DD>
-                    <DT>~exception(){}</DT>
+                    <DT ID="destruct">~exception()</DT>
                         <DD>Non-trivial destructor as it is virtual.</DD>
                     </DL>
                 </TD>

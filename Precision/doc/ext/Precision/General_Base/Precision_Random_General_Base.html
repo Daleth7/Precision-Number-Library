@@ -138,7 +138,7 @@
                     <DT id="operator_functor"><I>type operator()()</I></DT>
                     <DD>Returns a randomly generated number.</DD>
             <BR />
-                    <DT id="discard"><I>Random&lt;IntegerType>& discard()</I></DT>
+                    <DT id="discard"><I>Random& discard()</I></DT>
                     <DD>
                         Advance one state without returning the generated number.
                         This is as if calling <I>operator()()</I> but not using
@@ -152,37 +152,37 @@
                 <TD>Setting modifiers</TD>
                 <TD>
                     <DL>
-                    <DT id="seed_mod"><I>Random&lt;IntegerType>& seed(const type& new_seed)</I></DT>
+                    <DT id="seed_mod"><I>Random& seed(const type& new_seed)</I></DT>
                     <DD>
                         Set a new seed for the generator. A reference to the
                         functor is returned for function chaining.
                     </DD>
             <BR />
-                    <DT id="max_mod"><I>Random&lt;IntegerType>& max(const type& new_max)</I></DT>
+                    <DT id="max_mod"><I>Random& max(const type& new_max)</I></DT>
                     <DD>
                         Set a new maximum that the generator may produce. A
                         reference to the functor is returned for function
                         chaining.
                     </DD>
             <BR />
-                    <DT id="min_mod"><I>Random&lt;IntegerType>& min(const type& new_min)</I></DT>
+                    <DT id="min_mod"><I>Random& min(const type& new_min)</I></DT>
                     <DD>
                         Set a new minimum that the generator may produce. A
                         reference to the functor is returned for function
                         chaining.
                     </DD>
             <BR />
-                    <DT id="and1_mod"><I>Random&lt;IntegerType>& and1(const type& new_and1)</I></DT>
-                    <DT id="and2_mod"><I>Random&lt;IntegerType>& and2(const type& new_and2)</I></DT>
-                    <DT id="and3_mod"><I>Random&lt;IntegerType>& and3(const type& new_and3)</I></DT>
-                    <DT id="and4_mod"><I>Random&lt;IntegerType>& and4(const type& new_and4)</I></DT>
+                    <DT id="and1_mod"><I>Random& and1(const type& new_and1)</I></DT>
+                    <DT id="and2_mod"><I>Random& and2(const type& new_and2)</I></DT>
+                    <DT id="and3_mod"><I>Random& and3(const type& new_and3)</I></DT>
+                    <DT id="and4_mod"><I>Random& and4(const type& new_and4)</I></DT>
                     <DD>
                         Change one of four control values that help randomize
                         each digit. A reference to the functor is returned for
                         function chaining.
                     </DD>
             <BR />
-                    <DT id="ooe_mod"><I>Random&lt;IntegerType>& order_of_entropy(lli)</I></DT>
+                    <DT id="ooe_mod"><I>Random& order_of_entropy(lli)</I></DT>
                     <DD>
                         Change the order of entropy the functor is set to. The
                         higher the order, the more random the numbers generated
@@ -190,9 +190,9 @@
                         The vice versa is true as well.
                     </DD>
             <BR />
-                    <DT id="push1_mod"><I>Random&lt;IntegerType>& push1(size_type new_push1)</I></DT>
-                    <DT id="push2_mod"><I>Random&lt;IntegerType>& push2(size_type new_push2)</I></DT>
-                    <DT id="push3_mod"><I>Random&lt;IntegerType>& push3(size_type new_push3)</I></DT>
+                    <DT id="push1_mod"><I>Random& push1(size_type new_push1)</I></DT>
+                    <DT id="push2_mod"><I>Random& push2(size_type new_push2)</I></DT>
+                    <DT id="push3_mod"><I>Random& push3(size_type new_push3)</I></DT>
                     <DD>
                         Change one of three control values that aid in refreshing
                         the generated number, i.e. increase the period of the
@@ -210,7 +210,9 @@
                         <BLOCKQUOTE>
                             const type& INseed = 1,
             <BR />
-                            const type& INmax = type(1).logical_shift(100),
+                            const type& INmax = Helper::rand_wrapper&lt;type,
+                                typename
+                                std::is_fundamental&lt;type>::type>::max(),
             <BR />
                             const type& INmin = 0,
             <BR />
@@ -226,19 +228,21 @@
             <BR />
                             const type& INand4 = 0xDFFFFFEF,
             <BR />
-                            size_type INpush1 = 8, size_type INpush2 = 11,
+                            size_type INpush1 = 8,
+            <BR />
+                            size_type INpush2 = 11,
             <BR />
                             size_type INpush3 = 18
                         </BLOCKQUOTE>
                         )
                     </I></DT>
                     <DD>
-                        Construct a new Random&lt;IntegerType> object with a list of settings
-                        as described in member functions above. In particular,
-                        the parameter <I>call_discard</I>, if true, will cause
-                        the generator to discard states after construction
-                        until the maximum number of digits is reached. This is
-                        similar to "warming" up the generator.
+                        Construct a new <I>Random</I> object with a list of
+                        settings as described in member functions above. In
+                        particular, the parameter <I>call_discard</I>, if
+                        true, will cause the generator to discard states
+                        after construction until the maximum number of digits
+                        is reached. This is similar to "warming" up the generator.
             <BR />
             <BR />
                         <B>Note:</B> The first four parameters: <I>INseed,

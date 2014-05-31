@@ -2,11 +2,12 @@
 #define PRECISION_HEXADECIMAL_GENERAL_BASE__H__
 
 #include "General_Base.h"
-#include "Instantiation_Packs/Precision_Hexadecimal_Default_Types.h"
 
-#define DEFAULT_PARAMS                              \
-    Default_Type::digit, Default_Type::image::set,  \
-    byte_type, Default_Type::k_base
+#include "General_Base/Precision_Shared_Pack.h"
+
+#define DEFAULT_PARAMS                     \
+    Base36::image::type, Base36::image::glyphs,  \
+    byte_type, 16
 
 namespace Precision{
     namespace Hexadecimal{

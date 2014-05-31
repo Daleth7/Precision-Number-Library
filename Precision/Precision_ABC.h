@@ -2,6 +2,7 @@
 #define PRECISION_ABCDEF_BASE_INSTANTIATION__H__
 
 #include "General_Base.h"
+
 #include "Instantiation_Packs/Precision_ABC_Default_Types.h"
 
 #define DEFAULT_PARAMS                              \

@@ -73,7 +73,7 @@
                     digit. This type also sets the maximum base that may
                     be used and affects the dynamic storage size. Defaulted
                     to <I>Precision::byte_type</I>, which is guaranteed to
-                    allow a base up to at least 127 and is guaranteed to be at
+                    allow a base up to 64 and is guaranteed to be at
                     least one byte in size. It is recommended to use
                     <I>Precision::byte_type</I> for small bases.
                 </TD>
@@ -263,57 +263,57 @@
                             <I><A href="Precision_Float_General_Base.html">
                             Precision::General_Base::Float</A></I>.
                         </DD>
-                        <DT><I>str_type</I></DT>
+                        <DT ID="str_type"><I>str_type</I></DT>
                         <DD>
                             The type which represents a string of CharT objects.
                             It is used to display the number. <I>str_type</I> is
                             equivalent to <I>std::basic_string&lt;CharT></I>.
                         </DD>
-                        <DT><I>lli</I></DT>
+                        <DT ID="lli"><I>lli</I></DT>
                         <DD>
                             A primitive type that represents a signed, integral
                             number with a wide range. The client need not worry
                             about this type.
                         </DD>
-                        <DT><I>ld</I></DT>
+                        <DT ID="ld"><I>ld</I></DT>
                         <DD>
                             A primitive type that represents a signed, floating
                             point number with a wide range and large precision.
                             The client need not worry about this type.
                         </DD>
-                        <DT><I>image_type</I></DT>
+                        <DT ID="image_type"><I>image_type</I></DT>
                         <DD>
                             A type whose objects represent the visual display
                             of each digit. This type is equivalent to
                             <I>CharT</I>.
                         </DD>
-                        <DT><I>digit_type</I></DT>
+                        <DT ID="digit_type"><I>digit_type</I></DT>
                         <DD>
                             A type whose objects are the computer representations
                             of each digit. This type is equivalent to
                             <I>ByteType</I>.
                         </DD>
-                        <DT><I>diglist_type</I></DT>
+                        <DT ID="diglist_type"><I>diglist_type</I></DT>
                         <DD>
                             A container that stores each digit of the number.
                             This type is equivalent to
                             <I>Container&lt;CharT></I>. For the most part, the
                             client need not worry about this type.
                         </DD>
-                        <DT><I>digit_10_type</I></DT>
+                        <DT ID="digit_10_type"><I>digit_10_type</I></DT>
                         <DD>
                             An alias of <I>digit_type</I>. This is used to
                             distinguish semantic differences. The client need
                             not worry about this type.
                         </DD>
-                        <DT><I>sign_type</I></DT>
+                        <DT ID="sign_type"><I>sign_type</I></DT>
                         <DD>
                             The type whose objects represent positive and
                             negative. This type is equivalent to <I>SignType</I>.
                             For the most part, the client need not worry about
                             this type.
                         </DD>
-                        <DT><I>size_type</I></DT>
+                        <DT ID="size_type"><I>size_type</I></DT>
                         <DD>
                             A type whose objects represent a counting system such
                             as when checking size or using indices. This type is
