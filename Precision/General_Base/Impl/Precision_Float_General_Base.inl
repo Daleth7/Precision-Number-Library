@@ -314,13 +314,13 @@ namespace Precision{
             {return m_whole.digit(i);}
 
         FLOAT_TEMPL_
-        typename FLOAT_INST_::digit_10_type
+        typename FLOAT_INST_::digit_type
             FLOAT_INST_::digit_10(size_type i)
         const{return m_whole.digit_10(i);}
 
 
         FLOAT_TEMPL_
-        constexpr typename FLOAT_INST_::digit_10_type FLOAT_INST_::base()
+        constexpr typename FLOAT_INST_::digit_type FLOAT_INST_::base()
             {return Integer::base();}
 
         FLOAT_TEMPL_
@@ -398,7 +398,6 @@ namespace Precision{
             , m_show_full(false)
         {
             sign_type newsign(inFP < 0 ? -1 : 1);
-
             std::stringstream ss("");
                 //Use std::fixed to ensure converting the whole number
                 ss << std::fixed << (inFP * newsign);
@@ -408,30 +407,30 @@ namespace Precision{
             ss.str(s);
             lli whole_part(0);
             ss >> whole_part;
-            m_whole = Integer(whole_part);
-            if(inPrec > e)
-                m_whole.shift_left(inPrec - e);
+            m_whole =
+                Integer(whole_part)
+                . logical_shift_left(m_precision)
+                / Math::exponentiate(Integer(10), e)
+            ;
         }
 
 
         FLOAT_TEMPL_
-        FLOAT_INST_::Float(str_type inImage, size_type inPrec)
+        FLOAT_INST_::Float(const str_type& inImage, size_type inPrec)
             : m_whole(0)
             , m_precision(inPrec)
             , m_show_full(false)
         {
-            if(inImage.size() != 0){
-                const size_type pos = inImage.find(_symbols[2]);
-                if(pos == str_type::npos)
-                    m_whole = Integer(inImage + str_type(m_precision, _0[0]));
+            if(!inImage.empty()){
+                size_type e_pos(inImage.find(_symbols[3]));
+                if(e_pos == str_type::npos)
+                    parse(inImage, inPrec);
                 else{
-                    inImage.erase(pos, 1);
-                    const size_type str_prec(inImage.size() - pos);
-                    m_whole = Integer(inImage);
-                    if(str_prec > inPrec)
-                        m_precision = str_prec;
-                    else
-                        m_whole.shift_left(inPrec - str_prec);
+                    parse(inImage.substr(0, e_pos), inPrec);
+                    lli exp(0);
+                    std::istringstream catalyst(inImage.substr(e_pos+1));
+                    catalyst >> exp;
+                    this->shift(exp);
                 }
             }
         }
@@ -460,6 +459,23 @@ namespace Precision{
         {m_whole.shift_left(inPrec);}
 
         //Helpers
+
+        FLOAT_TEMPL_
+        void FLOAT_INST_::parse(const str_type& inImage, size_type inPrec){
+            const size_type pos = inImage.find(_symbols[2]);
+            if(pos == str_type::npos)
+                m_whole = Integer(inImage + str_type(m_precision, _0[0]));
+            else{
+                str_type img_copy(inImage);
+                img_copy.erase(pos, 1);
+                const size_type str_prec(img_copy.size() - pos);
+                m_whole = Integer(img_copy);
+                if(str_prec > inPrec)
+                    m_precision = str_prec;
+                else
+                    m_whole.shift_left(inPrec - str_prec);
+            }
+        }
 
         FLOAT_TEMPL_
         void FLOAT_INST_::Update_Precision(size_type newPrec){

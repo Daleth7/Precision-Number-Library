@@ -7,6 +7,8 @@
     need it.
 */
 
+#include "Precision_Tags.h"
+
 #include <type_traits>
 #include <limits>
 
@@ -19,20 +21,20 @@ namespace Precision{
         struct is_fund<T, std::true_type>{
             using lli           = int;
             using size_type     = std::size_t;
-            using digit_10_type = short int;
+            using digit_type    = short int;
 
-            static constexpr digit_10_type base = 10;
+            static constexpr digit_type base = 10;
             static constexpr bool positive(T val)
                 {return val > 0;}
         };
 
         template <typename T>
         struct is_fund<T, std::false_type>{
-            using lli               = typename T::lli;
-            using size_type         = typename T::size_type;
-            using digit_10_type     = typename T::digit_10_type;
+            using lli           = typename T::lli;
+            using size_type     = typename T::size_type;
+            using digit_type    = typename T::digit_type;
 
-            static constexpr digit_10_type base = T::base();
+            static constexpr digit_type base = T::base();
             static constexpr bool positive(const T& val)
                 {return val.positive();}
         };

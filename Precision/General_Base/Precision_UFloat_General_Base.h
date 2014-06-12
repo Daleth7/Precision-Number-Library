@@ -1,5 +1,5 @@
-#ifndef __PRECISION_UNSIGNED_FLOAT_IMPL_GENERAL_BASE_H
-#define __PRECISION_UNSIGNED_FLOAT_IMPL_GENERAL_BASE_H
+#ifndef HHHH____PRECISION_UNSIGNED_FLOAT_IMPL_GENERAL_BASE_H
+#define HHHH____PRECISION_UNSIGNED_FLOAT_IMPL_GENERAL_BASE_H
 
 #include "Precision_Float_General_Base.h"
 #include "Precision_UInt_General_Base.h"
@@ -50,46 +50,45 @@ namespace Precision{
                 using image_type    = typename Signed_Float::image_type;
                 using diglist_type  = typename Signed_Float::diglist_type;
                 using digit_type    = typename Signed_Float::digit_type;
-                using digit_10_type = typename Signed_Float::digit_10_type;
                 using size_type     = typename Signed_Float::size_type;
                 using sign_type     = typename Signed_Float::sign_type;
         //Arithmetic operators
-                UFLOAT_INST_& operator+=(const UFLOAT_INST_& rhs)
+                UFloat& operator+=(const UFloat& rhs)
                     {return m_base += rhs.m_base, *this;}
 
-                UFLOAT_INST_& operator-=(const UFLOAT_INST_& rhs){
+                UFloat& operator-=(const UFloat& rhs){
                     m_base -= rhs.m_base;
                     if(m_base.negative())
                         m_base = 0;
                     return *this;
                 }
 
-                UFLOAT_INST_& operator*=(const UFLOAT_INST_& rhs)
+                UFloat& operator*=(const UFloat& rhs)
                     {return m_base *= rhs.m_base, *this;}
 
-                UFLOAT_INST_& operator/=(const UFLOAT_INST_& rhs)
+                UFloat& operator/=(const UFloat& rhs)
                     {return m_base /= rhs.m_base, *this;}
 
-                UFLOAT_INST_& operator%=(const UFLOAT_INST_& rhs)
+                UFloat& operator%=(const UFloat& rhs)
                     {return m_base %= rhs.m_base, *this;}
 
-                UFLOAT_INST_& operator--()
+                UFloat& operator--()
                     {return (*this -= 1);}
 
-                UFLOAT_INST_ operator--(int)
+                UFloat operator--(int)
                     {return (*this -= 1) + 1;}
 
-                UFLOAT_INST_& operator++()
+                UFloat& operator++()
                     {return ++m_base, *this;}
 
-                UFLOAT_INST_ operator++(int)
-                    {return UFLOAT_INST_(m_base++);}
+                UFloat operator++(int)
+                    {return UFloat(m_base++);}
 
                     //Returns the power of, not XOR
-                UFLOAT_INST_& operator^=(const Integer& rhs)
+                UFloat& operator^=(const Integer& rhs)
                     {return m_base ^= rhs, *this;}
 
-                UFLOAT_INST_& operator^=(const UFLOAT_INST_& rhs)
+                UFloat& operator^=(const UFloat& rhs)
                     {return m_base ^= rhs.m_base, *this;}
 
         //Read-only functions
@@ -131,13 +130,13 @@ namespace Precision{
                 size_type count_right_digits()const
                     {return m_base.count_right_digits();}
 
-                const UFLOAT_INST_& magnitude()const
+                const UFloat& magnitude()const
                     {return *this;}
 
                 size_type precision()const
                     {return m_base.precision();}
 
-                short compare(const UFLOAT_INST_& s)const
+                short compare(const UFloat& s)const
                     {return m_base.compare(s.m_base);}
 
                 Integer integer()const
@@ -146,8 +145,8 @@ namespace Precision{
                 bool show_full()const
                     {return m_base.show_full();}
 
-                UFLOAT_INST_ remainder(const UFLOAT_INST_& s)const
-                    {return UFLOAT_INST_(m_base.remainder(s.m_base));}
+                UFloat remainder(const UFloat& s)const
+                    {return UFloat(m_base.remainder(s.m_base));}
 
                 const Signed_Float& get_signed()const
                     {return m_base;}
@@ -158,13 +157,13 @@ namespace Precision{
                 bool is_integer()const
                     {return m_base.is_integer();}
 
-                UFLOAT_INST_ inverse()const
-                    {return UFLOAT_INST_(m_base.inverse());}
+                UFloat inverse()const
+                    {return UFloat(m_base.inverse());}
 
-                static constexpr digit_10_type base()
+                static constexpr digit_type base()
                     {return Signed_Float::base();}
 
-                static constexpr digit_type digit0()
+                static constexpr image_type const* digit0()
                     {return Signed_Float::digit0();}
 
         //Other modifers
@@ -183,19 +182,19 @@ namespace Precision{
                 void shift_right(size_type e)
                     {m_base.shift_right(e);}
 
-                UFLOAT_INST_& invert()
+                UFloat& invert()
                     {return m_base.invert(), *this;}
 
-                UFLOAT_INST_& exponentiate(const Integer& s)
+                UFloat& exponentiate(const Integer& s)
                     {return m_base.exponentiate(s), *this;}
 
-                UFLOAT_INST_& exponentiate(const UFLOAT_INST_& s)
+                UFloat& exponentiate(const UFloat& s)
                     {return m_base.exponentiate(s.m_base), *this;}
 
-                UFLOAT_INST_& exponentiate(const Signed_Float& s)
+                UFloat& exponentiate(const Signed_Float& s)
                     {return m_base.exponentiate(s), *this;}
 
-                void swap(UFLOAT_INST_& s)
+                void swap(UFloat& s)
                     {m_base.swap(s.m_base);}
 
         //Overload cast operators
@@ -259,11 +258,11 @@ namespace Precision{
                     : m_base(inFP.magnitude())
                 {}
 
-                UFloat(const UFLOAT_INST_&)            =default;
-                UFloat(UFLOAT_INST_&&)                 =default;
-                UFloat& operator=(const UFLOAT_INST_&) =default;
-                UFloat& operator=(UFLOAT_INST_&&)      =default;
-                ~UFloat()                              =default;
+                UFloat(const UFloat&)               = default;
+                UFloat(UFloat&&)                    = default;
+                UFloat& operator=(const UFloat&)    = default;
+                UFloat& operator=(UFloat&&)         = default;
+                ~UFloat()                           = default;
             private:
                 Signed_Float   m_base;
         };

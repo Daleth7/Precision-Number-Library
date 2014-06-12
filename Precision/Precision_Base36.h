@@ -3,10 +3,7 @@
 
 #include "General_Base.h"
 
-#include "General_Base/Precision_Shared_Pack.h"
-
-#define DEFAULT_PARAMS                     \
-    image::type, image::glyphs, byte_type, 36
+#define DEFAULT_PARAMS Constant::type, Constant::glyphs, byte_type, 36
 
 namespace Precision{
     namespace Base36{

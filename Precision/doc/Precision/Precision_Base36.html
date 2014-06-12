@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+
+<HTML>
+    <HEAD>
+        <STYLE>
+            @import url("../doc_style.css");
+            <LINK rel="stylesheet" type="text/css" href="doc_style.css">
+        </STYLE>
+    </HEAD>
+    <BODY>
+        <H2>Base 36 Instantiation</H2>
+        <P>
+            <FONT SIZE=2>
+                Associated File: <B><A href="../../Precision_Base36.h">
+                Precision/Precision_Base36.h</A></B>
+            </FONT>
+            <BR />
+            <BR />
+            A base 36 set of number types provided by the Precision Number
+            Library. It includes the types:
+            <UL>
+                <LI>Int</LI>
+                <LI>Float</LI>
+                <LI>Fract</LI>
+                <LI>UInt</LI>
+                <LI>UFloat</LI>
+                <LI>UFract</LI>
+            </UL>
+            <BR />
+            This number base may be accessed through the <I>Base36</I> namespace.
+            For detailed information of the interface, refer to:
+            <UL>
+                <LI><A href="General_Base/Precision_Int_General_Base.html">
+                    Int</A></LI>
+                <LI><A href="General_Base/Precision_Float_General_Base.html">
+                    Float</A></LI>
+                <LI><A href="General_Base/Precision_Fract_General_Base.html">
+                    Fract</A></LI>
+                <LI><A href="General_Base/Precision_UInt_General_Base.html">
+                    UInt</A></LI>
+                <LI><A href="General_Base/Precision_UFloat_General_Base.html">
+                    UFloat</A></LI>
+                <LI><A href="General_Base/Precision_UFract_General_Base.html">
+                    UFract</A></LI>
+            </UL>
+        </P>
+            <BR />
+        <TABLE STYLE="border-collapse:collapse;" ID="example">
+        <CAPTION>Example Use</CAPTION><TR><TD><OL><CODE>
+        <LI>#include "Precision.h"</LI>
+        <LI></LI>
+        <LI>#include &lt;iostream></LI>
+        <LI></LI>
+        <LI>int main(){</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;using namespace std;</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;Precision::Base36::Int i1(-1125),
+            i2("2AZZ500");</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            i1.str() &lt;&lt; '\n' &lt;&lt; i2.str() &lt;&lt; '\n';
+            //Displays -V9 and +2AZZ500</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;Precision::Base36::Float f1(i1+i2);</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;f1 /= 1296;</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; f1.str() &lt;&lt; '\n';
+            //Displays +2AZZ4.4R</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;Precision::Base36::Fract fr1(i2, i1);</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; fr1.str() &lt;&lt; '\n';
+            //Displays -97ZWK0/3H</LI>
+        <LI></LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;return 0;</LI>
+        <LI>}</LI>
+        </CODE></OL></TD></TR></TABLE>
+    </BODY>
+</HTML>

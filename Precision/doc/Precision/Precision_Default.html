@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+
+<HTML>
+    <HEAD>
+        <STYLE>
+            @import url("../doc_style.css");
+            <LINK rel="stylesheet" type="text/css" href="doc_style.css">
+        </STYLE>
+    </HEAD>
+    <BODY>
+        <H2>Decimal (Default) Instantiation</H2>
+        <P>
+            <FONT SIZE=2>
+                Associated File: <B><A href="../../Precision_Default.h">
+                Precision/Precision_Default.h</A></B>
+            </FONT>
+            <BR />
+            <BR />
+            The default set of number types provided by the Precision Number
+            Library. It includes the types:
+            <UL>
+                <LI>Int</LI>
+                <LI>Float</LI>
+                <LI>Fract</LI>
+                <LI>UInt</LI>
+                <LI>UFloat</LI>
+                <LI>UFract</LI>
+            </UL>
+            All of which are in base 10 and use <I>char</I> to represent each
+            digit, e.g. "10022023456789".
+            <BR />
+            For detailed information of the interface, refer to:
+            <UL>
+                <LI><A href="General_Base/Precision_Int_General_Base.html">
+                    Int</A></LI>
+                <LI><A href="General_Base/Precision_Float_General_Base.html">
+                    Float</A></LI>
+                <LI><A href="General_Base/Precision_Fract_General_Base.html">
+                    Fract</A></LI>
+                <LI><A href="General_Base/Precision_UInt_General_Base.html">
+                    UInt</A></LI>
+                <LI><A href="General_Base/Precision_UFloat_General_Base.html">
+                    UFloat</A></LI>
+                <LI><A href="General_Base/Precision_UFract_General_Base.html">
+                    UFract</A></LI>
+            </UL>
+            <BR />
+            In addition to the types listed above, the default instantiation
+            comes with a set of literal operators for the integral and floating
+            point types. For more information of the literal operators, click
+            <A href="Precision_Literal_Operators.html">here</A>.
+        </P>
+            <BR />
+        <TABLE STYLE="border-collapse:collapse;" ID="example">
+        <CAPTION>Example Use</CAPTION><TR><TD><OL><CODE>
+        <LI>#include "Precision.h"</LI>
+        <LI></LI>
+        <LI>#include &lt;iostream></LI>
+        <LI></LI>
+        <LI>int main(){</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;using namespace Precision;</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;using namespace std;</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;Int i1(-1125), i2("235");</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            i1.str() &lt;&lt; '\n' &lt;&lt; i2.str() &lt;&lt; '\n';
+            //Displays -1125 and +235</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;Float f1(i1+i2);</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;f1 /= 1E7;</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; f1.str() &lt;&lt; '\n';
+            //Displays -0.000089</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;Fract fr1(i2, i1);</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; fr1.str() &lt;&lt; '\n';
+            //Displays -47/225</LI>
+        <LI></LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;return 0;</LI>
+        <LI>}</LI>
+        </CODE></OL></TD></TR></TABLE>
+    </BODY>
+</HTML>

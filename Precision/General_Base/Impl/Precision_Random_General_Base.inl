@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <iterator>
 
 namespace Precision{
     namespace General_Base{
@@ -48,7 +49,7 @@ namespace Precision{
             {return m_push3;}
 
         template <typename Integer_Type>
-        constexpr auto Random<Integer_Type>::base()->digit_10_type
+        constexpr auto Random<Integer_Type>::base()->digit_type
             {return wrap::base;}
 
     //Retrive and/or change state
@@ -166,42 +167,41 @@ namespace Precision{
         {
         //Algorithm is a modified form of the SFMT as described in this paper:
         // http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/ARTICLES/sfmt.pdf
-            typename type::str_type image(m_seed.str());
-            const size_type quad(image.size()/4);
+            typedef typename type::diglist_type digit_list;
+            digit_list image(m_seed.digit_list());
+            auto it1 = image.begin(), it2 = it1, it3 = it1;
+                const size_type quad(image.size()/4);
+                std::advance(it2, quad);
+                std::advance(it3, quad<<1);
             m_seed.shift(m_order_of_entropy);
             image =
                 m_seed
                 . logical_shift_left(m_push1)
                 . logical_xor(m_seed)                                   //wA
-                . logical_xor(type(
-                    type(image.substr(0, quad))
+                . logical_xor(
+                    type(digit_list(image.begin(), it1), 1)
                         . logical_shift_right(m_push2)
                         . logical_and(m_and1)
-                        . str()
-                    + type(image.substr(quad+1, quad))
+                        . logical_shift_left(quad*3)
+                    + type(digit_list(it1, it2), 1)
                         . logical_shift_right(m_push2)
                         . logical_and(m_and2)
-                        . str()
-                        . substr(1)
-                    + type(image.substr(2*quad+1, quad))
+                        . logical_shift_left(quad*2)
+                    + type(digit_list(it2, it3), 1)
                         . logical_shift_right(m_push2)
                         . logical_and(m_and3)
-                        . str()
-                        . substr(1)
-                    + type(image.substr(3*quad+1))
+                        . logical_shift_left(quad)
+                    + type(digit_list(it3, image.end()), 1)
                         . logical_shift_right(m_push2)
                         . logical_and(m_and4)
-                        . str()
-                        . substr(1)
-                    ))                                                  //wB
+                    )                                                   //wB
                 . logical_xor(m_seed.logical_shift_right(m_push1))      //wC
                 . logical_xor(m_seed.logical_shift_left(m_push3))       //wD
-                . str()
-                . substr(1)
+                . digit_list()
             ;
 
             std::reverse(image.begin(), image.end());
-            return m_seed = (type(image)%(m_max-m_min) + m_min);
+            return m_seed = (type(image, 1)%(m_max-m_min) + m_min);
         }
     }
 }

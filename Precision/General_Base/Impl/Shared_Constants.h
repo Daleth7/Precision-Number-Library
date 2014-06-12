@@ -1,5 +1,5 @@
-#ifndef __SHARED_CONSTANTS__H
-#define __SHARED_CONSTANTS__H
+#ifndef HHHHH___SHARED_CONSTANTS__H
+#define HHHHH___SHARED_CONSTANTS__H
 
 #include <cstddef>
 #include <cstdint>
@@ -16,7 +16,9 @@ namespace Precision{
     ;
 
     struct Constant{
-        static constexpr char symbols[] = "+-.E /i";
+        using type = char;
+        static constexpr type glyphs[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        static constexpr type symbols[] = "+-.e /i";
     };
 
     namespace Math{

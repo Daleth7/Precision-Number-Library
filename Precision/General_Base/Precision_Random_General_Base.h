@@ -1,5 +1,5 @@
-#ifndef PRECISION_RANDOM_GENERAL_BASE_H__H_
-#define PRECISION_RANDOM_GENERAL_BASE_H__H_
+#ifndef PRECISION_RANDOM_GENERAL_BASE_H_HH_H_
+#define PRECISION_RANDOM_GENERAL_BASE_H_HH_H_
 
 #include <cstddef>
 
@@ -16,7 +16,7 @@ namespace Precision{
                 using type          = Integer_Type;
                 using lli           = typename wrap::lli;
                 using size_type     = typename wrap::size_type;
-                using digit_10_type = typename wrap::digit_10_type;
+                using digit_type    = typename wrap::digit_type;
             //Read-only
                 const type& seed()const;
                 const type& max()const;
@@ -29,22 +29,22 @@ namespace Precision{
                 size_type push1()const;
                 size_type push2()const;
                 size_type push3()const;
-                static constexpr digit_10_type base();
+                static constexpr digit_type base();
             //Retrieve and/or change state
                 type operator()();
-                Random<Integer_Type>& discard();
+                Random& discard();
             //Change settings
-                Random<Integer_Type>& seed(const type&);
-                Random<Integer_Type>& max(const type&);
-                Random<Integer_Type>& min(const type&);
-                Random<Integer_Type>& and1(const type&);
-                Random<Integer_Type>& and2(const type&);
-                Random<Integer_Type>& and3(const type&);
-                Random<Integer_Type>& and4(const type&);
-                Random<Integer_Type>& order_of_entropy(lli);
-                Random<Integer_Type>& push1(size_type);
-                Random<Integer_Type>& push2(size_type);
-                Random<Integer_Type>& push3(size_type);
+                Random& seed(const type&);
+                Random& max(const type&);
+                Random& min(const type&);
+                Random& and1(const type&);
+                Random& and2(const type&);
+                Random& and3(const type&);
+                Random& and4(const type&);
+                Random& order_of_entropy(lli);
+                Random& push1(size_type);
+                Random& push2(size_type);
+                Random& push3(size_type);
             //Constructor
                 Random(
                 //Seed

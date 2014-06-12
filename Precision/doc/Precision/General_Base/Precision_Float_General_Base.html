@@ -1,0 +1,911 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+		<STYLE>
+            @import url("../../doc_style.css");
+            <LINK rel="stylesheet" type="text/css" href="doc_style.css">
+		</STYLE>
+    </HEAD>
+    <BODY>
+        <H2>Precision::General_Base::Float
+            <FONT SIZE=2><SUB>(<FONT COLOR="#FF0000">template</FONT>)
+            </SUB></FONT></H2>
+        <P>
+            A class template for signed, floating point numbers of unlimited
+            size and precision. This class is designed such that all operations
+            are dependent upon the precision of the number. For instance,
+            assuming the precision is equal to the number of digits after the
+            decimal point:
+            <BR />
+            <CODE>Float("12.345", 3) + Float("6.54321", 5)
+                == Float("18.888", 3)</CODE>
+            <BR />
+            <CODE>Float("12.345", 3) != Float("12.3456", 4)</CODE>
+            <CODE>Float("12.345", 3) == Float("12.345", 3)</CODE>
+            <BR />
+            <BR />
+            <FONT SIZE=2>
+                Associated File: <B><A
+                    href="../../../General_Base/Precision_Float_General_Base.h"
+                >Precision/General_Base/Precision_Float_General_Base.h</A></B>
+            </FONT>
+            <BR />
+            <UL>
+                <LI><A href="#template">Template Parameter Information</A></LI>
+                <LI><A href="#interface">Class Interface Information</A></LI>
+                <LI><A href="#example">Example Use</A></LI>
+            </UL>
+            <BR />
+        </P>
+        <TABLE WIDTH=90% id="template">
+            <TR>
+                <TH WIDTH=33%>Template Parameter</TH>
+                <TH>Description</TH>
+            </TR>
+            <TR>
+                <TD><I>typename CharT</I></TD>
+                <TD>
+                    The type of character or image used to represent each digit
+                    in Base N. Must be compatible as a template parameter to
+                    <I>std::basic_string&lt;T></I>. The string type
+                    (<I>str_type</I>) of the class shall be instantiated as
+                    <I>std::basic_string&lt;CharT></I>. The following or the 
+                    equivalent of the following functions must be supported
+                    for type <I>CharT</I>:
+                    <UL STYLE="font-style:italic;">
+                        <LI>std::istream& operator>>(std::istream&, CharT&)</LI>
+                        <LI>bool operator==(const CharT&, const CharT&)</LI>
+                    </UL>
+                </TD>
+            </TR>
+            <TR>
+                <TD><I>CharT const *const _0</I></TD>
+                <TD>
+                    A pointer to the first digit in an array containing the
+                    images of each digit. The array must have external
+                    linkage.
+            <BR />
+                    <B>Note</B>: It is the responsibility of the
+                    instantiator to ensure <I>_0</I> is a valid parameter and
+                    that the array pointed to contains the appropriate images.
+                </TD>
+            </TR>
+            <TR>
+                <TD><I>typename ByteType</I></TD>
+                <TD>
+                    The type used for the computer representation of each
+                    digit. This type also sets the maximum base that may
+                    be used and affects the dynamic storage size. Defaulted
+                    to <I>Precision::byte_type</I>, which is guaranteed to
+                    allow a base up to 64 and is guaranteed to be at
+                    least one byte in size. It is recommended to use
+                    <I>Precision::byte_type</I> for small bases.
+                </TD>
+            </TR>
+            <TR>
+                <TD><I>ByteType Base</I></TD>
+                <TD>
+                    The base N the class shall represent. Defaulted to 10.
+            <BR />
+                    <B>Note</B>: The behaviour of the instantiation is not
+                    guaranteed if the base is below 2.
+                </TD>
+            </TR>
+            <TR>
+                <TD><I>CharT const *const _symbols</I></TD>
+                <TD>
+                    A pointer to the first symbol in an array with external
+                    linkage and that contains the images of each symbol.
+                    Each symbol is further defined below in the order it
+                    should appear in the array.
+                    <UL>
+                        <LI><I>plus symbol</I></LI>
+                        <UL>
+                            <LI>
+                                An image depicting the plus sign to indicate a
+                                positive number as in "+123".
+                            </LI>
+                        </UL>
+                        <LI><I>minus symbol</I></LI>
+                        <UL>
+                            <LI>
+                                An image depicting the minus sign to indicate a
+                                negative number as in "-123".
+                            </LI>
+                        </UL>
+                        <LI><I>point symbol</I></LI>
+                        <UL>
+                            <LI>
+                                An image depicting the decimal point to indicate a
+                                separation between a number's whole part and
+                                decimal part as in "123.456".
+                            </LI>
+                        </UL>
+                        <LI><I>exponent symbol</I></LI>
+                        <UL>
+                            <LI>
+                                An image depicting the exponential sign to
+                                represent a power of 10 as in "1.23 E 456"
+                                which is equivalent to writing "1.23 *
+                                10<SUP>456</SUP>".
+                            </LI>
+                        </UL>
+                        <LI><I>space symbol</I></LI>
+                        <UL>
+                            <LI>
+                                An image depicting an empty space between two
+                                other images as in "+ 1234".
+                            </LI>
+                        </UL>
+                    </UL>
+                    The above five symbols are required as the minimum.
+                    Depending on what the number type is tagged with from
+                    <I>Precision::Tag</I>, there may be additional symbols
+                    needed.
+                    <UL>
+                        <LI><I>slash symbol</I></LI>
+                        <UL>
+                            <LI>
+                                An image depicting the slash sign to indicate a
+                                fractional number as in "12/345". Required for
+                                fraction number types, tagged with
+                                <I>Tag::Fraction</I>.
+                            </LI>
+                        </UL>
+                        <LI><I>imaginary symbol</I></LI>
+                        <UL>
+                            <LI>
+                                An image depicting the imaginary number to
+                                indicate a complex number as in "a + bi".
+                                Required for complex number types, tagged with
+                                <I>Tag::Complex</I>.
+                            </LI>
+                        </UL>
+                    </UL>
+                    <I>_symbols</I> is defaulted to <I>Constant::symbols</I>
+                    which points to an array containing images of type
+                    <I>const char</I>:
+                    <TABLE STYLE="text-align:center;">
+                        <TR><TD>plus symbol</TD><TD WIDTH=15%>+</TD></TR>
+                        <TR><TD>minus symbol</TD><TD>-</TD></TR>
+                        <TR><TD>point symbol</TD><TD>.</TD></TR>
+                        <TR><TD>exponent symbol</TD><TD>E</TD></TR>
+                        <TR><TD>space symbol</TD><TD> </TD></TR>
+                        <TR><TD>slash symbol</TD><TD>/</TD></TR>
+                        <TR><TD>imaginary symbol</TD><TD>i</TD></TR>
+                    </TABLE>
+                    <B>Note</B>: It is the responsibility of the
+                    instantiator to ensure <I>_symbols</I> is a valid parameter
+                    and that the array pointed to contains the appropriate
+                    symbols.
+                </TD>
+            </TR>
+            <TR>
+                <TD><I>typename &lt;template...> Container</I></TD>
+                <TD>
+                    The container used to store indices to the array.
+                    Most STL containers will work. The type must support
+                    the following:
+                    <UL STYLE="font-style:italic;">
+                        <LI>Container::Container(size_type, digit_type)</LI>
+                        <LI>At minimum: bidirectional iterators</LI>
+                        <LI>Container::begin()</LI>
+                        <LI>Container::end()</LI>
+                        <LI>Container::crbegin()</LI>
+                        <LI>Container::crend()</LI>
+                        <LI>Container::push_back()</LI>
+                        <LI>Container::size()</LI>
+                        <LI>Container::insert(iterator, size_type, digit_type)</LI>
+                        <LI>Container::erase(iterator, size_type)</LI>
+                        <LI>Container::erase(iterator)</LI>
+                    </UL>
+                    Defaulted to <I>Precision::default_container_type</I>.
+                </TD>
+            </TR>
+            <TR>
+                <TD><I>typename SignType</I></TD>
+                <TD>
+                    The type used to represent the sign of the number, i.e.
+                    whether it is positive or negative. The type must support
+                    the following:
+                    <UL STYLE="font-style:italic;">
+                        <LI>signed_integral_type SignType::value()const</LI>
+                        <LI>bool SignType::positive()const</LI>
+                        <LI>bool SignType::negative()const</LI>
+                        <LI>void SignType::negate()</LI>
+                        <LI>void SignType::make_positive()</LI>
+                        <LI>void SignType::make_negative()</LI>
+                        <LI>SignType::SignType(sign_integral_type)</LI>
+                    </UL>
+                    By convention, all number types in the Precision namespace
+                    shall abide by the following rules:
+                    <UL>
+                        <LI>signed short(1) == positive</LI>
+                        <LI>signed short(-1) == negative</LI>
+                    </UL>
+                    Defaulted to <I>Precision::SignClass</I>.
+                </TD>
+            </TR>
+        </TABLE>
+            <BR />
+        <TABLE WIDTH=90% id="interface">
+            <TR>
+                <TH>Namespace</TH>
+                <TH>Class</TH>
+                <TH>Category</TH>
+                <TH>Member</TH>
+            </TR>
+            <TR>
+                <TD ROWSPAN=6>General_Base</TD>
+                <TD ROWSPAN=6>Float&lt;CharT, _0, ByteType, Base,
+                    _symbols, Container, SignType></TD>
+                <TD>Types</TD>
+                <TD>
+                    <DL>
+                        <DT ID="Integer"><I>Integer_t</I></DT>
+                        <DD>
+                            While this class is the floating point version,
+                            <I>Integer</I> represents the whole number version.
+                            When calling methods such as <I>integer()</I>, an
+                            object of this type is returned. This type is
+                            equivalent to
+                            <I><A href="Precision_Int_General_Base.html">
+                            Precision::General_Base::Int</A></I>.
+                        </DD>
+                        <DT ID="UInteger"><I>UInteger</I></DT>
+                        <DD>
+                            Similar to <I>Integer</I>, this type represents the
+                            unsigned whole number type.
+                            This type is equivalent to
+                            <I><A href="Precision_UInt_General_Base.html">
+                            Precision::General_Base::UInt</A></I>.
+                        </DD>
+                        <DT ID="str_type"><I>str_type</I></DT>
+                        <DD>
+                            The type which represents a string of CharT objects.
+                            It is used to display the number. <I>str_type</I> is
+                            equivalent to <I>std::basic_string&lt;CharT></I>.
+                        </DD>
+                        <DT ID="lli"><I>lli</I></DT>
+                        <DD>
+                            A primitive type that represents a signed, integral
+                            number with a wide range. The client need not worry
+                            about this type.
+                        </DD>
+                        <DT ID="ld"><I>ld</I></DT>
+                        <DD>
+                            A primitive type that represents a signed, floating
+                            point number with a wide range and large precision.
+                            The client need not worry about this type.
+                        </DD>
+                        <DT ID="image_type"><I>image_type</I></DT>
+                        <DD>
+                            A type whose objects represent the visual display
+                            of each digit. This type is equivalent to
+                            <I>CharT</I>.
+                        </DD>
+                        <DT ID="digit_type"><I>digit_type</I></DT>
+                        <DD>
+                            A type whose objects are the computer representations
+                            of each digit. This type is equivalent to
+                            <I>ByteType</I>.
+                        </DD>
+                        <DT ID="diglist_type"><I>diglist_type</I></DT>
+                        <DD>
+                            A container that stores each digit of the number.
+                            This type is equivalent to
+                            <I>Container&lt;CharT></I>. For the most part, the
+                            client need not worry about this type.
+                        </DD>
+                        <DT ID="sign_type"><I>sign_type</I></DT>
+                        <DD>
+                            The type whose objects represent positive and
+                            negative. This type is equivalent to <I>SignType</I>.
+                            For the most part, the client need not worry about
+                            this type.
+                        </DD>
+                        <DT ID="size_type"><I>size_type</I></DT>
+                        <DD>
+                            A type whose objects represent a counting system such
+                            as when checking size or using indices. This type is
+                            equivalent to <I>std::size_t</I>.
+                        </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Read only</TD>
+                <TD>
+                    <DL>
+                    <DT ID="sign">sign_type sign()const</DT>
+                    <DD>
+                        Return an object that represents what sign the number
+                        is, i.e. positive or negative.
+                    </DD>
+            <BR />
+                    <DT = ID="str">str_type str(
+                        size_type precision = 0,
+                        bool inShowFull = false)const</DT>
+                    <DD>
+                        Return the visual display of the number as a string.
+                        The parameter, <I>precision</I>, determines how many
+                        digits to the right of the decimal point should be
+                        displayed. If the value of the parameter is greater
+                        than the precision of the number or is 0, the
+                        parameter is ignored. The parameter will also be
+                        ignored if the number is set to always show the
+                        full number or if <I>inShowFull</I> is true. When
+                        <I>precision</I> is 0, digits up to the rightmost,
+                        non-zero digit is shown.
+                    </DD>
+            <BR />
+                    <DT ID="sci_note">str_type sci_note(size_type
+                        precision = k_display_prec,
+                        bool inShowFull = false)const</DT>
+                    <DD>
+                        Similar to <I>str()</I> but formats the number in
+                        scientific notation. For example, for base 10 using
+                        the default template parameters: "+1.23E-5". The
+                        parameter, <I>inShowFull</I>, determines if the whole
+                        number is shown. This parameter takes precedence over
+                        the first parameter.
+                    </DD>
+            <BR />
+                    <DT ID="sci_note_w_spaces">str_type
+                        sci_note_w_spaces(size_type
+                        precision = k_display_prec,
+                        bool inShowFull = false)const</DT>
+                    <DD>
+                        Similar to <I>sci_note(size_type, bool)</I> but
+                        inserts space symbols around the sign symbol and the
+                        exponent symbol. Using the example from
+                        <I>sci_note(size_type)</I>, "+ 1.23 E -5".
+                    </DD>
+            <BR />
+                    <DT ID="magnitude">Float magnitude()const</DT>
+                    <DD>
+                        Return the absolute value of the number, or the
+                        distance between 0 and the number.
+                    </DD>
+            <BR />
+                    <DT ID="count_digits">size_type
+                        count_digits()const</DT>
+                    <DD>Return the total number of digits the number has.</DD>
+            <BR />
+                    <DT ID="count_ldigits">size_type
+                        count_left_digits()const</DT>
+                    <DD>Return the number of digits to the left of the
+                        decimal point, i.e. the number of digits of the
+                        integral portion.</DD>
+            <BR />
+                    <DT ID="count_rdigits">size_type
+                        count_right_digits()const</DT>
+                    <DD>Return the number of digits to the right of the
+                        decimal point. This only counts up to the
+                        rightmost, <U>non-zero</U> digit, so the returned
+                        value may or may not be equivalent to the precision.
+                        </DD>
+            <BR />
+                    <DT ID="precision">size_type precision()const</DT>
+                    <DD>Return the precision of the number.</DD>
+            <BR />
+                    <DT ID="compare">short compare(const Float& s)const</DT>
+                    <DD>
+                        Return a code number representing how the number
+                        compares to the parameter, i.e. it will be as if
+                        [This number] [Code] [Parameter].
+                        The code will be as follows:
+                        <UL>
+                            <LI>1: Greater than</LI>
+                            <LI>0: Equal to</LI>
+                            <LI>-1: Less than</LI>
+                        </UL>
+                        Remember that the comparison will also account for
+                        precision. So two numbers will never be considered
+                        equal if their precisions are different.
+                    </DD>
+            <BR />
+                    <DT ID="integer">Integer integer()const</DT>
+                    <DD>
+                        Return the whole part of the number, e.g.
+            <BR />
+                        <CODE>Float("-123.456").integer()
+                            == Float::Integer("-123")</CODE>
+                    </DD>
+            <BR />
+                    <DT ID="show_full">bool show_full()const</DT>
+                    <DD>
+                        Return whether or not the number is set to always
+                        display the full precision when calling, for
+                        example, <I>str()</I>.
+                    </DD>
+            <BR />
+                    <DT ID="op_negate">Float operator-()const</DT>
+                    <DD>Return the negated version of the number.</DD>
+            <BR />
+                    <DT ID="op_complement">Float operator~()const</DT>
+                    <DD>
+                        <B>Note</B>: This is not the bitwise complement operator.
+            <BR />
+                        Return a copy of the number inverted, as if
+                        calling <I>inverse()</I>.
+                    </DD>
+            <BR />
+                    <DT ID="even">bool even()const</DT>
+                    <DD>
+                        Check if the number is even, i.e. if the number is a
+                        multiple of 2. This will check the rightmost digit
+                        as if calling <CODE>digit_10(0)</CODE>.
+                    </DD>
+            <BR />
+                    <DT ID="odd">bool odd()const</DT>
+                    <DD>
+                        Check if the number is odd, i.e. if the number is not
+                        a multiple of 2. This will check the rightmost digit
+                        as if calling <CODE>digit_10(0)</CODE>.
+                    </DD>
+            <BR />
+                    <DT ID="positive">bool positive()const</DT>
+                    <DD>
+                        Check if the number is positive, i.e. if the number is
+                        greater than 0.
+                    </DD>
+            <BR />
+                    <DT ID="negative">bool negative()const</DT>
+                    <DD>
+                        Check if the number is negative, i.e. if the number is
+                        less than 0.
+                    </DD>
+            <BR />
+                    <DT ID="remainder">Float remainder(const Float& s)const</DT>
+                    <DD>
+                        Return the remainder of dividing this number by the
+                        parameter.
+                    </DD>
+            <BR />
+                    <DT ID="inverse">Float inverse()const</DT>
+                    <DD>
+                        Return a copy of this number inverted. This is as if
+                        dividing 1 by this number, or <CODE>1/[This]</CODE>.
+                    </DD>
+            <BR />
+                    <DT ID="is_integer">bool is_integer()const</DT>
+                    <DD>
+                        Return whether or not this number could be considered
+                        whole. This is true if:
+            <BR />
+                        <CODE>[This] - [This].integer() == 0</CODE>
+                    </DD>
+            <BR />
+                    <DT ID="digit">image_type digit(size_type index)const</DT>
+                    <DD>
+                        Obtain one of the digits of the number, in its visual
+                        representation. The parameter, <I>index</I>, is relative
+                        to the rightmost digit, e.g.
+                        <CODE>calling digit(0)</CODE> on the number "1234.567890"
+                        with a precision of 6 will return "0".
+                    </DD>
+            <BR />
+                    <DT ID="digit_10">digit_type
+                        digit_10(size_type index)const</DT>
+                    <DD>
+                        Similar to <I>digit(size_type)</I> but returns the digit
+                        in its computer representation, which will inevitably
+                        be shown as base 10.
+                    </DD>
+            <BR />
+                    <DT ID="base">static digit_type base()</DT>
+                    <DD>
+                        Return, in base 10, the number base of the number type.
+                        This will effectively return <I>Base</I>.
+                    </DD>
+            <BR />
+                    <DT ID="digit0">static image_type const* digit0()</DT>
+                    <DD>
+                        Return a pointer to the array used by the number type.
+                        The array will contain the visual symbols that represent
+                        each digit. This will effectively return <I>_0</I>.
+                    </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Modifiers</TD>
+                <TD>
+                    <DL>
+                    <DT ID="show_full_mod">bool
+                        show_full(bool inShowfull)</DT>
+                    <DD>
+                        Change the setting of the number. This setting
+                        determines if, when calling a method such as
+                        <I>str()</I>, the full number should always be shown.
+                        The old setting is returned.
+                    </DD>
+            <BR />
+                    <DT ID="shift">void shift(lli count)</DT>
+                    <DD>
+                        Multiply the number by an order of magnitude of
+                        <I>Base</I>. This effectively shifts the decimal
+                        point of the number by <I>count</I> spaces to the
+                        left or right depending on the sign of the
+                        parameter.
+                    </DD>
+            <BR />
+                    <DT ID="shift_left">void shift_left(size_type count)</DT>
+                    <DD>
+                        Similar to <I>shift(lli)</I> but always shifts
+                        the decimal point to the left.
+                    </DD>
+            <BR />
+                    <DT ID="shift_right">void shift_right(size_type count)</DT>
+                    <DD>
+                        Similar to <I>shift(lli)</I> but always shifts
+                        the decimal point to the right.
+                    </DD>
+            <BR />
+                    <DT ID="sign_mod">void sign(sign_type new_sign)</DT>
+                    <DD>Assign a new sign for the number.</DD>
+            <BR />
+                    <DT ID="negate">void negate()</DT>
+                    <DD>
+                        Reverse the sign of the number. This is similar to
+                        calling <I>operator-()</I>, except the number is
+                        modified.
+                    </DD>
+            <BR />
+                    <DT ID="exponentiate">Float&
+                        exponentiate(const Integer& s)</DT>
+                    <DD>
+                        Take the power of this number by the parameter and
+                        store the result in this number. Return a reference
+                        to this number to allow for function chaining.
+                    </DD>
+            <BR />
+                    <DT ID="exponentiatef">Float&
+                        exponentiate(const Float& s)</DT>
+                    <DD>
+                        Take the power of this number by the parameter and
+                        store the result in this number. Return a reference
+                        to this number to allow for function chaining. This
+                        method is slower than the integer version due to the
+                        different algorithm.
+                    </DD>
+            <BR />
+                    <DT ID="invert">Float& invert()</DT>
+                    <DD>
+                        Invert this number as if dividing 1 by this number,
+                        i.e. <CODE>1/[This]</CODE>. Return a reference to this
+                        number to allow for function chaining.
+                    </DD>
+            <BR />
+                    <DT ID="swap">void swap(Float& s)</DT>
+                    <DD>Switch the values of this number and the parameter.</DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Arithmetic operators</TD>
+                <TD>
+                    <DL>
+                    <DT ID="op_plus_eq">Float& operator+=(const Float& s)</DT>
+                    <DD>
+                        Add the parameter to this number and assign the sum
+                        to this number. Return a reference to this number to
+                        allow for function chaining.
+                    </DD>
+            <BR />
+                    <DT ID="op_minus_eq">Float& operator-=(const Float& s)</DT>
+                    <DD>
+                        Subtract the parameter from this number and assign the
+                        difference to this number. Return a reference to this
+                        number to allow for function chaining.
+                    </DD>
+            <BR />
+                    <DT ID="op_mult_eq">Float& operator*=(const Float& s)</DT>
+                    <DD>
+                        Multiply the parameter to this number and assign the
+                        product to this number. Return a reference to this
+                        number to allow for function chaining.
+                    </DD>
+            <BR />
+                    <DT ID="op_divide_eq">Float& operator/=(const Float& s)</DT>
+                    <DD>
+                        Divide this number by the parameter and assign the
+                        quotient to this number. Return a reference to this
+                        number to allow for function chaining.
+                    </DD>
+            <BR />
+                    <DT ID="op_mod_eq">Float& operator%=(const Float& s)</DT>
+                    <DD>
+                        <B>Note</B>: This is not the modulus operator.
+            <BR />
+                        Divide this number by the parameter and assign the
+                        remainder to this number. Return a reference to this
+                        number to allow for function chaining.
+            <BR />
+                        The operation always acts as if taking the modulus
+                        of the magnitude of both numbers.
+                    </DD>
+            <BR />
+                    <DT ID="op_exp_eq">Float& operator^=(const Float& s)</DT>
+                    <DD>
+                        <B>Note</B>: This is not the XOR operator.
+            <BR />
+                        Exponentiate this number by the parameter.
+                    </DD>
+            <BR />
+                    <DT ID="op_pre_dec">Float& operator--()</DT>
+                    <DD>
+                        Decrement this number by 1 and return a reference
+                        to the result (this number).
+                    </DD>
+            <BR />
+                    <DT ID="op_post_dec">Float operator--(int)</DT>
+                    <DD>Decrement this number by 1
+                        but return the original value.</DD>
+            <BR />
+                    <DT ID="op_pre_inc">Float& operator++()</DT>
+                    <DD>
+                        Increment this number by 1 and return a reference
+                        to the result (this number).
+                    </DD>
+            <BR />
+                    <DT ID="op_post_dec">Float operator++(int)</DT>
+                    <DD>Increment this number by 1 but
+                        return the original value.</DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Type casts</TD>
+                <TD>
+                    <DL>
+                    <DT ID="cast_int">explicit
+                        operator Integer()const</DT>
+                    <DD>
+                        Return the whole part of this number as
+                        if calling <I>integer()</I>.
+                    </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Constructors and destructor</TD>
+                <TD>
+                    <DL>
+                    <DT ID="con_default">Float(ld new_number = 0.0,
+                        size_type new_precision = k_default_prec)</DT>
+                    <DD>
+                        Construct an object with an initial value that was
+                        in base 10 and with a set precision. This precision
+                        determines how many digits to the right of the
+                        point exist. The default precision is 100 digits.
+            <BR />
+                        The show full number setting is by default false but
+                        can be changed by calling <I>show_full(bool)</I>.
+                    </DD>
+            <BR />
+                    <DT ID="con_str">Float(const str_type& str,
+                        size_type new_precision = k_default_prec)</DT>
+                    <DD>
+                        Construct an object from the visual representation of
+                        the number and a set precision. This operation may be
+                        slow since each digit has to be verified.
+            <BR />
+                        If the size of <I>str</I> is large enough such that
+                        the precision would be larger than <I>new_precision</I>,
+                        the parameter, <I>precision</I>, is ignored.
+            <BR />
+                        The show full number setting is by default false but
+                        can be changed by calling <I>show_full(bool)</I>.
+                    </DD>
+            <BR />
+                    <DT ID="con_int">Float(const Integer& new_number)</DT>
+                        <DD>Construct an object from an integer value.</DD>
+            <BR />
+                    <DT ID="con_int_size">Float(const Integer& new_number,
+                        size_type new_precision)</DT>
+                        <DD>Construct an object from an
+                            integer value and a set precision.</DD>
+            <BR />
+                    <DT ID="con_uint">Float(const UInteger& new_number,
+                        size_type new_precision = k_default_prec)</DT>
+                        <DD>Construct an object from an unsigned
+                            integer value and a set precision.</DD>
+            <BR />
+                    <DT ID="con_copy">Float(const Float&) = default</DT>
+                        <DD>Compiler generated copy constructor.</DD>
+            <BR />
+                    <DT ID="con_move">Float(Float&&) = default</DT>
+                        <DD>Compiler generated move constructor.</DD>
+            <BR />
+                    <DT ID="con_copy_eq">Float&
+                        operator=(const Float&) = default</DT>
+                        <DD>Compiler generated copy assignment operator.</DD>
+            <BR />
+                    <DT ID="con_move_eq">Float&
+                        operator=(Float&&) = default</DT>
+                        <DD>Compiler generated move assignment operator.</DD>
+            <BR />
+                    <DT ID="destruct">~Float() = default</DT>
+                        <DD>Compiler generated destructor.</DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD></TD>
+                <TD></TD>
+                <TD>Related non-members</TD>
+                <TD>
+                    <DL>
+                    <DT ID="op_plus">Float operator+(Float, const Float&)</DT>
+                        <DD>Add the two parameters together.</DD>
+            <BR />
+                    <DT ID="op_minus">Float operator-(Float, const Float&)</DT>
+                        <DD>Find the difference of the two parameters.</DD>
+            <BR />
+                    <DT ID="op_mult">Float operator*(Float, const Float&)</DT>
+                        <DD>Multiply the two parameters together.</DD>
+            <BR />
+                    <DT ID="op_divide">Float operator/(Float, const Float&)</DT>
+                        <DD>Divide the the first parameter by the second.</DD>
+            <BR />
+                    <DT ID="op_mod">Float operator%(Float, const Float&)</DT>
+                        <DD>Find the remainder.</DD>
+            <BR />
+                    <DT ID="op_exp">Float operator^(Float, const Float&)</DT>
+                        <DD>Exponentiate the first parameter by the second.</DD>
+            <BR />
+                    <DT ID="op_is_eq">bool
+                        operator==(const Float&, const Float&)</DT>
+                        <DD>Test if the two parameters are equal.</DD>
+            <BR />
+                    <DT ID="op_not_eq">bool operator!=(const Float&, const Float&)</DT>
+                        <DD>Test if the two parameters are not equal.</DD>
+            <BR />
+                    <DT ID="op_geq">bool operator>=(const Float&, const Float&)</DT>
+                    <DD>Test if the first parameter is
+                        greater than or equal to the second.</DD>
+            <BR />
+                    <DT ID="op_leq">bool operator&lt;=(const Float&, const Float&)</DT>
+                    <DD>Test if the first parameter is
+                        less than or equal to the second.</DD>
+            <BR />
+                    <DT ID="op_g">bool operator>(const Float&, const Float&)</DT>
+                    <DD>Test if the first parameter is
+                        greater than the second.</DD>
+            <BR />
+                    <DT ID="op_l">bool operator&lt;(const Float&, const Float&)</DT>
+                    <DD>Test if the first parameter is
+                        less than the second.</DD>
+            <BR />
+                    <DT ID="op_not">bool operator!(const Float&)</DT>
+                        <DD>Test if the parameter is equal to 0.</DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Global</TD>
+                <TD></TD>
+                <TD>Related, global non-members</TD>
+                <TD>
+                    <DL>
+                    <DT ID="g_swap">void swap(Precision::General_Base::Float&,
+                        Precision::General_Base::Float&)
+                        </DT>
+                    <DD>Switch the value of the first
+                            parameter with the second.</DD>
+                    </DL>
+                </TD>
+            </TR>
+        </TABLE>
+            <BR />
+        <TABLE STYLE="border-collapse:collapse;" ID="example">
+        <CAPTION>Example Use</CAPTION><TR><TD><OL><CODE>
+        <LI>#include "Precision.h"</LI>
+        <LI></LI>
+        <LI>#include &lt;iostream></LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;// Using the base 10 instantiation</LI>
+        <LI>int main(){</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;using namespace Precision;</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;using namespace std;</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;Float testee(-283.764);</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; boolalpha</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.sign() &lt;&lt; '\n' // -1</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.str() &lt;&lt; '\n' // -283.764</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.sci_note() &lt;&lt; '\n' // -2.83764E2</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.sci_note_w_spaces() &lt;&lt; '\n' // - 2.83764 E 2</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.magnitude().str() &lt;&lt; '\n' // +283.764</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.count_digits() &lt;&lt; '\n' // 6</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.count_left_digits() &lt;&lt; '\n' // 3</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.count_right_digits() &lt;&lt; '\n' // 3</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.precision() &lt;&lt; '\n' // 100</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.compare(Float(-283.764), 3) &lt;&lt; '\n' // 1</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.integer().str() &lt;&lt; '\n' // -283</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.show_full() &lt;&lt; '\n' // false</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            (-testee).str() &lt;&lt; '\n' // +283.764</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            (~testee).str(10) &lt;&lt; '\n' // -0.0035240552</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.even() &lt;&lt; '\n' // true</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.odd() &lt;&lt; '\n' // false</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.positive() &lt;&lt; '\n' // false</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.negative() &lt;&lt; '\n' // true</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.is_integer() &lt;&lt; '\n' // false</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.digit(100) &lt;&lt; '\n' // 7</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            testee.digit10(101) &lt;&lt; '\n' // 3</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            Float::base() &lt;&lt; '\n' // 10</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;
+            *Float::digit0() &lt;&lt; '\n' // 0</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;;</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            testee.show_full(false) &lt;&lt; '\n'; // false</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;testee.shift(15);</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; testee.str()
+            &lt;&lt; '\n'; // -283764000000000000</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;testee.shift_left(10);</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; testee.str()
+            &lt;&lt; '\n'; // -2837640000000000000000000000</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;testee.shift_right(30);</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; testee.str()
+            &lt;&lt; '\n'; // -0.002</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;testee.sign(1);</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; testee.str()
+            &lt;&lt; '\n'; // +0.002</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;testee.negate();</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; testee.str()
+            &lt;&lt; '\n'; // -0.002</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;Float testee2("77");</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;testee.swap(testee2);</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; testee.str()
+            &lt;&lt; '\n'; // +77</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            (testee + testee2).str() &lt;&lt; '\n'; // +76.998</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            (testee - testee2).str() &lt;&lt; '\n'; // +77.002</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            (testee * testee2).str() &lt;&lt; '\n'; // -0.154</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            (testee / testee2).str() &lt;&lt; '\n'; // -38500</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            (testee % testee2).str() &lt;&lt; '\n'; // +0</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            (testee ^ testee2).str(10) &lt;&lt; '\n'; // +0.9913500174</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            (++testee).str() &lt;&lt; '\n'; // +78</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            (--testee).str() &lt;&lt; '\n'; // +77</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            (testee++).str() &lt;&lt; '\n'; // +77</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            (testee--).str() &lt;&lt; '\n'; // +78</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;return 0;</LI>
+        <LI>}</LI>
+        </CODE></OL></TD></TR></TABLE>
+    </BODY>
+</HTML>

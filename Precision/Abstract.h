@@ -1,0 +1,6 @@
+#ifndef HHHHHH____PRECISION_HELPER_INCLUDE_ABSTRACT___H____
+#define HHHHHH____PRECISION_HELPER_INCLUDE_ABSTRACT___H____
+
+#include "General_Base/Precision_Int_Abstract_Base.h"
+
+#endif

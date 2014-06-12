@@ -4,7 +4,7 @@
 #include "General_Base/Precision_Binary_Specialization.h"
 #include "General_Base.h"
 
-#define SPEC_PARAMS_  Base36::image::type, Base36::image::glyphs, block_type, 2,\
+#define SPEC_PARAMS_  Constant::type, Constant::glyphs, block_type, 2,\
     Constant::symbols, default_container_type, SignClass
 
 namespace Precision{

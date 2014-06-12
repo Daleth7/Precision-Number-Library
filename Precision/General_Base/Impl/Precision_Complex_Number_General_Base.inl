@@ -62,7 +62,7 @@ namespace Precision{
             }
 
             COMP_TEMPL_
-            constexpr digit_10_type Complex::base()
+            constexpr digit_type Complex::base()
                 {return scalar_type::base();}
 
             COMP_TEMPL_

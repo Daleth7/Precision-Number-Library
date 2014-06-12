@@ -65,11 +65,11 @@ namespace Precision{
                     const scalar_type& new_imag = scalar_type(0)
                 );
                 Int(const str_type&);
-                Int(const INT_INST_&)                   = default;
-                Int(INT_INST_&&)                        = default;
-                INT_INST_& operator=(const INT_INST_&)  = default;
-                INT_INST_& operator=(INT_INST_&&)       = default;
-                ~Int()                                  = default;
+                Int(const Int&)             = default;
+                Int(Int&&)                  = default;
+                Int& operator=(const Int&)  = default;
+                Int& operator=(Int&&)       = default;
+                ~Int()                      = default;
             };
 
             template <
@@ -104,11 +104,12 @@ namespace Precision{
                     const scalar_type& new_imag = scalar_type(0)
                 );
                 Float(const str_type&, size_type = k_default_prec);
-                Float(const FLOAT_INST_&)                   = default;
-                Float(FLOAT_INST_&&)                        = default;
-                FLOAT_INST_& operator=(const FLOAT_INST_&)  = default;
-                FLOAT_INST_& operator=(FLOAT_INST_&&)       = default;
-                ~Float()                                    = default;
+
+                Float(const Float&)             = default;
+                Float(Float&&)                  = default;
+                Float& operator=(const Float&)  = default;
+                Float& operator=(Float&&)       = default;
+                ~Float()                        = default;
             };
 
             template <
@@ -138,18 +139,19 @@ namespace Precision{
                 )const;
                 size_type precision()const;
                 scalar_type gcd()const;
-                scalar_type gcd(const FRACT_INST_&)const;
+                scalar_type gcd(const Fract&)const;
         //Constructors and destructor
                 Fract(
                     const scalar_type& new_real = scalar_type(0),
                     const scalar_type& new_imag = scalar_type(0)
                 );
                 Fract(const str_type&, size_type = k_default_prec);
-                Fract(const FRACT_INST_&)                   = default;
-                Fract(FRACT_INST_&&)                        = default;
-                FRACT_INST_& operator=(const FRACT_INST_&)  = default;
-                FRACT_INST_& operator=(FRACT_INST_&&)       = default;
-                ~Fract()                                    = default;
+
+                Fract(const Fract&)             = default;
+                Fract(Fract&&)                  = default;
+                Fract& operator=(const Fract&)  = default;
+                Fract& operator=(Fract&&)       = default;
+                ~Fract()                        = default;
             };
 
             COMP_TEMPL_

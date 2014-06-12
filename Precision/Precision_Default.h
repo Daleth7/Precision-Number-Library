@@ -3,11 +3,7 @@
 
 #include "General_Base.h"
 
-#include "General_Base/Precision_Shared_Pack.h"
-
-#define DEFAULT_TEMPLATE_PARAMS                     \
-    Base36::image::type, Base36::image::glyphs,  \
-    byte_type, 10
+#define DEFAULT_TEMPLATE_PARAMS Constant::type, Constant::glyphs, byte_type, 10
 
 namespace Precision{
     using Int       = General_Base::Int <DEFAULT_TEMPLATE_PARAMS>;
@@ -19,6 +15,7 @@ namespace Precision{
 }
 
 #include "Common_Overloads_and_Specializations.inl"
+#include "Precision_Literal_Operators.inl"
 
 #undef DEFAULT_TEMPLATE_PARAMS
 

@@ -6,4 +6,4 @@ A library of number types with an unlimited digit count and whose floating point
 
 Written in C++ using the C++11 standard.
 
-Please refer to Precision/doc/documentation.html for complete documentation of the library.
+Please refer to Precision/documentation.html for complete documentation of the library.

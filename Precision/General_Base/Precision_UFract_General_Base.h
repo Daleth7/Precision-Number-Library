@@ -1,5 +1,5 @@
-#ifndef __PRECISION_UNSIGNED_FRACT_IMPL_H
-#define __PRECISION_UNSIGNED_FRACT_IMPL_H
+#ifndef HHHH____PRECISION_UNSIGNED_FRACT_IMPL_H
+#define HHHH____PRECISION_UNSIGNED_FRACT_IMPL_H
 
 #include "Precision_Fract_General_Base.h"
 
@@ -47,49 +47,48 @@ namespace Precision{
                 using image_type    = typename Signed_Fract::image_type;
                 using diglist_type  = typename Signed_Fract::diglist_type;
                 using digit_type    = typename Signed_Fract::digit_type;
-                using digit_10_type = typename Signed_Fract::digit_10_type;
                 using ld            = typename Signed_Fract::ld;
                 using lli           = typename Signed_Fract::lli;
                 using size_type     = typename Signed_Fract::size_type;
         //Arithmetic operators
-                UFRACT_INST_& operator+=(const UFRACT_INST_& s)
+                UFract& operator+=(const UFract& s)
                     {return m_base += s.m_base, *this;}
 
-                UFRACT_INST_& operator-=(const UFRACT_INST_& s){
+                UFract& operator-=(const UFract& s){
                     m_base -= s.m_base;
                     if(m_base.negative())
                         m_base = 0;
                     return *this;
                 }
 
-                UFRACT_INST_& operator*=(const UFRACT_INST_& s)
+                UFract& operator*=(const UFract& s)
                     {return m_base *= s.m_base, *this;}
 
-                UFRACT_INST_& operator/=(const UFRACT_INST_& s)
+                UFract& operator/=(const UFract& s)
                     {return m_base /= s.m_base, *this;}
 
-                UFRACT_INST_& operator%=(const UFRACT_INST_& s)
+                UFract& operator%=(const UFract& s)
                     {return m_base %= s.m_base, *this;}
 
-                UFRACT_INST_& operator--()
+                UFract& operator--()
                     {return --m_base, *this;}
 
-                UFRACT_INST_ operator--(int)
+                UFract operator--(int)
                     {return m_base--;}
 
-                UFRACT_INST_& operator++()
+                UFract& operator++()
                     {return ++m_base, *this;}
 
-                UFRACT_INST_ operator++(int)
+                UFract operator++(int)
                     {return m_base++;}
 
         //Overloaded operators with new meanings
                     //Invert the fraction
-                UFRACT_INST_ operator~()const
+                UFract operator~()const
                     {return ~m_base;}
 
                     //Raise the fraction to the power of
-                UFRACT_INST_& operator^=(const UFRACT_INST_& e)
+                UFract& operator^=(const UFract& e)
                     {return m_base ^= e.m_base, *this;}
 
         //Read-only functions
@@ -121,13 +120,13 @@ namespace Precision{
                     {return m_base.mixed();}
 
             //Set the precision through parameter
-                const UFRACT_INST_& magnitude()const
+                const UFract& magnitude()const
                     {return *this;}
 
                 size_type precision()const
                     {return m_base.precision();}
 
-                short compare(const UFRACT_INST_& s)const
+                short compare(const UFract& s)const
                     {return m_base.compare(s.m_base);}
 
             //Following two pairs are merely different names for the same thing
@@ -143,13 +142,13 @@ namespace Precision{
                 Floating floating_point()const
                     {return this->decimal();}
 
-                Integer gcd(const UFRACT_INST_& s)const
+                Integer gcd(const UFract& s)const
                     {return m_base.gcd(s.m_base);}
 
-                UFRACT_INST_ inverse()const
+                UFract inverse()const
                     {return m_base.inverse();}
 
-                UFRACT_INST_ remainder(const UFRACT_INST_& s)const
+                UFract remainder(const UFract& s)const
                     {return m_base.remainder(s.m_base);}
 
                 bool is_integer()const
@@ -161,10 +160,10 @@ namespace Precision{
                 Signed_Fract operator-()const
                     {return -m_base;}
 
-                static constexpr digit_10_type base()
+                static constexpr digit_type base()
                     {return Signed_Fract::base();}
 
-                static constexpr digit_type digit0()
+                static constexpr image_type const* digit0()
                     {return Signed_Fract::digit0();}
 
         //Other modifiers
@@ -177,12 +176,12 @@ namespace Precision{
                 void denominator(const Integer& d)
                     {m_base.denominator(d); m_base.sign(1);}
 
-                UFRACT_INST_& invert()
+                UFract& invert()
                     {return m_base.invert(), *this;}
 
                 void sign(sign_type){}
 
-                void swap(UFRACT_INST_& s)
+                void swap(UFract& s)
                     {m_base.swap(s.m_base);}
 
                 void shift(lli e)
@@ -194,13 +193,13 @@ namespace Precision{
                 void shift_right(size_type e)
                     {m_base.shift_right(e);}
 
-                UFRACT_INST_& exponentiate(const Integer& e)
+                UFract& exponentiate(const Integer& e)
                     {return m_base.exponentiate(e), *this;}
 
-                UFRACT_INST_& exponentiate(const UFRACT_INST_& s)
+                UFract& exponentiate(const UFract& s)
                     {return m_base.exponentiate(s.m_base), *this;}
 
-                UFRACT_INST_& exponentiate(const Signed_Fract& s)
+                UFract& exponentiate(const Signed_Fract& s)
                     {return m_base.exponentiate(s), *this;}
 
         //Overload cast operators
@@ -246,11 +245,11 @@ namespace Precision{
                     : m_base(newbase.magnitude())
                 {}
 
-                UFract(const UFRACT_INST_&)                     =default;
-                UFract(UFRACT_INST_&&)                          =default;
-                UFRACT_INST_& operator=(const UFRACT_INST_&)    =default;
-                UFRACT_INST_& operator=(UFRACT_INST_&&)         =default;
-                ~UFract()                                       =default;
+                UFract(const UFract&)               = default;
+                UFract(UFract&&)                    = default;
+                UFract& operator=(const UFract&)    = default;
+                UFract& operator=(UFract&&)         = default;
+                ~UFract()                           = default;
             private:
                 Signed_Fract m_base;
         };

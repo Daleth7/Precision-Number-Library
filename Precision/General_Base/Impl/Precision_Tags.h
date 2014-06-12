@@ -6,14 +6,16 @@
 //  a particular number type belongs to.
 namespace Precision{
     namespace Tag{
-        class Integral{};
-        class Floating_Point{};
-        class Fraction{};
-        class Complex{};
-        class Polar{};
-        class Unsigned{};
-        class Signed{};
-        class Set{};
+        struct Integral{};
+        struct Floating_Point{};
+        struct Fraction{};
+        struct Complex{};
+        struct Polar{};
+        struct Unsigned{};
+        struct Signed{};
+        struct Set{};
+        struct Static{};
+        struct Dynamic{};
     }
 }
 

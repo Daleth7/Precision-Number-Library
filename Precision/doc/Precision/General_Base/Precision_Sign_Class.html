@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+
+<HTML>
+    <HEAD>
+        <STYLE>
+            @import url("../../doc_style.css");
+            <LINK rel="stylesheet" type="text/css" href="doc_style.css">
+        </STYLE>
+    </HEAD>
+    <BODY>
+        <H2>Precision::SignClass</H2>
+        <P>
+            A class used by the number types in the library to denote whether
+            or not they are positive or negative. This is a relatively
+            lightweight class acting as a proxy such that the client need not
+            worry about the details.
+            <BR />
+            <BR />
+            <FONT SIZE=2>
+                Associated File: <B><A
+                    href="../../../General_Base/Precision_Sign_Class.h"
+                >Precision/General_Base/Precision_Sign_Class.h</A></B>
+            </FONT>
+            <BR />
+            <UL>
+                <LI><A href="#interface">Class Interface</A></LI>
+                <LI><A href="#example">Example Use</A></LI>
+            </UL>
+        </P>
+        <TABLE WIDTH=90% ID="interface">
+            <TR>
+                <TH>Namespace</TH>
+                <TH>Class</TH>
+                <TH>Category</TH>
+                <TH>Member</TH>
+            </TR>
+            <TR>
+                <TD ROWSPAN=20></TD>
+                <TD ROWSPAN=20>SignClass</TD>
+                <TD>Types</TD>
+                <TD>
+                    <DL>
+                    <DT ID="signed_type">signed_type</DT>
+                    <DD>
+                        The primitive signed type, of which this class
+                        is a proxy.
+                    </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Read Only</TD>
+                <TD>
+                    <DL>
+                    <DT ID="value">signed_type value()const</DT>
+                        <DD>Returns either 1 (positive) or -1 (negative).</DD>
+                    <DT ID="positive">bool positive()const</DT>
+                    <DD>
+                        Returns true or false as if using
+                        SignClassObj == 1 (positive).
+                    </DD>
+                    <DT ID="negative">bool negative()const</DT>
+                    <DD>
+                        Returns true or false as if using
+                        SignClassObj == -1 (positive).
+                    </DD>
+                    <DT ID="cast_signed">operator signed_type()const</DT>
+                    <DD>
+                        Returns the primitive value version of the class value.
+                        This is equivalent to calling value().
+                    </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Modifiers</TD>
+                <TD>
+                    <DL>
+                    <DT ID="flip">void flip()</DT>
+                    <DT ID="negate">void negate()</DT>
+                    <DD>
+                        Reverse the sign, e.g. if the class value is 1, it
+                        becomes -1 and vice versa. Both <I>flip()</I> and
+                        <I>negate()</I> do the same thing.
+                    </DD>
+                    <DT ID="assign">void assign(signed_type new_value)</DT>
+                    <DD>
+                        Replace the current value of the class with a new value.
+                        If <I>new_value</I> is 0 or positive, the new value is
+                        1 (positive). Otherwise, it is -1 (negative).
+                    </DD>
+                    <DT ID="make_positive">void make_positive()</DT>
+                    <DD>
+                        Replace the current value of the class with 1 (positive).
+                        This is as if calling assign(1).
+                    </DD>
+                    <DT ID="make_negative">void make_negative()</DT>
+                    <DD>
+                        Replace the current value of the class with -1 (negative).
+                        This is as if calling assign(-1).
+                    </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Constructors and Destructor</TD>
+                <TD>
+                    <DL>
+                    <DT ID="con">SignClass(signed_type new_value)</DT>
+                    <DD>
+                        Construct a SignClass object whose initial value is
+                        <I>new_value</I>.
+                    </DD>
+                    <DT ID="default">SignClass() = default</DT>
+                        <DD>Compiler generated default constructor.</DD>
+                    <DT ID="con_copy">SignClass(const SignClass&) = default</DT>
+                        <DD>Compiler generated copy constructor.</DD>
+                    <DT ID="con_move">SignClass(SignClass&&) = default</DT>
+                        <DD>Compiler generated move constructor.</DD>
+                    <DT ID="con_copy_eq">SignClass& operator=(const SignClass&) = default</DT>
+                        <DD>Compiler generated copy assignment operator.</DD>
+                    <DT ID="con_move_eq">SignClass& operator=(SignClass&&) = default</DT>
+                        <DD>Compiler generated move assignment operator.</DD>
+                    <DT ID="destruct">~SignClass() = default</DT>
+                        <DD>Compiler generated destructor.</DD>
+                    </DL>
+                </TD>
+            </TR>
+        </TABLE>
+            <BR />
+        <TABLE STYLE="border-collapse:collapse;" ID="example">
+        <CAPTION>Example Use</CAPTION><TR><TD><OL><CODE>
+        <LI>#include "Precision/General_Base/Precision_Sign_Class.h"</LI>
+        <LI></LI>
+        <LI>#include &lt;iostream></LI>
+        <LI></LI>
+        <LI>int main(){</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;Precision::SignClass sign(-1); //Negative</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;std::cout &lt;&lt; std::boolalpha;</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;std::cout &lt;&lt;
+            "Value: " &lt;&lt; sign.value() &lt;&lt; '\n';</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;std::cout &lt;&lt;
+            "Positive? " &lt;&lt; sign.positive() &lt;&lt; '\n';</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;std::cout &lt;&lt;
+            "Negative? " &lt;&lt; sign.negative() &lt;&lt; '\n';</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;int val = sign; //Implicit conversion</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;sign.negate(); //sign is now positive</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;sign.assign(val); //sign is now negative</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;sign.make_positive(); //Value is positive</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;sign.make_negative(); //Back to negative</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;return 0;</LI>
+        <LI>}</LI>
+        </CODE></OL></TD></TR></TABLE>
+    </BODY>
+</HTML>

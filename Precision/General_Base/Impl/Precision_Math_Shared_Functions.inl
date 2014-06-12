@@ -1,8 +1,9 @@
-#include <type_traits>
-#include <cmath>
 #include "Precision_Tags.h"
 #include "Precision_Math_Shared_Helpers.h"
 #include "Precision_Exception.h"
+
+#include <type_traits>
+#include <cmath>
 
 namespace Precision{
     namespace Math{
@@ -19,16 +20,19 @@ namespace Precision{
                         "Precision::Math::sqrt(Number_Type)"
                     );
                 }else if(
-                    base == Helper::cast(0, base) ||
-                    base == Helper::cast(1, base)
+                    base == Helper::cast(base, 0) ||
+                    base == Helper::cast(base, 0)
                 )   return base;
             //Uses Babylonian method:
             //  http://en.wikipedia.org/wiki/Methods_of_computing_square_roots
             //      #Babylonian_method
-                Number_Type toreturn(base/Helper::cast(2, base)), old(0);
-                while(!Helper::are_equal(old, toreturn, true)){
+                Number_Type
+                    toreturn(base/Helper::cast(base, 2)),
+                    old(Helper::cast(base, 0))
+                ;
+                while(!Helper::are_equal(old, toreturn)){
                     old = toreturn;
-                    toreturn = (toreturn + base/toreturn)/Helper::cast(2, base);
+                    toreturn = (toreturn + base/toreturn)/Helper::cast(base, 2);
                 }
                 return toreturn;
             }
@@ -39,27 +43,64 @@ namespace Precision{
             {return Helper::sqrt_helper(base,
                 typename std::is_fundamental<Number_Type>::type());}
 
-        template <typename Number_Type, typename Integer_Type>
-        Number_Type root(const Number_Type& base, const Integer_Type& n){
-            if(base.negative() && n.even()){
-                throw exception(
-                    exception::complex_number,
-                    "Precision::Math::root(Number_Type, Integer_Type)"
-                );
-            }else if(
-                base == Helper::cast(0, base) ||
-                base == Helper::cast(1, base)
-            )   return base;
-        //Newton's method
-            const Number_Type N(Helper::cast(n, base));
-            Number_Type toreturn(base/Helper::cast(N, base)), old(0);
-            while(!Helper::are_equal(old, toreturn, true)){
-                old = toreturn;
-                toreturn = ((N-Helper::cast(1, base))*toreturn
-                    + base/exponentiate(toreturn, N))/N;
+        namespace Helper{
+            template <typename Number_Type, typename Integer_Type>
+            Number_Type root(
+                const Number_Type& base,
+                const Integer_Type& n,
+                std::true_type
+            ){
+                if( (base < 0.0) && (n%2 == 0) ){
+                    throw exception(
+                        exception::complex_number,
+                        "Precision::Math::root(Number_Type, Integer_Type)"
+                    );
+                }
+            //Newton's method
+                const Number_Type N(n);
+                Number_Type toreturn(base/N), old(0);
+                while(!Helper::are_equal(old, toreturn)){
+                    old = toreturn;
+                    toreturn = ((N-1)*toreturn
+                        + base/std::pow(toreturn, N))/N;
+                }
+                return toreturn;
             }
-            return toreturn;
+
+            template <typename Number_Type, typename Integer_Type>
+            Number_Type root(
+                const Number_Type& base,
+                const Integer_Type& n,
+                std::false_type
+            ){
+                if(base.negative() && n.even()){
+                    throw exception(
+                        exception::complex_number,
+                        "Precision::Math::root(Number_Type, Integer_Type)"
+                    );
+                }else if(
+                    base == Helper::cast(base, 0) ||
+                    base == Helper::cast(base, 1)
+                )   return base;
+            //Newton's method
+                const Number_Type N(Helper::cast(base, n));
+                Number_Type 
+                    toreturn(base/Helper::cast(base, N)),
+                    old(Helper::cast(base, 0))
+                ;
+                while(!Helper::are_equal(old, toreturn)){
+                    old = toreturn;
+                    toreturn = ((N-Helper::cast(base, 1))*toreturn
+                        + base/exponentiate(toreturn, N))/N;
+                }
+                return toreturn;
+            }
         }
+
+        template <typename Number_Type, typename Integer_Type>
+        Number_Type root(const Number_Type& base, const Integer_Type& n)
+            {return Helper::root(base, n,
+                typename std::is_fundamental<Number_Type>::type());}
 
         namespace Helper{
             template <typename Integer_Type>
@@ -70,50 +111,60 @@ namespace Precision{
                 if(s == f)
                     return s;
                 else if(s < f)
-                    return 1;
-                else if(f+Integer_Type(1) == s)
+                    return Helper::cast(f, 1);
+                else if(f+Helper::cast(f, 1) == s)
                     return f*s;
                 else
-                    return factorial_range(f, (f+s)/Integer_Type(2))
-                    * factorial_range((f+s)/Integer_Type(2)+Integer_Type(1), s);
+                    return factorial_range(f, (f+s)/Helper::cast(f, 2))
+                    * factorial_range((f+s)/Helper::cast(f, 2)
+                        + Helper::cast(f, 1), s);
+            }
+
+            template <typename Integer_Type>
+            Integer_Type gamma_sift(
+                const Integer_Type& start,
+                std::true_type
+            ){
+                if(start < Helper::cast(start, 2))
+                    return Helper::cast(start, 1);
+                return factorial_range(Helper::cast(start, 2), start);
             }
 
             template <typename Number_Type>
-            Number_Type gamma_helper(
+            Number_Type gamma_sift(
                 const Number_Type& z,
-                size_t start, size_t lim
+                std::false_type
             ){
-                //Used to help find the product of a sequence, or capital PI
-                //  Use the divide and conquer technique to ease the
-                //  multiplications
-                if(lim < start)
-                    return z;
-                else if(start == lim)
-                    return z+Helper::cast(start, z);
-                else if(lim - 1 == start)
-                    return (z+Helper::cast(start, z))*(z+Helper::cast(lim, z));
-                else
-                    return gamma_helper(z, start, lim/2)
-                        * gamma_helper(z, lim/2+1, lim);
+                if(Helper::is_integer(z))
+                    return factorial_sift(z.integer(), std::true_type());
+                else{
+                //Based on Euler's infinite product definition
+                    Number_Type k(Helper::cast(z, 2));
+                    const Number_Type k1 = Helper::cast(z, 1);
+                    Number_Type
+                        toreturn(exponentiate(k, z)/(k1+z)),
+                        old(Helper::cast(z, 0))
+                    ;
+                    while(!Helper::are_equal(old, toreturn)){
+                        old = toreturn;
+                        toreturn *= exponentiate(k1+k.inverse(), z)
+                            / (k1+z/k);
+                        ++k;
+                    }
+                }
             }
         }
 
         template <typename Number_Type>
-        Number_Type factorial_gamma(const Number_Type& z){
-            //Based on Euler's gamma function
+        Number_Type gamma(const Number_Type& z){
             if(z.negative()){
                 throw exception(
                     exception::divide_by_zero,
-                    "Precision::Math::factorial_gamma(Number_Type)"
+                    "Precision::Math::gamma(Number_Type)"
                 );
             }
-            using int_type = typename Number_Type::Integer;
-            auto lim = z.precision();
-            return
-                exponentiate(Number_Type(lim), z)
-                * Helper::factorial_range(int_type(2), int_type(lim))
-                / Helper::gamma_helper(z, 0, lim)
-            ;
+            return Helper::gamma_sift(z,
+                typename std::is_base_of<Number_Type, Tag::Integral>::type());
         }
 
         namespace Helper{
@@ -122,8 +173,9 @@ namespace Precision{
                 const Integer_Type& start,
                 std::true_type
             ){
-                if(start < Integer_Type(2))   return 1;
-                return factorial_range(Integer_Type(2), start);
+                if(start < Helper::cast(start, 2))
+                    return Helper::cast(start, 1);
+                return factorial_range(Helper::cast(start, 2), start);
             }
 
             template <typename Number_Type>
@@ -131,10 +183,10 @@ namespace Precision{
                 const Number_Type& start,
                 std::false_type
             ){
-                if(start.is_integer())
+                if(Helper::is_integer(start))
                     return factorial_sift(start.integer(), std::true_type());
                 else
-                    return factorial_gamma(start);
+                    return gamma(start);
             }
         }
 
@@ -152,37 +204,46 @@ namespace Precision{
 
         template <typename Floating_Type>
         Floating_Type ln(Floating_Type f){
-            const Floating_Type k1(Helper::cast(1, f));
+            const Floating_Type k1(Helper::cast(f, 1));
             if(f == k1)
-                return Helper::cast(0, f);
-            else if(f <= Helper::cast(0, f)){
+                return Helper::cast(f, 0);
+            else if(f <= Helper::cast(f, 0)){
                 throw exception(
                     exception::complex_number,
                     "Precision::Math::ln(Floating_Type)"
                 );
             }
-            long long int i(1);
+            typedef long long int lli;
+            lli i(1);
             const bool over(f > k1);
             if(over)
                 f /= (f-k1);
-            Floating_Type toreturn(Helper::cast(0, f)), old(-1);
-            while(!Helper::are_equal(old, toreturn, true)){
+
+            typedef Floating_Type F_TT; //Floating Truncated Type
+            F_TT (*callbacks[2])(const F_TT&, const F_TT&, lli) = {
+            //Taylor series of ln(a-1)
+                [](const F_TT& fp, const F_TT& kp, lli ip)
+                    {return Helper::cast(fp, ip%2 ? 1 : -1)
+                        * exponentiate(fp-kp, ip)/Helper::cast(fp, ip);},
+            //Taylor series of ln(y) where y = x/(x-1)
+                [](const F_TT& fp, const F_TT& kp, lli ip)
+                    {return kp/(Helper::cast(fp, ip)*exponentiate(fp, ip));}
+            };
+
+            Floating_Type
+                toreturn(Helper::cast(f, 0)),
+                old(Helper::cast(f, -1))
+            ;
+            while(!Helper::are_equal(old, toreturn)){
                 old = toreturn;
-                toreturn
-                    += over
-                        //Taylor series of ln(y) where y = x/(x-1)
-                    ? ( k1/(Helper::cast(i, f)*exponentiate(f, i)) )
-                        //Taylor series of ln(a-1)
-                    : ( (i%2 ? 1 : -1)*exponentiate(f-k1, i)/Helper::cast(i, f) )
-                ;
-                ++i;
+                toreturn += callbacks[over](f, k1, i++);
             }
             return toreturn;
         }
 
         template <typename Floating_Type>
         Floating_Type log(const Floating_Type& b)
-            {return ln(b)/ln(Helper::cast(10, b));}
+            {return ln(b)/ln(Helper::cast(b, 10));}
 
         template <typename Floating_Type>
         Floating_Type log(
@@ -193,9 +254,7 @@ namespace Precision{
         namespace Helper{
             template <typename Integer_Type>
             bool is_negative(const Integer_Type& i)
-                {return (i < Integer_Type(0));}
-
-            bool is_negative(size_t);
+                {return (i < Helper::cast(i, 0));}
 
             template <typename Number_Type, typename Integer_Type>
             Number_Type exponentiate(
@@ -203,42 +262,45 @@ namespace Precision{
                 Integer_Type e,
                 std::true_type
             ){
-                if(e == Integer_Type(0))
-                    return Helper::cast(1, base);
-                else if(e == Integer_Type(1))
+                if(e == Helper::cast(e, 0))
+                    return Helper::cast(base, 1);
+                else if(e == Helper::cast(e, 1))
                     return base;
-                else if(e == Integer_Type(-1))
-                    return Helper::cast(1, base) / base;
+                else if(e == Helper::cast(e, -1))
+                    return Helper::cast(base, 1) / base;
 
                 Number_Type operand(base);
-                if(is_negative(e))
-                    operand = Helper::cast(1, base)/operand, e *= -1;
+                if(is_negative(e)){
+                    operand = Helper::cast(base, 1)/operand;
+                    e *= Helper::cast(e, -1);
+                }
                     //Exponentiation by squaring
-                if(e % Integer_Type(2) == Integer_Type(0))
+                if(e % Helper::cast(e, 2) == Helper::cast(e, 0))
                     return exponentiate( (operand * operand),
-                        (e/Integer_Type(2)), std::true_type() );
+                        (e/Helper::cast(e, 2)), std::true_type() );
                 else
                     return operand * exponentiate( operand,
-                        (e - Integer_Type(1)), std::true_type() );
+                        (e - Helper::cast(e, 1)), std::true_type() );
+
             }
 
             template <typename Number_Type, typename Number_Type2>
-            Number_Type2 exponentiate(
+            Number_Type exponentiate(
                 const Number_Type& base,
                 const Number_Type2& e,
                 std::false_type
             ){
-                if(e == Helper::cast(0, e))
-                    return Helper::cast(1, base);
-                else if(e == Helper::cast(1, e))
+                if(e == Helper::cast(e, 0))
+                    return Helper::cast(base, 1);
+                else if(e == Helper::cast(e, 1))
                     return base;
-                else if(e == Helper::cast(-1, e))
-                    return Helper::cast(1, base)/base;
-                else if(e.is_integer())
+                else if(e == Helper::cast(e, -1))
+                    return Helper::cast(base, 1)/base;
+                else if(Helper::is_integer(e))
                     return exponentiate(base, e.integer(), std::true_type());
                 return Helper::cast(
-                    exp(ln(e.positive() ? base : Helper::cast(1, base)/base)*e),
-                    e
+                    e,
+                    exp(ln(e.positive() ? base : Helper::cast(base, 1)/base)*e)
                 );
             }
 
@@ -259,23 +321,22 @@ namespace Precision{
         template <typename Floating_Type>
         Floating_Type exp(const Floating_Type& e){
             Floating_Type
-                toreturn(Helper::cast(1, e)),
-                old(0),
+                toreturn(Helper::cast(e, 1)),
+                old(Helper::cast(e, 0)),
                 _x(toreturn)
             ;
-            long long int i(0);
-            while(!Helper::are_equal(toreturn, old, true)){
+            auto i(Helper::cast(typename Floating_Type::Integer(), 0));
+            while(!Helper::are_equal(old, toreturn)){
                 old = toreturn;
                 ++i;
-                toreturn += (_x *= e)
-                    / factorial(typename Floating_Type::Integer(i));
+                toreturn += (_x *= e)/Helper::cast(_x, factorial(i));
             }
             return toreturn;
         }
 
         template <typename Number_Type, typename Number_Type2>
         Number_Type exponentiate(const Number_Type& f, const Number_Type2& s){
-            if(s == Number_Type2(0) && f == Number_Type(0)){
+            if(s == Helper::cast(s, 0) && f == Helper::cast(f, 0)){
                 throw exception(
                     exception::indeterminate,
                     "Precision::Math::exponentiate(Number_Type,Number_Type2)"
@@ -291,7 +352,7 @@ namespace Precision{
     //http://en.wikipedia.org/wiki/Greatest_common_divisor
     //  #Using_Euclid.27s_algorithm
             Integer_Type toreturn(a), prev(b);
-            while(prev != Integer_Type(0)){
+            while(prev != Helper::cast(a, 0)){
                 toreturn %= prev;
                 std::swap(toreturn, prev);
             }
@@ -305,11 +366,12 @@ namespace Precision{
 
         template <typename Number_Type>
         Number_Type agm(const Number_Type& _1, const Number_Type& _2){
-            if(_1.sign() != _2.sign()) return Helper::cast(0, _1);
+            if(_1.sign() != _2.sign()) return Helper::cast(_1, 0);
             Number_Type a(_1), g(_2);
-            while(!Helper::are_equal(a, g, false)){
+            const Number_Type twos_temp(Helper::cast(a, 2));
+            while(!Helper::are_equal(a, g)){
                 Number_Type hold(a);
-                (a += g)/=Helper::cast(2, a);
+                (a += g)/=twos_temp;
                 g = sqrt(hold*g);
             }
             return a;

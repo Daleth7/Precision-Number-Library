@@ -3,11 +3,7 @@
 
 #include "General_Base.h"
 
-#include "General_Base/Precision_Shared_Pack.h"
-
-#define DEFAULT_PARAMS                     \
-    Base36::image::type, Base36::image::glyphs,  \
-    byte_type, 16
+#define DEFAULT_PARAMS Constant::type, Constant::glyphs, byte_type, 16
 
 namespace Precision{
     namespace Hexadecimal{

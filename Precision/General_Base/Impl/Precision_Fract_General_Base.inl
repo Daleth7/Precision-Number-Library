@@ -241,13 +241,13 @@ namespace Precision{
             {return this->decimal().digit(i);}
 
         FRACT_TEMPL_
-        typename FRACT_INST_::digit_10_type
+        typename FRACT_INST_::digit_type
             FRACT_INST_::digit_10(size_type i)
         const{return this->decimal().digit_10(i);}
 
 
         FRACT_TEMPL_
-        constexpr typename FRACT_INST_::digit_10_type FRACT_INST_::base()
+        constexpr typename FRACT_INST_::digit_type FRACT_INST_::base()
             {return Floating::base();}
 
         FRACT_TEMPL_

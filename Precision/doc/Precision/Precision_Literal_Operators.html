@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+
+<HTML>
+    <HEAD>
+        <STYLE>
+            @import url("../doc_style.css");
+            <LINK rel="stylesheet" type="text/css" href="doc_style.css">
+        </STYLE>
+    </HEAD>
+    <BODY>
+        <H2>Decimal Literal Operators</H2>
+        <P>
+            <FONT SIZE=2>
+                Associated File: <B><A
+                    href="../../Precision_Literal_Operators.h"
+                >Precision/General_Base/Precision_Literal_Operators.h</A></B>
+            </FONT>
+            <BR />
+            <BR />
+            For the <A href="Precision_Default.html">decimal instantiation</A>,
+            there is a set of literal operators in the global space. They
+            allow the client to construct objects with the usual parameters,
+            i.e. integer/floating point values and string objects.
+            <BR />
+            <UL>
+                <LI><A href="#interface">Function Information</A></LI>
+                <LI><A href="#example">Example Use</A></LI>
+            </UL>
+            <BR />
+        </P>
+            <BR />
+        <TABLE WIDTH=90% id="interface">
+            <TR>
+                <TH>Precision::Int</TH>
+                <TD>
+                    <DL>
+                        <DT>Int operator"" _p_int(char
+                            const *const, std::size_t)</DT>
+                        <DD>
+                            Construct a <I>Precision::Int</I> object from
+                            a string. E.g. <CODE>"123"_p_int</CODE>
+                        </DD>
+            <BR />
+                        <DT>Int operator"" _p_int(unsigned long long)</DT>
+                        <DD>
+                            Construct a <I>Precision::Int</I> object from
+                            an unsigned integer value.
+                            E.g. <CODE>237864_p_int</CODE>
+            <BR />
+                            <B>Note</B>: Remember that, even if the integer
+                            is prefixed with a negative sign, the sign is
+                            parsed as a lower precedent operator, i.e.
+                            writing <CODE>-123_P_Int</CODE> is equivalent
+                            to <CODE>-(123_p_int)</CODE>.
+                        </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TH>Precision::Float</TH>
+                <TD>
+                    <DL>
+                        <DT>Float operator"" _p_float(char
+                            const *const, std::size_t)</DT>
+                        <DD>
+                            Construct a <I>Precision::Float</I> object from
+                            a string. E.g. <CODE>"123.456"_p_float</CODE>
+                        </DD>
+            <BR />
+                        <DT>Float operator"" _p_float(unsigned long long)</DT>
+                        <DD>
+                            Construct a <I>Precision::Float</I> object from
+                            an unsigned integer value.
+                            E.g. <CODE>237864_p_float</CODE>
+                        </DD>
+            <BR />
+                        <DT>Float operator"" _p_float(long double)</DT>
+                        <DD>
+                            Construct a <I>Precision::Float</I> object from
+                            an signed, floating point value.
+                            E.g. <CODE>-237.864_p_float</CODE>
+                        </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TH>Precision::UInt</TH>
+                <TD>
+                    <DL>
+                        <DT>UInt operator"" _p_uint(char
+                            const *const, std::size_t)</DT>
+                        <DD>
+                            Construct a <I>Precision::UInt</I> object from
+                            a string. E.g. <CODE>"123"_p_uint</CODE>
+                        </DD>
+            <BR />
+                        <DT>UInt operator"" _p_uint(unsigned long long)</DT>
+                        <DD>
+                            Construct a <I>Precision::UInt</I> object from
+                            an unsigned integer value.
+                            E.g. <CODE>237864_p_uint</CODE>
+                        </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TH>Precision::UFloat</TH>
+                <TD>
+                    <DL>
+                        <DT>UFloat operator"" _p_ufloat(char
+                            const *const, std::size_t)</DT>
+                        <DD>
+                            Construct a <I>Precision::UFloat</I> object from
+                            a string. E.g. <CODE>"123.456"_p_ufloat</CODE>
+                        </DD>
+            <BR />
+                        <DT>UFloat operator"" _p_ufloat(unsigned long long)</DT>
+                        <DD>
+                            Construct a <I>Precision::UFloat</I> object from
+                            an unsigned integer value.
+                            E.g. <CODE>237864_p_ufloat</CODE>
+                        </DD>
+            <BR />
+                        <DT>UFloat operator"" _p_ufloat(long double)</DT>
+                        <DD>
+                            Construct a <I>Precision::UFloat</I> object from
+                            a floating point value.
+                            E.g. <CODE>237.864_p_ufloat</CODE>
+                        </DD>
+                    </DL>
+                </TD>
+            </TR>
+        </TABLE>
+            <BR />
+        <TABLE STYLE="border-collapse:collapse;" ID="example">
+        <CAPTION>Example Use</CAPTION><TR><TD><OL><CODE>
+        <LI>#include "Precision/Precision_Default.h"</LI>
+        <LI></LI>
+        <LI>#include &lt;iostream></LI>
+        <LI></LI>
+        <LI>int main(){</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;std::cout</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt; (-123_p_int).str() &lt;&lt; '\n'</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt; ("8882"_p_int).str() &lt;&lt; '\n'</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt; ("82"_P_int).str() &lt;&lt; '\n'</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt; ("82.3E10"_p_int).str() &lt;&lt; '\n'</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;;</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;return 0;</LI>
+        <LI>}</LI>
+        </CODE></OL></TD></TR></TABLE>
+    </BODY>
+</HTML>

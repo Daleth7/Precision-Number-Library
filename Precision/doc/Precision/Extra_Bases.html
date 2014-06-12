@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+		<STYLE>
+            @import url("../doc_style.css");
+            <LINK rel="stylesheet" type="text/css" href="doc_style.css">
+		</STYLE>
+    </HEAD>
+    <BODY>
+        <H2>Extra Bases</H2>
+        <P>
+            <FONT SIZE=2>
+                Associated File: <B><A href="../../Extra_Bases.h">
+                Precision/Extra_Bases.h</A></B>
+            </FONT>
+            <BR />
+            <BR />
+            The Precision Number Library provides not just the decimal
+            instantiation, but also instantiations for the following bases:
+            <UL>
+                <LI><A href="Precision_Binary.html">Binary</A></LI>
+                <LI><A href="Precision_Octal.html">Octal</A></LI>
+                <LI><A href="Precision_Hexadecimal.html">Hexadecimal</A></LI>
+                <LI><A href="Precision_Base36.html">Base 36</A></LI>
+                <LI><A href="Precision_ABC.html">ABC</A></LI>
+            </UL>
+            <BR />
+            <UL>
+                <LI><A href="#interface">Class Interface Information</A></LI>
+                <LI><A href="#example">Example Use</A></LI>
+                <UL>
+                    <LI> This is only of the make functions. Use the links
+                        to each number base for more examples.</LI>
+                </UL>
+            </UL>
+            Specifically, the Binary base is a specialization that is memory
+            efficient at the cost of speed (though the bitwise operations
+            are actually faster). It also includes a couple more member types and
+            additional shifting operations. More information about this
+            specialization can be found <A href="Precision_Binary.html">here</A>.
+            <BR />
+            <BR />
+            Additionally, make functions are available to create one of the
+            number types using default template parameters. These make functions
+            are only for bases 2 to 36. The return type is equivalent to one
+            of the number types found in the General_Base name space, i.e.
+            <I>Precision::General_Base::FOO</I>. For more information on these
+            types, click <A href="General_Base.html">here</A>.
+            <BR />
+            <BR />
+            <FONT COLOR="#EE0000"><B>Warning</B>: The current implementation
+                will not compile with GCC 4.7.1 due to a compiler bug.
+                If you are using GCC, it is recommended
+                that you use GCC 4.8.1 or above.</FONT>
+            <BR />
+            <BR />
+        </P>
+        <TABLE WIDTH=90% id="interface">
+            <TR>
+                <TH WIDTH=33%>Template Parameter</TH>
+                <TH>Description</TH>
+            </TR>
+            <TR>
+                <TD><I>byte_type Base</I></TD>
+                <TD>
+                    The base of the number type to create. This number must be
+                    between 2 and 36.
+                </TD>
+            </TR>
+        </TABLE>
+            <BR />
+        <TABLE WIDTH=90% id="interface">
+            <TR>
+                <TD>
+                    <DL>
+                    <DT>make_type_int&lt;Base> make_int(long double i)</DT>
+                    <DT>make_type_int&lt;Base> make_int(const std::string& s)</DT>
+                    <DT>make_type_uint&lt;Base> make_uint(long double i)</DT>
+                    <DT>make_type_uint&lt;Base> make_uint(const std::string& s)</DT>
+                        <DD>Construct an integer that is of base <I>Base</I>.</DD>
+            <BR />
+                    <DT>make_type_float&lt;Base> make_float(long double i)</DT>
+                    <DT>make_type_float&lt;Base> make_float(const std::string& s)</DT>
+                    <DT>make_type_ufloat&lt;Base> make_ufloat(long double i)</DT>
+                    <DT>make_type_ufloat&lt;Base> make_ufloat(const std::string& s)</DT>
+                    <DD>Construct a floating point
+                        number that is of base <I>Base</I>.</DD>
+            <BR />
+                    <DT>make_type_fract&lt;Base> make_fract(long double i)</DT>
+                    <DT>make_type_fract&lt;Base> make_fract(const std::string& s)</DT>
+                    <DT>make_type_ufract&lt;Base> make_ufract(long double i)</DT>
+                    <DT>make_type_ufract&lt;Base> make_ufract(const std::string& s)</DT>
+                        <DD>Construct a fraction that is of base <I>Base</I>.</DD>
+                    </DL>
+                </TD>
+            </TR>
+        </TABLE>
+            <BR />
+        <TABLE STYLE="border-collapse:collapse;" ID="example">
+        <CAPTION>Example Use</CAPTION><TR><TD><OL><CODE>
+        <LI>#include "Precision/Extra_Bases.h"</LI>
+        <LI></LI>
+        <LI>#include &lt;iostream></LI>
+        <LI></LI>
+        <LI>int main(){</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;using namespace std;</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;auto b7 = Precision::make_int&lt;7>(1000);</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; b7.str(); //+2626</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            Precision::make_float&lt;14>("-BA.40C").str(); //+BA.40C</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            Precision::make_ufract&lt;36>("ASJDDHE/2398AEHFEJ").str();
+            //+ASJDDHE/2398AEHFEJ</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;return 0;</LI>
+        <LI>}</LI>
+        </CODE></OL></TD></TR></TABLE>
+    <BODY>
+</HTML>

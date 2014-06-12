@@ -37,7 +37,7 @@ namespace Precision{
                 template <typename...> class Container,
                 typename SignType, typename ScalarType
             >
-            class Number : Tag::Complex{
+            class Number : Tag::Complex, Tag::Static{
                 public:
             //Type aliases
                     using scalar_type   = ScalarType;
@@ -46,17 +46,16 @@ namespace Precision{
                     using image_type    = typename scalar_type::image_type;
                     using diglist_type  = typename scalar_type::diglist_type;
                     using digit_type    = typename scalar_type::digit_type;
-                    using digit_10_type = typename scalar_type::digit_10_type;
                     using lli           = typename scalar_type::lli;
                     using ld            = typename scalar_type::ld;
                     using size_type     = typename scalar_type::size_type;
             //Arithmetic operators
-                    COMP_INST_& operator+=(const COMP_INST_&);
-                    COMP_INST_& operator-=(const COMP_INST_&);
-                    COMP_INST_& operator*=(const COMP_INST_&);
-                    COMP_INST_& operator/=(const COMP_INST_&);
+                    Number& operator+=(const Number&);
+                    Number& operator-=(const Number&);
+                    Number& operator*=(const Number&);
+                    Number& operator/=(const Number&);
 
-                    COMP_INST_ operator-()const;
+                    Number operator-()const;
             //Read-only functions
                         //True ~ Real, False ~ Imaginary
                     sign_type sign(bool)const;
@@ -64,9 +63,9 @@ namespace Precision{
                     const scalar_type& imaginary()const;
                     scalar_type magnitude()const;
                     scalar_type phase()const;
-                    short compare(const COMP_INST_&)const;
+                    short compare(const Number&)const;
 
-                    static constexpr digit_10_type base();
+                    static constexpr digit_type base();
                     static constexpr digit_type digit0();
             //Modifers
                         //True ~ Real, False ~ Imaginary
@@ -74,23 +73,23 @@ namespace Precision{
                     void real(const scalar_type&);
                     void imaginary(const scalar_type&);
                     void negate();
-                    void swap(COMP_INST_&);
+                    void swap(Number&);
 
             //Constructors and destructor
-                    Complex(
+                    Number(
                         const scalar_type& new_real = scalar_type(0),
                         const scalar_type& new_imag = scalar_type(0)
                     );
-                    Complex(
+                    Number(
                         scalar_type&& new_real,
                         scalar_type&& new_imag
                     );
-                    Complex(const str_type&);
-                    Complex(const COMP_INST_&)                  = default;
-                    Complex(COMP_INST_&&)                       = default;
-                    COMP_INST_& operator=(const COMP_INST_&)    = default;
-                    COMP_INST_& operator=(COMP_INST_&&)         = default;
-                    ~Complex()                                  = default;
+                    Number(const str_type&);
+                    Number(const Number&)               = default;
+                    Number(Number&&)                    = default;
+                    Number& operator=(const Number&)    = default;
+                    Number& operator=(Number&&)         = default;
+                    ~Number()                           = default;
 
                 private:
                     scalar_type m_real, m_imag;

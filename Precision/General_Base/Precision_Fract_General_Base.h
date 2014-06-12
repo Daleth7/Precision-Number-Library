@@ -1,5 +1,5 @@
-#ifndef __PRECISION_FRACT_IMPL_H
-#define __PRECISION_FRACT_IMPL_H
+#ifndef HH___PRECISION_FRACT_IMPL_H
+#define HH___PRECISION_FRACT_IMPL_H
 
 #include "Precision_Int_General_Base.h"
 #include "Precision_Float_General_Base.h"
@@ -36,7 +36,7 @@ namespace Precision{
             template <typename...> class Container = default_container_type,
             typename SignType = SignClass
         >
-        class Fract : Tag::Fraction, Tag::Signed {
+        class Fract : Tag::Fraction, Tag::Signed, Tag::Static {
             public:
                 using Integer       = Int<INST_PARAMS_>;
                 using Floating      = Float<INST_PARAMS_>;
@@ -45,28 +45,27 @@ namespace Precision{
                 using image_type    = typename Integer::image_type;
                 using diglist_type  = typename Integer::diglist_type;
                 using digit_type    = typename Integer::digit_type;
-                using digit_10_type = typename Integer::digit_10_type;
                 using ld            = typename Floating::ld;
                 using lli           = typename Integer::lli;
                 using size_type     = typename Integer::size_type;
         //Arithmetic operators
-                FRACT_INST_& operator+=(const FRACT_INST_&);
-                FRACT_INST_& operator-=(const FRACT_INST_&);
-                FRACT_INST_& operator*=(const FRACT_INST_&);
-                FRACT_INST_& operator/=(const FRACT_INST_&);
-                FRACT_INST_& operator%=(const FRACT_INST_&);
-                FRACT_INST_& operator--();
-                FRACT_INST_ operator--(int);
-                FRACT_INST_& operator++();
-                FRACT_INST_ operator++(int);
+                Fract& operator+=(const Fract&);
+                Fract& operator-=(const Fract&);
+                Fract& operator*=(const Fract&);
+                Fract& operator/=(const Fract&);
+                Fract& operator%=(const Fract&);
+                Fract& operator--();
+                Fract operator--(int);
+                Fract& operator++();
+                Fract operator++(int);
 
-                FRACT_INST_ operator-()const;
+                Fract operator-()const;
 
         //Overloaded operators with new meanings
                     //Invert the fraction
-                FRACT_INST_ operator~()const;
+                Fract operator~()const;
                     //Raise the fraction to the power of
-                FRACT_INST_& operator^=(const FRACT_INST_&);
+                Fract& operator^=(const Fract&);
         //Read-only functions
                 sign_type sign()const;
                 bool even()const;
@@ -78,37 +77,37 @@ namespace Precision{
                 str_type str()const;
                 str_type mixed()const;
             //Set the precision through parameter
-                FRACT_INST_ magnitude()const;
+                Fract magnitude()const;
                 size_type precision()const;
-                short compare(const FRACT_INST_&)const;
+                short compare(const Fract&)const;
             //Following two pairs are merely different names for the same thing
                 Integer whole()const;
                 Floating decimal()const;
                 Integer integer()const;
                 Floating floating_point()const;
-                Integer gcd(const FRACT_INST_&)const;
-                FRACT_INST_ inverse()const;
+                Integer gcd(const Fract&)const;
+                Fract inverse()const;
 
-                FRACT_INST_ remainder(const FRACT_INST_&)const;
+                Fract remainder(const Fract&)const;
                 bool is_integer()const;
                 image_type digit(size_type)const;
-                digit_10_type digit_10(size_type)const;
+                digit_type digit_10(size_type)const;
 
-                static constexpr digit_10_type base();
+                static constexpr digit_type base();
                 static constexpr image_type const * digit0();
         //Other modifiers
                 void precision(size_type);
                 void numerator(const Integer&);
                 void denominator(const Integer&);
-                FRACT_INST_& invert();
+                Fract& invert();
                 void sign(sign_type);
                 void negate();
-                void swap(FRACT_INST_& s);
+                void swap(Fract& s);
                 void shift(lli);
                 void shift_left(size_type);
                 void shift_right(size_type);
-                FRACT_INST_& exponentiate(const Integer&);
-                FRACT_INST_& exponentiate(const FRACT_INST_&);
+                Fract& exponentiate(const Integer&);
+                Fract& exponentiate(const Fract&);
 
         //Overload cast operators
                 explicit operator Integer() const;
@@ -125,11 +124,11 @@ namespace Precision{
                     size_type = k_default_prec
                 );
 
-                Fract(const FRACT_INST_&)                   =default;
-                Fract(FRACT_INST_&&)                        =default;
-                FRACT_INST_& operator=(const FRACT_INST_&)  =default;
-                FRACT_INST_& operator=(FRACT_INST_&&)       =default;
-                ~Fract()                                    =default;
+                Fract(const Fract&)             = default;
+                Fract(Fract&&)                  = default;
+                Fract& operator=(const Fract&)  = default;
+                Fract& operator=(Fract&&)       = default;
+                ~Fract()                        = default;
             protected:
         //Helpers
                 void Simplify();

@@ -1,5 +1,5 @@
-#ifndef SIGN_CLASS_DEFINITION_H__
-#define SIGN_CLASS_DEFINITION_H__
+#ifndef SIGN_CLASS_DEFINITION_H___
+#define SIGN_CLASS_DEFINITION_H___
 
 namespace Precision{
     class SignClass{

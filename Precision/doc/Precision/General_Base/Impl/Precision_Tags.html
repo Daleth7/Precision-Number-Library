@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+
+<HTML>
+    <HEAD>
+        <STYLE>
+            @import url("../../../doc_style.css");
+            <LINK rel="stylesheet" type="text/css" href="doc_style.css">
+        </STYLE>
+    </HEAD>
+    <BODY>
+        <H2>Tag Subsystem</H2>
+        <P>
+            This subsystem contains tags that denote which category of numbers
+            a particular number type belongs to. For example, the type
+            <I><A href="../../Precision_Default.html">Precision::Int</A></I>
+            belongs to the Signed and Integral categories.
+            <BR />
+            <BR />
+            <FONT SIZE=2>
+                Associated File: <B><A
+                    href="../../../../General_Base/Impl/Precision_Tags.h"
+                >Precision/General_Base/Impl/Precision_Tags.h</A></B>
+            </FONT>
+            <BR />
+            <UL>
+                <LI><A href="#class">Class descriptions</A></LI>
+                <LI><A href="#example">Example Use</A></LI>
+            </UL>
+        </P>
+        <TABLE WIDTH=90% ID="class">
+            <TR>
+                <TH>Namespace</TH>
+                <TH>Class</TH>
+                <TH>Description</TH>
+            </TR>
+            <TR>
+                <TD ROWSPAN=20>Tag</TD>
+                <TD ID="Integral">Integral</TD>
+                <TD>
+                    The number increments and decrements by exactly 1. It is
+                    always whole and has no fractional portion.
+                </TD>
+            </TR>
+            <TR>
+                <TD ID="Floating">Floating_Point</TD>
+                <TD>
+                    The number is not whole and has a fractional portion. It
+                    also contains a certain precision to indicate how many digits
+                    past the point the number may contain. Floating_Point numbers
+                    shall be able to be constructed from and be convertible to
+                    Integral numbers.
+                </TD>
+            </TR>
+            <TR>
+                <TD ID="Fraction">Fraction</TD>
+                <TD>
+                    The number contains both a numerator and denominator, both
+                    of which are integral. The number represents a non-whole
+                    number with a fractional portion and a certain precision.
+                    Fraction numbers shall be able to be constructed from and
+                    be convertible to Integral and Floating numbers.
+                </TD>
+            </TR>
+            <TR>
+                <TD ID="Complex">Complex</TD>
+                <TD>
+                    The number contains both a real number and an imaginary
+                    number. The coefficients of these numbers are real. This
+                    number follows the format <B>a+bi</B> where a is the
+                    coefficient of the real part and b is the coefficient of
+                    the imaginary part. Complex numbers shall be convertible
+                    to Polar numbers.
+                </TD>
+            </TR>
+            <TR>
+                <TD ID="Polar">Polar</TD>
+                <TD>
+                    The number contains both a magnitude and an imaginary
+                    number. The coefficients of these numbers are real. This
+                    number follows the format <B>M*e<SUP>(Pi)</SUP></B> where
+                    M is the magnitude and P is the phase. Polar numbers shall
+                    be convertible to Complex numbers.
+                </TD>
+            </TR>
+            <TR>
+                <TD ID="Unsigned">Unsigned</TD>
+                <TD>
+                    The number has no sign component as the sign is
+                    always positive. The minimum value of the number is
+                    guaranteed to be 0.
+                </TD>
+            </TR>
+            <TR>
+                <TD ID="Signed">Signed</TD>
+                <TD>
+                    The number has a sign component to indicate whether it is
+                    positive or negative. By convention, numbers in this
+                    library shall follow the following rules:
+                    <UL>
+                        <LI>short(1) == positive</LI>
+                        <LI>short(-1) == negative</LI>
+                    </UL>
+                </TD>
+            </TR>
+            <TR>
+                <TD ID="Set">Set</TD>
+                <TD>
+                    The number is not a single number but rather a collection
+                    of numbers. Regular arithmetic operations will not apply
+                    to Sets, but Sets will allow access to individual elements.
+                </TD>
+            </TR>
+            <TR>
+                <TD ID="Dynamic">Dynamic</TD>
+                <TD>The number has a mutable base
+                    that can be changed during runtime.</TD>
+            </TR>
+            <TR>
+                <TD ID="Static">Static</TD>
+                <TD>The number has an immutable base
+                    that is determined at compile-time.</TD>
+            </TR>
+        </TABLE>
+            <BR />
+        <TABLE STYLE="border-collapse:collapse;" ID="example">
+        <CAPTION>Example Use</CAPTION><TR><TD><OL><CODE>
+        <LI>#include "Precision.h"</LI>
+        <LI></LI>
+        <LI>#include &lt;iostream></LI>
+        <LI>#include &lt;type_traits></LI>
+        <LI></LI>
+        <LI>int main(){</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;std::cout &lt;&lt;
+            (std::is_base_of&lt;Precision::Tag::Signed, Precision::Int
+            >() ? "Int is signed." : "Error. Please report this
+            issue.");</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;return 0;</LI>
+        <LI>}</LI>
+        </CODE></OL></TD></TR></TABLE>
+    </BODY>
+</HTML>

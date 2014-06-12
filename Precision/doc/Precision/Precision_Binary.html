@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+
+<HTML>
+    <HEAD>
+        <STYLE>
+            @import url("../doc_style.css");
+            <LINK rel="stylesheet" type="text/css" href="doc_style.css">
+        </STYLE>
+    </HEAD>
+    <BODY>
+        <H2>Binary Instantiation</H2>
+        <P>
+            <FONT SIZE=2>
+                Associated Files: <B><A href="../../Precision_Binary.h">
+                Precision/Precision_Binary.h</A> and
+                <A href="../../General_Base/Precision_Binary_Specialization.h">
+                Precision/General_Base/Precision_Binary_Specialization.h</A></B>
+            </FONT>
+            <BR />
+            <BR />
+            A base 2 set of number types provided by the Precision Number
+            Library. It includes the types:
+            <UL>
+                <LI>Int</LI>
+                <LI>Float</LI>
+                <LI>Fract</LI>
+                <LI>UInt</LI>
+                <LI>UFloat</LI>
+                <LI>UFract</LI>
+            </UL>
+            <BR />
+            This number base may be accessed through the <I>Binary</I> namespace.
+            For detailed information of the interface, refer to:
+            <UL>
+                <LI><A href="General_Base/Precision_Int_General_Base.html">
+                    Int</A></LI>
+                <LI><A href="General_Base/Precision_Float_General_Base.html">
+                    Float</A></LI>
+                <LI><A href="General_Base/Precision_Fract_General_Base.html">
+                    Fract</A></LI>
+                <LI><A href="General_Base/Precision_UInt_General_Base.html">
+                    UInt</A></LI>
+                <LI><A href="General_Base/Precision_UFloat_General_Base.html">
+                    UFloat</A></LI>
+                <LI><A href="General_Base/Precision_UFract_General_Base.html">
+                    UFract</A></LI>
+            </UL>
+            <BR />
+            This base in particular is specialized for the integral and
+            unsigned integral types. These specializations are dynamic bit sets
+            designed to maximize memory space at the cost of speed. The bitwise
+            operations, however, are faster. The interface of the specializations
+            includes the following in addition to the interface of the general
+            base:
+        </P>
+        <TABLE WIDTH=90% id="interface">
+            <TR>
+                <TH>Namespace</TH>
+                <TH>Class</TH>
+                <TH>Category</TH>
+                <TH>Member</TH>
+            </TR>
+            <TR>
+                <TD ROWSPAN=20>Binary</TD>
+                <TD ROWSPAN=2>Int</TD>
+                <TD>Types</TD>
+                <TD>
+                    <DL>
+                    <DT>byte_type</DT>
+                    <DD>
+                        The type of the memory blocks used by the bit set. The
+                        number of bits used in the memory block is equal to the
+                        number of bits the type is minus 2. Of the 2 not used
+                        for storage, one is reserved for sign and the other is
+                        reserved for overflow.
+                    </DD>
+                    <DT>bitset_type</DT>
+                    <DD>
+                        The raw bit set type that the specialization manages.
+                        This is an abstract integral type that has no visual
+                        representation (attempting to request its visual
+                        representation shall cause a crash during runtime).
+                    </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Modifiers</TD>
+                <TD>
+                    <DL>
+                    <DT>void shift_byte(lli e)</DT>
+                    <DD>
+                        Similar to <I>shift(lli)</I> but instead of increasing
+                        by a power of the base, this inserts or removes an
+                        entire memory block (<I>byte_type</I>) in the bitset.
+                        The memory inserted or removed is always with respect
+                        to the right most place, e.g. removing an 8-bit block
+                        on the number 0011010010110110 will result in
+                        00110100.
+                    </DD>
+            <BR />
+                    <DT>void shift_left_byte(size_type e)</DT>
+                    <DD>
+                        Similar to <I>shift_byte(lli)</I> but always inserts
+                        memory blocks.
+                    </DD>
+            <BR />
+                    <DT>void shift_right_byte(size_type e)</DT>
+                    <DD>
+                        Similar to <I>shift_byte(lli)</I> but always removes
+                        memory blocks.
+                    </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD ROWSPAN=2>UInt</TD>
+                <TD>Types</TD>
+                <TD>
+                    <DL>
+                    <DT>byte_type</DT>
+                    <DD>
+                        The type of the memory blocks used by the bit set. The
+                        number of bits used in the memory block is equal to the
+                        number of bits the type is minus 2. Of the 2 not used
+                        for storage, one is reserved for sign and the other is
+                        reserved for overflow.
+                    </DD>
+                    <DT>bitset_type</DT>
+                    <DD>
+                        The raw bit set type that the specialization manages.
+                        This is an abstract integral type that has no visual
+                        representation (attempting to request its visual
+                        representation shall cause a crash during runtime).
+                    </DD>
+                    </DL>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Modifiers</TD>
+                <TD>
+                    <DL>
+                    <DT>void shift_byte(lli e)</DT>
+                    <DD>
+                        Similar to <I>shift(lli)</I> but instead of increasing
+                        by a power of the base, this inserts or removes an
+                        entire memory block (<I>byte_type</I>) in the bitset.
+                        The memory inserted or removed is always with respect
+                        to the right most place, e.g. removing an 8-bit block
+                        on the number 0011010010110110 will result in
+                        00110100.
+                    </DD>
+            <BR />
+                    <DT>void shift_left_byte(size_type e)</DT>
+                    <DD>
+                        Similar to <I>shift_byte(lli)</I> but always inserts
+                        memory blocks.
+                    </DD>
+            <BR />
+                    <DT>void shift_right_byte(size_type e)</DT>
+                    <DD>
+                        Similar to <I>shift_byte(lli)</I> but always removes
+                        memory blocks.
+                    </DD>
+                    </DL>
+                </TD>
+            </TR>
+        </TABLE>
+            <BR />
+        <TABLE STYLE="border-collapse:collapse;" ID="example">
+        <CAPTION>Example Use</CAPTION><TR><TD><OL><CODE>
+        <LI>#include "Precision.h"</LI>
+        <LI></LI>
+        <LI>#include &lt;iostream></LI>
+        <LI></LI>
+        <LI>int main(){</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;using namespace std;</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;Precision::Binary::Int i1(-1125),
+            i2("1110101110");</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt;
+            i1.str() &lt;&lt; '\n' &lt;&lt; i2.str() &lt;&lt; '\n';
+            //Displays -10001100101 and +1110101110</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;Precision::Binary::Float f1(i1+i2);</LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;f1 /= 16;</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; f1.str() &lt;&lt; '\n';
+            //Displays -1011.0111</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;Precision::Binary::Fract fr1(i2, i1);</LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; fr1.str() &lt;&lt; '\n';
+            //Displays -100111010/101110111</LI>
+        <LI></LI>
+        <LI></LI>
+        <LI>&nbsp;&nbsp;&nbsp;&nbsp;return 0;</LI>
+        <LI>}</LI>
+        </CODE></OL></TD></TR></TABLE>
+    </BODY>
+</HTML>

@@ -1,72 +1,74 @@
+#include "Type_Traits_Extended/Type_Traits_Ext.h"
+
 #include "Precision_Tags.h"
+
+#include "Precision_Precedence_Pack.h"
 
 namespace Precision{
     namespace Math{
         namespace Helper{
-        //are_equal is used in the case when a Fract might be passed to
-        //  avoid infinite loops and recursions
             template <typename Number_Type>
             bool are_equal(
                 const Number_Type& f, const Number_Type& s,
-                bool by_precision, std::true_type
-            ){return by_precision ? (f.decimal() == s.decimal()) : (f == s);}
+                Tag::Fraction
+            ){return f.decimal() == s.decimal();}
 
             template <typename Number_Type>
-            bool are_equal(
+            bool are_equal_float_fund(
                 const Number_Type& f, const Number_Type& s,
-                bool, std::false_type
-            ){return (f == s);}
-
-            template <typename Number_Type>
-            bool are_equal(
-                const Number_Type& f, const Number_Type& s,
-                bool by_precision
-            ){return are_equal(f, s, by_precision,
-                typename std::is_base_of<Tag::Fraction, Number_Type>::type());}
-
-        //cast shall be used to safely convert among Precision types, mainly to
-        //  ensure any cast to Fract or Float will also carry the precision
-        //Needs another object from which to extract the precision.
-            template <typename Number_Type>
-            Number_Type cast(
-                const Number_Type& n,
-                const Number_Type&,
                 std::true_type
-            ){return n;}
+            ){return ( (f < s+1e-7) && (s-1e-7 < f) );}
 
-            template <typename Number_Type1, typename Number_Type2>
-            Number_Type1 cast2(
-                const Number_Type2& n,
-                const Number_Type1&,
-                std::true_type
-            ){return Number_Type1(n);}
-
-            template <typename Number_Type1, typename Number_Type2>
-            Number_Type1 cast2(
-                const Number_Type2& n,
-                const Number_Type1& sample,
+            template <typename Number_Type>
+            bool are_equal_float_fund(
+                const Number_Type& f, const Number_Type& s,
                 std::false_type
-            ){return Number_Type1(n, sample.precision());}
+            ){return f == s;}
 
-            template <typename Number_Type1, typename Number_Type2>
-            Number_Type1 cast(
-                const Number_Type2& n,
-                const Number_Type1& sample,
-                std::false_type
-            ){
-                return cast2(
-                    n, sample,
-                    typename std::is_base_of<Tag::Integral, Number_Type1>::type()
+            template <typename Number_Type, typename U>
+            bool are_equal(const Number_Type& f, const Number_Type& s, U){
+                return are_equal_float_fund(
+                    f, s,
+                    typename std::is_floating_point<Number_Type>::type()
                 );
             }
 
-            template <typename Number_Type1, typename Number_Type2>
-            Number_Type1 cast(const Number_Type2& n, const Number_Type1& sample){
-                return cast(
-                    n, sample,
-                    typename std::is_same<Number_Type1, Number_Type2>::type()
+            template <typename Number_Type>
+            bool are_equal(const Number_Type& f, const Number_Type& s){
+                return are_equal(
+                    f, s,
+                    typename Type_Trait::find_base<Number_Type, PRE_CATE_>::type()
                 );
             }
+
+            #include "Precision_Cast_System.inl"
+
+            template <typename T>
+            bool is_integer_prec(const T&, std::true_type)
+                {return true;}
+
+            template <typename T>
+            bool is_integer_prec(const T& val, std::false_type)
+                {return val.is_integer();}
+
+            template <typename T>
+            bool is_integer(const T&, std::true_type)
+                {return typename std::is_integral<T>::type();}
+
+            template <typename T>
+            bool is_integer(const T& val, std::false_type){
+                return is_integer_prec(
+                    val,
+                    typename std::is_base_of<Tag::Integral, T>::type()
+                );
+            }
+
+            template <typename T>
+            bool is_integer(const T& val)
+                {return is_integer(val, typename std::is_fundamental<T>::type());}
         }
     }
 }
+
+#undef PRE_CATE_
+#undef PRE_BASE_

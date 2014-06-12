@@ -1,5 +1,5 @@
-#ifndef __PRECISION_UNSIGNED_INT_IMPL_GENERAL_BASE_H
-#define __PRECISION_UNSIGNED_INT_IMPL_GENERAL_BASE_H
+#ifndef HHHH____PRECISION_UNSIGNED_INT_IMPL_GENERAL_BASE_H
+#define HHHH____PRECISION_UNSIGNED_INT_IMPL_GENERAL_BASE_H
 
 #include "Precision_Int_General_Base.h"
 
@@ -49,78 +49,77 @@ namespace Precision{
                 using image_type    = typename Signed_Int::image_type;
                 using diglist_type  = typename Signed_Int::diglist_type;
                 using digit_type    = typename Signed_Int::digit_type;
-                using digit_10_type = typename Signed_Int::digit_10_type;
                 using sign_type     = typename Signed_Int::sign_type;
                 using size_type     = typename Signed_Int::size_type;
         //Arithmetic operators
-                UINT_INST_& operator+=(const UINT_INST_& rhs)
+                UInt& operator+=(const UInt& rhs)
                     {return m_base += rhs.m_base, *this;}
 
-                UINT_INST_& operator-=(const UINT_INST_& rhs){
+                UInt& operator-=(const UInt& rhs){
                     m_base -= rhs.m_base;
                     if(m_base.negative())
                         m_base = 0;
                     return *this;
                 }
 
-                UINT_INST_& operator*=(const UINT_INST_& rhs)
+                UInt& operator*=(const UInt& rhs)
                     {return m_base *= rhs.m_base, *this;}
 
-                UINT_INST_& operator/=(const UINT_INST_& rhs)
+                UInt& operator/=(const UInt& rhs)
                     {return m_base /= rhs.m_base, *this;}
 
-                UINT_INST_& operator%=(const UINT_INST_& rhs)
+                UInt& operator%=(const UInt& rhs)
                     {return m_base %= rhs.m_base, *this;}
 
-                UINT_INST_& operator--()
+                UInt& operator--()
                     {return (*this -= 1);}
 
-                UINT_INST_ operator--(int)
+                UInt operator--(int)
                     {return (*this -= 1) + 1;}
 
-                UINT_INST_& operator++()
+                UInt& operator++()
                     {return ++m_base, *this;}
 
-                UINT_INST_ operator++(int)
+                UInt operator++(int)
                     {return m_base++;}
 
         //Bitwise operators
-                UINT_INST_& operator&=(const UINT_INST_& rhs)
+                UInt& operator&=(const UInt& rhs)
                     {return m_base &= rhs.m_base, *this;}
 
-                UINT_INST_& operator|=(const UINT_INST_& rhs)
+                UInt& operator|=(const UInt& rhs)
                     {return m_base |= rhs.m_base, *this;}
 
-                UINT_INST_& operator^=(const UINT_INST_& rhs)
+                UInt& operator^=(const UInt& rhs)
                     {return m_base ^= rhs.m_base, *this;}
 
-                UINT_INST_& operator<<=(const UINT_INST_& rhs)
+                UInt& operator<<=(const UInt& rhs)
                     {return m_base <<= rhs.m_base, *this;}
 
-                UINT_INST_& operator>>=(const UINT_INST_& rhs)
+                UInt& operator>>=(const UInt& rhs)
                     {return m_base >>= rhs.m_base, *this;}
 
         //Logical Operators
-                UINT_INST_ logical_and(const UINT_INST_& s)const
-                    {return UINT_INST_(m_base.logical_and(s.m_base));}
+                UInt logical_and(const UInt& s)const
+                    {return UInt(m_base.logical_and(s.m_base));}
 
-                UINT_INST_ logical_or(const UINT_INST_& s)const
-                    {return UINT_INST_(m_base.logical_or(s.m_base));}
+                UInt logical_or(const UInt& s)const
+                    {return UInt(m_base.logical_or(s.m_base));}
 
-                UINT_INST_ logical_xor(const UINT_INST_& s)const
-                    {return UINT_INST_(m_base.logical_xor(s.m_base));}
+                UInt logical_xor(const UInt& s)const
+                    {return UInt(m_base.logical_xor(s.m_base));}
 
                 Signed_Int logical_inversion()const
                     {return m_base.logical_inversion();}
 
-                UINT_INST_ logical_shift(lli e)const
-                    {return UINT_INST_(m_base.logical_shift(e));}
+                UInt logical_shift(lli e)const
+                    {return UInt(m_base.logical_shift(e));}
 
-                UINT_INST_ logical_shift_left(size_type e)const
-                    {return UINT_INST_(m_base.logical_shift_left(e));}
+                UInt logical_shift_left(size_type e)const
+                    {return UInt(m_base.logical_shift_left(e));}
 
-                UINT_INST_ logical_shift_right(size_type e)const
-                    {return UINT_INST_(m_base.logical_shift_right(e));}
+                UInt logical_shift_right(size_type e)const
+                    {return UInt(m_base.logical_shift_right(e));}
 
         //Read-only functions
                 sign_type sign()const
@@ -152,10 +151,10 @@ namespace Precision{
                 size_type count_digits()const
                     {return m_base.count_digits();}
 
-                short compare(const UINT_INST_& s)const
+                short compare(const UInt& s)const
                     {return m_base.compare(s.m_base);}
 
-                const UINT_INST_& magnitude()const
+                const UInt& magnitude()const
                     {return *this;}
 
                 const Signed_Int& get_signed()const
@@ -168,10 +167,19 @@ namespace Precision{
                 Signed_Int operator~()const
                     {return Signed_Int(~m_base);}
 
-                static constexpr digit_10_type base()
+                image_type digit(size_type index)const
+                    {return m_base.digit(index);}
+
+                digit_type digit_10(size_type index)const
+                    {return m_base.digit_10(index);}
+
+                diglist_type digit_list()const
+                    {return m_base.digit_list();}
+
+                static constexpr digit_type base()
                     {return Signed_Int::base();}
 
-                static constexpr digit_type digit0()
+                static constexpr image_type const* digit0()
                     {return Signed_Int::digit0();}
 
         //Other modifiers
@@ -186,7 +194,7 @@ namespace Precision{
                 void shift_right(size_type e)
                     {m_base.shift_right(e);}
 
-                void swap(UINT_INST_& s)
+                void swap(UInt& s)
                     {m_base.swap(s.m_base);}
 
         //Conversion operators
@@ -202,6 +210,10 @@ namespace Precision{
                     : m_base(inImage)
                 {m_base.sign(1);}
 
+                UInt(const diglist_type& inImage, sign_type = 1)
+                    : m_base(inImage, 1)
+                {}
+
                 UInt(const Signed_Int& inInt)
                     : m_base(inInt)
                 {m_base.sign(1);}
@@ -210,11 +222,11 @@ namespace Precision{
                     : m_base(std::move(inInt))
                 {m_base.sign(1);}
 
-                UInt(const UINT_INST_&)            =default;
-                UInt(UINT_INST_&&)                 =default;
-                UInt& operator=(const UINT_INST_&) =default;
-                UInt& operator=(UINT_INST_&&)      =default;
-                ~UInt()                            =default;
+                UInt(const UInt&)               = default;
+                UInt(UInt&&)                    = default;
+                UInt& operator=(const UInt&)    = default;
+                UInt& operator=(UInt&&)         = default;
+                ~UInt()                         = default;
             private:
                 Signed_Int   m_base;
         };
